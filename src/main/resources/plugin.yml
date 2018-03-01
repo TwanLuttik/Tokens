@@ -1,0 +1,9 @@
+main: com.twanl.tokens.Tokens
+version: 1.0.0-pre1
+name: Tokens
+author: T.L
+
+commands:
+  tokens:
+    usage: /<command>
+    description: main command
