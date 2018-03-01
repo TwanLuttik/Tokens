@@ -2,12 +2,18 @@ package com.twanl.tokens;
 
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tokens extends JavaPlugin {
 
 
     private UpdateChecker checker;
+    protected PluginDescriptionFile pdfFile = getDescription();
+    private final String PluginVersionOn = ChatColor.GREEN + "(" + pdfFile.getVersion() + ")";
+    private final String PluginVersionOff = ChatColor.RED + "(" + pdfFile.getVersion() + ")";
 
 
     public void onEnable() {
@@ -35,10 +41,12 @@ public class Tokens extends JavaPlugin {
         }
         */
         Load();
+        Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Has been enabled " + PluginVersionOn);
 
     }
 
     public void onDisable() {
+        Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "Has been disabled " + PluginVersionOff);
 
     }
 
