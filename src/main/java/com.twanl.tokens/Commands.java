@@ -2,17 +2,18 @@ package com.twanl.tokens;
 
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
 
 public class Commands implements CommandExecutor {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     public ConfigManager cfgM;
+    public Functions F;
 
 
     @Override
@@ -20,10 +21,9 @@ public class Commands implements CommandExecutor {
 
         Player p = (Player) sender;
 
+        F = new Functions(plugin);
         cfgM = new ConfigManager();
         cfgM.setup();
-
-        UUID uuid = p.getUniqueId();
 
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
@@ -35,55 +35,94 @@ public class Commands implements CommandExecutor {
                         + " \n"
                         + Strings.white + "There will be a lot of updates");
 
+            } else if (args[0].equalsIgnoreCase("reset")) {
+
+                p.sendMessage("test");
+                return true;
+
+
             } else if (args[0].equalsIgnoreCase("add")) {
-                int tokens = Integer.parseInt(args[1]);
-                int tokens1 = cfgM.getPlayers().getInt("uuid." + uuid + ".tokens");
+                if (p.hasPermission("tokens.admin.add")) {
+                    String targetUUID;
+                    int tokens = Integer.parseInt(args[1]);
+                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+                    int tokens1 = cfgM.getPlayers().getInt("uuid." + targetUUID + ".tokens");
 
-                if (!cfgM.getPlayers().contains("uuid." + uuid)) {
 
-                    cfgM.getPlayers().set("uuid." + uuid + ".name", p.getName());
-                    cfgM.getPlayers().set("uuid." + uuid + ".tokens", 0);
 
-                    cfgM.getPlayers().set("uuid." + uuid + ".tokens", tokens1 + tokens);
-                    cfgM.savePlayers();
-                    p.sendMessage(Strings.green + tokens + " tokens are added!");
-                } else {
-                    cfgM.getPlayers().set("uuid." + uuid + ".tokens", tokens1 + tokens);
-                    cfgM.savePlayers();
-                    p.sendMessage(Strings.green + tokens + " tokens are added!");
+                    if (!cfgM.getPlayers().contains("uuid." + targetUUID)) {
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".name", F.getName(targetUUID));
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", 0);
+
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 + tokens);
+                        cfgM.savePlayers();
+                        p.sendMessage(Strings.green + tokens + " tokens are added to " + F.getName(targetUUID));
+                    } else {
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 + tokens);
+                        cfgM.savePlayers();
+                        p.sendMessage(Strings.green + tokens + " tokens are added to " + F.getName(targetUUID));
+
+                    }
+                    return true;
 
                 }
-                return true;
-
             } else if (args[0].equalsIgnoreCase("remove")) {
-                int tokens = Integer.parseInt(args[1]);
-                int tokens1 = cfgM.getPlayers().getInt("uuid." + uuid + ".tokens");
+                if (p.hasPermission("tokens.admin.remove")) {
+                    String targetUUID;
+                    int tokens = Integer.parseInt(args[1]);
+                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+                    int tokens1 = cfgM.getPlayers().getInt("uuid." + targetUUID + ".tokens");
 
 
-                if (!cfgM.getPlayers().contains("uuid." + uuid)) {
+                    if (!cfgM.getPlayers().contains("uuid." + targetUUID)) {
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".name", F.getName(targetUUID));
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", 0);
 
-                    cfgM.getPlayers().set("uuid." + uuid + ".name", p.getName());
-                    cfgM.getPlayers().set("uuid." + uuid + ".tokens", 0);
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 - tokens);
+                        cfgM.savePlayers();
+                        p.sendMessage(Strings.green + tokens + " tokens are removed from " + F.getName(targetUUID));
+                    } else {
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 - tokens);
+                        cfgM.savePlayers();
+                        p.sendMessage(Strings.green + tokens + " tokens are removed from " + F.getName(targetUUID));
 
-                    cfgM.getPlayers().set("uuid." + uuid + ".tokens", tokens1 - tokens);
-                    cfgM.savePlayers();
-                    p.sendMessage(Strings.green + tokens + " tokens are removed!");
-                } else {
-                    cfgM.getPlayers().set("uuid." + uuid + ".tokens", tokens1 - tokens);
-                    cfgM.savePlayers();
-                    p.sendMessage(Strings.green + tokens + " tokens are removed!");
+                    }
+                    return true;
 
                 }
-                return true;
+            } else if (args[0].equalsIgnoreCase("set")) {
+                if (p.hasPermission("tokens.admin.set")) {
+                    String targetUUID;
+                    int tokens = Integer.parseInt(args[1]);
+                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
 
 
+                    if (!cfgM.getPlayers().contains("uuid." + targetUUID)) {
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".name", F.getName(targetUUID));
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", 0);
+
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens);
+                        cfgM.savePlayers();
+                        p.sendMessage(Strings.green + "Tokens set to " + tokens + " for " + F.getName(targetUUID));
+                    } else {
+                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens);
+                        cfgM.savePlayers();
+                        p.sendMessage(Strings.green + "Tokens set to " + tokens + " for " + F.getName(targetUUID));
+
+                    }
+                    return true;
+
+                }
 
             }
+            return true;
         }
         return true;
     }
-
 }
+
+
+
 
 
 
