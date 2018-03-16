@@ -48,10 +48,10 @@ public class Commands implements CommandExecutor {
                         + " \n"
                         + Strings.gold + "     Admin Commands\n"
                         + Strings.white + "/tokens remove <amount> <player>\n"
-                        + Strings.white + "/tokens add <amount> <player>\n");
+                        + Strings.white + "/tokens add <amount> <player>\n"
+                        + Strings.white + "/tokens set <amount> <player>\n");
 
             } else if (args[0].equalsIgnoreCase("balance")) {
-
 
                 int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                 p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
@@ -116,7 +116,7 @@ public class Commands implements CommandExecutor {
                     cfgM.getPlayers().set(targetUUID + ".tokens", intTokens + tokenCommand);
                     cfgM.savePlayers();
 
-                    p.sendMessage(Strings.green + tokenCommand + " Tokens are removed from " + getName(targetUUID));
+                    p.sendMessage(Strings.green + tokenCommand + " Tokens are added to " + getName(targetUUID));
 
 
 
@@ -196,19 +196,56 @@ public class Commands implements CommandExecutor {
 
             } else if (args[0].equalsIgnoreCase("set")) {
                 if (p.hasPermission("tokens.admin.set")) {
-                    p.sendMessage("command wil be added in the coming updates");
-                    return true;
 
 
-/*
+                    // shows the command usage
+                    if (args.length == 1) {
+                        p.sendMessage(Strings.red + "/tokens set <amount> <player>");
+                        return true;
+                    }
+
+                    // check if the its a number instead of a character
+                    try {
+                        int tokens = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException ex) {
+                        int tokens;
+                        p.sendMessage(Strings.red + "Use a valid number!");
+                        return true;
+                    }
+
+                    // ...
+                    if (args.length == 2) {
+                        p.sendMessage(Strings.red + "Please specify a player!");
+                        return true;
+                    }
+
+
+                    int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
-                    int tokens = Integer.parseInt(args[1]);
                     targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
 
-                    UUID uuid = p.getUniqueId();
-                    TokensAPI.setTokens(UUID.fromString(targetUUID), p, tokens);
+                    String pathTokens;
+                    pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
 
-*/
+                    int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+
+
+
+
+                    // If 0 it will not execute
+                    if (tokenCommand < 0) {
+                        p.sendMessage(Strings.red + "Please don't enter a minus number!.");
+                        return true;
+                    }
+
+
+
+
+
+                    cfgM.getPlayers().set(targetUUID + ".tokens", tokenCommand);
+                    cfgM.savePlayers();
+
+                    p.sendMessage(Strings.green + tokenCommand + " Tokens are set to " + getName(targetUUID));
 
 
                 }
