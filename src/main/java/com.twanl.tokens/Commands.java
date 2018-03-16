@@ -1,6 +1,5 @@
 package com.twanl.tokens;
 
-import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import org.apache.commons.io.IOUtils;
@@ -16,7 +15,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.UUID;
 
 
 public class Commands implements CommandExecutor {
@@ -25,8 +23,6 @@ public class Commands implements CommandExecutor {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     public ConfigManager cfgM;
-    public TokensAPI TokensAPI;
-    public Functions F;
 
 
 
