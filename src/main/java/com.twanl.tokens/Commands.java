@@ -41,36 +41,29 @@ public class Commands implements CommandExecutor {
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
-                p.sendMessage(Strings.DgreenB + "       Tokens " + plugin.getDescription().getVersion() + "\n"
+                p.sendMessage(Strings.goldB + "       Tokens " + Strings.gold + plugin.getDescription().getVersion() + "\n"
                         + " \n"
-                        + Strings.green + "/tokens remove <amount> <player>\n"
-                        + " \n"
-                        + Strings.reset + "There wil be more in the coming updates");
+                        + Strings.gold + "     Admin Commands\n"
+                        + Strings.white + "/tokens remove <amount> <player>\n"
+                        + Strings.white + "/tokens add <amount> <player>\n");
 
             } else if (args[0].equalsIgnoreCase("balance")) {
 
-                TokensAPI.CheckPlayer(p.getUniqueId(), p);
+                p.sendMessage("command wil be added in the coming updates");
+                return true;
 
 
             } else if (args[0].equalsIgnoreCase("add")) {
                 if (p.hasPermission("tokens.admin.add")) {
-                    p.sendMessage("This will be added in the coming updates");
 
 
-
-
-                    /*
-
-
-
-
-
+                    // shows the command usage
                     if (args.length == 1) {
                         p.sendMessage(Strings.red + "/tokens add <amount> <player>");
                         return true;
                     }
 
-
+                    // check if the its a number instead of a character
                     try {
                         int tokens = Integer.parseInt(args[1]);
                     } catch (NumberFormatException ex) {
@@ -79,74 +72,50 @@ public class Commands implements CommandExecutor {
                         return true;
                     }
 
-                    String targetUUID1;
-                    if (Bukkit.getPlayerExact(args[0]) != null) {
-                        //targetUUID1 = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
-                        p.sendMessage(Strings.red + "Specify a player!");
+                    // ...
+                    if (args.length == 2) {
+                        p.sendMessage(Strings.red + "Please specify a player!");
                         return true;
-                    } else {
-
                     }
 
 
-                    String targetUUID;111111111
-                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
-                    int tokens = Integer.parseInt(args[1]);
-                    int tokens1 = cfgM.getPlayers().getInt("uuid." + targetUUID + ".tokens");
-
-
-
-                    if (!cfgM.getPlayers().contains("uuid." + targetUUID)) {
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".name", F.getName(targetUUID));
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", 0);
-
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 + tokens);
-                        cfgM.savePlayers();
-                        p.sendMessage(Strings.green + tokens + " tokens are added to " + F.getName(targetUUID));
-                    } else {
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 + tokens);
-                        cfgM.savePlayers();
-                        p.sendMessage(Strings.green + tokens + " tokens are added to " + F.getName(targetUUID));
-
-                    }
-
-
-
-
-*/
-
-
-
-
-
-
-
-
-                        //-----------------------------------------
-/*
+                    int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
-                    int tokens = Integer.parseInt(args[1]);
                     targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
-                    int tokens1 = cfgM.getPlayers().getInt("uuid." + targetUUID + ".tokens");
+
+                    String pathTokens;
+                    pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
+
+                    int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
 
 
-                    if (!cfgM.getPlayers().contains("uuid." + targetUUID)) {
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".name", F.getName(targetUUID));
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", 0);
 
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 + tokens);
+                    // Check if player exist, if not adding the player
+                    if (!cfgM.getPlayers().contains(targetUUID)) {
+                        cfgM.getPlayers().set(targetUUID + ".tokens", 0);
                         cfgM.savePlayers();
-                        p.sendMessage(Strings.green + tokens + " tokens are added to " + F.getName(targetUUID));
-                    } else {
-                        cfgM.getPlayers().set("uuid." + targetUUID + ".tokens", tokens1 + tokens);
-                        cfgM.savePlayers();
-                        p.sendMessage(Strings.green + tokens + " tokens are added to " + F.getName(targetUUID));
-
                     }
+
+
+
+                    // If 0 it will not execute
+                    if (tokenCommand == 0) {
+                        p.sendMessage(Strings.red + "Please enter a valid number.");
+                        return true;
+                    }
+
+
+
+                    cfgM.getPlayers().set(targetUUID + ".tokens", intTokens + tokenCommand);
+                    cfgM.savePlayers();
+
+                    p.sendMessage(Strings.green + tokenCommand + " Tokens are removed from " + getName(targetUUID));
+
+
+
 
                     return true;
-*/
                 }
 
             } else if (args[0].equalsIgnoreCase("remove")) {
@@ -154,7 +123,7 @@ public class Commands implements CommandExecutor {
 
                     // shows the command usage
                     if (args.length == 1) {
-                        p.sendMessage(Strings.red + "/tokens add <amount> <player>");
+                        p.sendMessage(Strings.red + "/tokens remove <amount> <player>");
                         return true;
                     }
 
@@ -221,9 +190,11 @@ public class Commands implements CommandExecutor {
 
             } else if (args[0].equalsIgnoreCase("set")) {
                 if (p.hasPermission("tokens.admin.set")) {
+                    p.sendMessage("command wil be added in the coming updates");
+                    return true;
 
 
-
+/*
                     String targetUUID;
                     int tokens = Integer.parseInt(args[1]);
                     targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
@@ -231,8 +202,8 @@ public class Commands implements CommandExecutor {
                     UUID uuid = p.getUniqueId();
                     TokensAPI.setTokens(UUID.fromString(targetUUID), p, tokens);
 
+*/
 
-                    return true;
 
                 }
 
