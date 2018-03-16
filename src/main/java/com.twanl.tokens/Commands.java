@@ -45,6 +45,7 @@ public class Commands implements CommandExecutor {
                         + " \n"
                         + Strings.gold + "     Users Commands\n"
                         + Strings.white + "/tokens balance\n"
+                        + Strings.white + "/tokens pay <amount> <player>\n"
                         + " \n"
                         + Strings.gold + "     Admin Commands\n"
                         + Strings.white + "/tokens remove <amount> <player>\n"
@@ -52,12 +53,14 @@ public class Commands implements CommandExecutor {
                         + Strings.white + "/tokens set <amount> <player>\n");
 
             } else if (args[0].equalsIgnoreCase("balance")) {
+                if (p.hasPermission("tokens.balance")) {
 
-                int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
-                p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
+                    int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
+                    p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
 
 
-                return true;
+                    return true;
+                }
 
             } else if (args[0].equalsIgnoreCase("add")) {
                 if (p.hasPermission("tokens.admin.add")) {
@@ -250,7 +253,95 @@ public class Commands implements CommandExecutor {
 
                 }
 
+            } else if (args[0].equalsIgnoreCase("pay")) {
+                if (p.hasPermission("tokens.pay")) {
+
+                    // shows the command usage
+                    if (args.length == 1) {
+                        p.sendMessage(Strings.red + "/tokens pay <amount> <player>");
+                        return true;
+                    }
+
+                    // check if the its a number instead of a character
+                    try {
+                        int tokens = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException ex) {
+                        int tokens;
+                        p.sendMessage(Strings.red + "Use a valid number!");
+                        return true;
+                    }
+
+                    // ...
+                    if (args.length == 2) {
+                        p.sendMessage(Strings.red + "Please specify a player!");
+                        return true;
+                    }
+
+                    String PA;
+                    PA = String.valueOf(p.getUniqueId());
+
+                    int tokenCommand = Integer.parseInt(args[1]);
+                    String targetUUID;
+                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+
+                    String pathTokens;
+                    pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
+
+                    int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+                    int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+
+
+
+                    // if he try to pay himself it wil exit the command
+                    String potentialPlayer = args[2];
+                    if (Bukkit.getPlayerExact(potentialPlayer) == p.getPlayer()) {
+                        p.sendMessage(Strings.red + "You cannot pay yourself");
+                        return true;
+                    }
+
+
+
+
+
+                    // Check if player exist, if not adding the player
+                    if (!cfgM.getPlayers().contains(targetUUID)) {
+                        cfgM.getPlayers().set(targetUUID + ".tokens", 0);
+                        cfgM.savePlayers();
+                    }
+
+
+                    // If 0 it will not execute
+                    if (tokenCommand == 0) {
+                        p.sendMessage(Strings.red + "You cannot pay with 0.");
+                        return true;
+                    }
+
+                    // Check if the player has enough coins to remove
+                    if (tokenCommand > playerTokens) {
+                        p.sendMessage(Strings.red +"You don't have enough tokens!");
+                        return true;
+                    }
+
+
+
+
+                    cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerTokens - tokenCommand);
+                    cfgM.getPlayers().set(targetUUID + ".tokens", tokenCommand + targetTokens);
+                    cfgM.savePlayers();
+
+                    p.sendMessage(Strings.green + "You payed " + getName(targetUUID) + " " + tokenCommand);
+
+
+
+
+                    return true;
+
+                }
             }
+
+
+
+
             return true;
         }
         return true;

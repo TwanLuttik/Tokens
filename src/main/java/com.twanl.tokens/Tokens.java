@@ -74,8 +74,7 @@ public class Tokens extends JavaPlugin {
 
     public void onDisable() {
         Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "Has been disabled " + PluginVersionOff);
-        Load();
-
+        loadPlayers();
     }
 
     public void Load() {
