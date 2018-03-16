@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 public class Tokens extends JavaPlugin {
 
 
@@ -19,7 +21,27 @@ public class Tokens extends JavaPlugin {
     public ConfigManager cfgM;
 
 
+    private File playerFolder;
+
+
+
     public void onEnable() {
+
+
+        /*
+        // check if players folder exist else creating a new one
+        playerFolder = new File(getDataFolder(), "players");
+        if (!playerFolder.exists()) {
+            getServer().getConsoleSender().sendMessage(Strings.red + "players folder not found, creating a new one\n ");
+            try {
+                playerFolder.mkdir();
+                getServer().getConsoleSender().sendMessage(Strings.green + "players folder created");
+            } catch (Exception e) {
+                getServer().getConsoleSender().sendMessage(Strings.red + "Failed to create players folder");
+                e.printStackTrace();
+            }
+        }
+        */
 
 
 
@@ -71,9 +93,10 @@ public class Tokens extends JavaPlugin {
 
     public void loadPlayers() {
         cfgM = new ConfigManager();
-        cfgM.setup();
-        cfgM.savePlayers();
-        cfgM.reloadplayers();
+        //cfgM.setup();
+        //cfgM.savePlayers();
+        //cfgM.reloadplayers();
     }
+
 
 }

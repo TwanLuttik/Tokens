@@ -11,19 +11,18 @@ import java.io.IOException;
 public class ConfigManager {
 
 
+
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
 
     //Files & Config Files
-    public FileConfiguration playersC;
-    public File playersF;
+    public static FileConfiguration playersC;
+    public static File playersF;
 
-    public FileConfiguration configC;
-    public File configF;
     //--------------------
 
 
     public void setup() {
-        playersF = new File(plugin.getDataFolder(), "PlayerData.yml");
+        playersF = new File(plugin.getDataFolder(), "players.yml");
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
         }
@@ -32,9 +31,9 @@ public class ConfigManager {
         if (!playersF.exists()) {
             try {
                 playersF.createNewFile();
-                Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The PlayerData.yml file has been created");
+                Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The players.yml file has been created");
             } catch (IOException e) {
-                Bukkit.getServer().getConsoleSender().sendMessage(Strings.red + "Could not create the PlayerData.yml file");
+                Bukkit.getServer().getConsoleSender().sendMessage(Strings.red + "Could not create the players.yml file");
             }
         }
 
@@ -51,14 +50,14 @@ public class ConfigManager {
 
 
     public void savePlayers() {
-        playersF = new File(plugin.getDataFolder(), "PlayerData.yml");
+        playersF = new File(plugin.getDataFolder(), "players.yml");
 
         try {
             playersC.save(playersF);
-            Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The PlayerData.yml file has been saved");
+            Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The players.yml file has been saved");
 
         } catch (IOException e) {
-            Bukkit.getServer().getConsoleSender().sendMessage(Strings.red + "Could not save the PlayerData.yml file");
+            Bukkit.getServer().getConsoleSender().sendMessage(Strings.red + "Could not save the players.yml file");
 
         }
     }
@@ -66,11 +65,86 @@ public class ConfigManager {
 
     public void reloadplayers() {
         playersC = YamlConfiguration.loadConfiguration(playersF);
-        Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The PlayerData.yml file has been reloaded");
+        Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The players.yml file has been reloaded");
 
     }
 
 
+
+
+    /*
+    private Tokens plugin = Tokens.getPlugin(Tokens.class);
+    public static File playersFile;
+    public static File playerFolder;
+
+    //Files & Config Files
+    public FileConfiguration playersC;
+
+    public File playersF;
+
+    //--------------------
+
+
+
+
+    public boolean setup() {
+        /*
+        playerFolder = new File(plugin.getDataFolder(), "players");
+        playersFile = new File(playerFolder, uuid.toString());
+
+        if (!plugin.getDataFolder().exists()) {
+            plugin.getDataFolder().mkdir();
+        }
+
+
+        if (!playersF.exists()) {
+            try {
+                playersF.createNewFile();
+                Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The players.yml file has been created");
+            } catch (IOException e) {
+                Bukkit.getServer().getConsoleSender().sendMessage(Strings.red + "Could not create the players.yml file");
+            }
+
+        }
+
+
+        playersC = YamlConfiguration.loadConfiguration(playersF);
+
+        return false;
+    }
+
+
+
+    public FileConfiguration getPlayers() {
+        return playersC;
+
+    }
+
+
+    public void savePlayers(UUID uuid) {
+
+        playerFolder = new File(plugin.getDataFolder(), "players.yml");
+        playersF = new File(playerFolder, uuid.toString());
+
+
+        try {
+            playersC.save(playersF);
+            Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The players.yml file has been saved");
+
+        } catch (IOException e) {
+            Bukkit.getServer().getConsoleSender().sendMessage(Strings.red + "Could not save the players.yml file");
+
+        }
+    }
+
+
+    public void reloadplayers() {
+        playersC = YamlConfiguration.loadConfiguration(playersF);
+        Bukkit.getServer().getConsoleSender().sendMessage(Strings.green + "The players.yml file has been reloaded");
+
+    }
+
+*/
 
 
 

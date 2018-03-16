@@ -17,6 +17,7 @@ public class Functions {
     public ConfigManager cfgM;
 
     public Functions(Tokens plugin) {
+
     }
 
 

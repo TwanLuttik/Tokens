@@ -28,7 +28,7 @@ public class JoinEvent implements Listener {
             if (p.hasPermission("playercounts.update")) {
                 final Player p1 = e.getPlayer();
                 final PlayerConnection connection = ((CraftPlayer) p).getHandle().playerConnection;
-                final PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"PlayerCount is outdated!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/playercount.52758/download?version=208548\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to download the newest version of PlayerCount\",\"color\":\"gold\"}]}}}"));
+                final PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"Tokens is outdated!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/tokens.53944/\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to download the newest version of Tokens\",\"color\":\"gold\"}]}}}"));
 
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
                     public UpdateChecker checker;
@@ -46,7 +46,7 @@ public class JoinEvent implements Listener {
                                         Strings.DgrayBS + "----------------------");
                             } else {
                                 p1.sendMessage(Strings.DgrayBS + "----------------------\n" +
-                                        Strings.green + "PlayerCount is up to date.\n" +
+                                        Strings.green + "Tokens is up to date.\n" +
                                         Strings.DgrayBS + "----------------------");
                             }
                         }
