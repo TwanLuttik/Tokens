@@ -43,15 +43,21 @@ public class Commands implements CommandExecutor {
             if (args.length == 0) {
                 p.sendMessage(Strings.goldB + "       Tokens " + Strings.gold + plugin.getDescription().getVersion() + "\n"
                         + " \n"
+                        + Strings.gold + "     Users Commands\n"
+                        + Strings.white + "/tokens balance\n"
+                        + " \n"
                         + Strings.gold + "     Admin Commands\n"
                         + Strings.white + "/tokens remove <amount> <player>\n"
                         + Strings.white + "/tokens add <amount> <player>\n");
 
             } else if (args[0].equalsIgnoreCase("balance")) {
 
-                p.sendMessage("command wil be added in the coming updates");
-                return true;
 
+                int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
+                p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
+
+
+                return true;
 
             } else if (args[0].equalsIgnoreCase("add")) {
                 if (p.hasPermission("tokens.admin.add")) {
