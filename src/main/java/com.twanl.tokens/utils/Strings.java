@@ -150,6 +150,7 @@ public class Strings {
 
     // Gold
     public static String gold = ChatColor.GOLD + "";
+    public static String goldU = ChatColor.GOLD + "" + ChatColor.UNDERLINE;
     public static String goldB = ChatColor.GOLD + "" + ChatColor.BOLD;
     public static String goldBI = ChatColor.GOLD + "" + ChatColor.BOLD + ChatColor.ITALIC;
     public static String goldBIS = ChatColor.GOLD + "" + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.STRIKETHROUGH;

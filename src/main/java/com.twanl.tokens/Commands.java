@@ -7,6 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,9 +16,12 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 
 
-public class Commands implements CommandExecutor {
+@SuppressWarnings("deprecation")
+public  class Commands implements CommandExecutor, TabCompleter {
 
 
 
@@ -39,12 +43,14 @@ public class Commands implements CommandExecutor {
             if (args.length == 0) {
                 p.sendMessage(Strings.goldB + "       Tokens " + Strings.gold + plugin.getDescription().getVersion() + "\n"
                         + " \n"
-                        + Strings.gold + "     Users Commands\n"
+                        + "     " + Strings.goldU + "Users Commands\n" + Strings.reset
+                        + " \n"
                         + Strings.white + "/tokens balance\n"
                         + Strings.white + "/tokens balance <player>\n"
                         + Strings.white + "/tokens pay <amount> <player>\n"
                         + " \n"
-                        + Strings.gold + "     Admin Commands\n"
+                        + "     " + Strings.goldU + "Admin Commands\n" + Strings.reset
+                        + " \n"
                         + Strings.white + "/tokens remove <amount> <player>\n"
                         + Strings.white + "/tokens add <amount> <player>\n"
                         + Strings.white + "/tokens set <amount> <player>\n");
@@ -63,16 +69,10 @@ public class Commands implements CommandExecutor {
 
 
 
-
-
-
-
                     if (args.length == 2) {
                         p.sendMessage(Strings.green + getName(targetUUID) + " has " + targetTokens + " Tokens");
                         return true;
                     }
-
-
 
                     return true;
                 }
@@ -345,6 +345,14 @@ public class Commands implements CommandExecutor {
     }
 
 
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
+        if (args.length == 1) {
+            return Arrays.asList("balance", "pay", "remove", "add", "set");
+        }
+
+        return null;
+    }
 
 
     // convert UUID to playername(String)

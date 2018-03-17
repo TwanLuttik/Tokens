@@ -1,5 +1,5 @@
 main: com.twanl.tokens.Tokens
-version: 0.0.12
+version: 0.0.13
 name: Tokens
 author: T.L
 
@@ -7,3 +7,4 @@ commands:
   tokens:
     usage: /<command>
     description: main command
+    aliases: [tokens, t]
