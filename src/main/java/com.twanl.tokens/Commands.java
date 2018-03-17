@@ -328,6 +328,11 @@ public class Commands implements CommandExecutor {
                     p.sendMessage(Strings.green + "You payed " + getName(targetUUID) + " " + tokenCommand);
 
 
+                    Player playerReceiver = Bukkit.getPlayerExact(getName(targetUUID));
+
+                    playerReceiver.sendMessage(Strings.green + "You received " + tokenCommand + " Tokens from " + p.getName());
+
+
 
 
                     return true;
