@@ -57,22 +57,32 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
             } else if (args[0].equalsIgnoreCase("balance")) {
                 if (p.hasPermission("tokens.balance")) {
+
                     int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                     if (args.length == 1) {
                         p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
                         return true;
                     }
 
+
+                    // Check if its a real player
+                    Player playerCheck = Bukkit.getPlayerExact(args[1]);
+                    if (playerCheck == null){
+                        p.sendMessage(Strings.red + "Player offline or invalid!");
+                        return true;
+                    }
+
+
                     String targetUUID;
                     targetUUID = Bukkit.getPlayerExact(args[1]).getUniqueId().toString();
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-
 
 
                     if (args.length == 2) {
                         p.sendMessage(Strings.green + getName(targetUUID) + " has " + targetTokens + " Tokens");
                         return true;
                     }
+
 
                     return true;
                 }
@@ -98,6 +108,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     // ...
                     if (args.length == 2) {
                         p.sendMessage(Strings.red + "Please specify a player!");
+                        return true;
+                    }
+
+                    // Check if its a real player
+                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    if (playerCheck == null){
+                        p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
                     }
 
@@ -161,6 +178,14 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         return true;
                     }
 
+                    // Check if its a real player
+                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    if (playerCheck == null){
+                        p.sendMessage(Strings.red + "Player offline or invalid!");
+                        return true;
+                    }
+
+
 
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
@@ -206,7 +231,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("set")) {
                 if (p.hasPermission("tokens.admin.set")) {
 
-
                     // shows the command usage
                     if (args.length == 1) {
                         p.sendMessage(Strings.red + "/tokens set <amount> <player>");
@@ -222,9 +246,17 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         return true;
                     }
 
-                    // ...
+
                     if (args.length == 2) {
                         p.sendMessage(Strings.red + "Please specify a player!");
+                        return true;
+                    }
+
+
+                    // Check if its a real player
+                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    if (playerCheck == null){
+                        p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
                     }
 
@@ -276,6 +308,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     // ...
                     if (args.length == 2) {
                         p.sendMessage(Strings.red + "Please specify a player!");
+                        return true;
+                    }
+
+                    // Check if its a real player
+                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    if (playerCheck == null){
+                        p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
                     }
 
