@@ -41,6 +41,7 @@ public class Commands implements CommandExecutor {
                         + " \n"
                         + Strings.gold + "     Users Commands\n"
                         + Strings.white + "/tokens balance\n"
+                        + Strings.white + "/tokens balance <player>\n"
                         + Strings.white + "/tokens pay <amount> <player>\n"
                         + " \n"
                         + Strings.gold + "     Admin Commands\n"
@@ -50,14 +51,31 @@ public class Commands implements CommandExecutor {
 
             } else if (args[0].equalsIgnoreCase("balance")) {
                 if (p.hasPermission("tokens.balance")) {
-
                     int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
-                    p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
+                    if (args.length == 1) {
+                        p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
+                        return true;
+                    }
+
+                    String targetUUID;
+                    targetUUID = Bukkit.getPlayerExact(args[1]).getUniqueId().toString();
+                    int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+
+
+
+
+
+
+
+                    if (args.length == 2) {
+                        p.sendMessage(Strings.green + getName(targetUUID) + " has " + targetTokens + " Tokens");
+                        return true;
+                    }
+
 
 
                     return true;
                 }
-
             } else if (args[0].equalsIgnoreCase("add")) {
                 if (p.hasPermission("tokens.admin.add")) {
 
@@ -95,13 +113,11 @@ public class Commands implements CommandExecutor {
 
 
 
-
                     // Check if player exist, if not adding the player
                     if (!cfgM.getPlayers().contains(targetUUID)) {
                         cfgM.getPlayers().set(targetUUID + ".tokens", 0);
                         cfgM.savePlayers();
                     }
-
 
 
                     // If 0 it will not execute
@@ -111,12 +127,10 @@ public class Commands implements CommandExecutor {
                     }
 
 
-
                     cfgM.getPlayers().set(targetUUID + ".tokens", intTokens + tokenCommand);
                     cfgM.savePlayers();
 
                     p.sendMessage(Strings.green + tokenCommand + " Tokens are added to " + getName(targetUUID));
-
 
 
 
@@ -167,7 +181,6 @@ public class Commands implements CommandExecutor {
                     }
 
 
-
                     // If 0 it will not execute
                     if (tokenCommand == 0) {
                         p.sendMessage(Strings.red + "Please enter a valid number.");
@@ -187,11 +200,8 @@ public class Commands implements CommandExecutor {
                     p.sendMessage(Strings.green + tokenCommand + " Tokens are removed from " + getName(targetUUID));
 
 
-
-
                     return true;
                 }
-
 
             } else if (args[0].equalsIgnoreCase("set")) {
                 if (p.hasPermission("tokens.admin.set")) {
@@ -229,15 +239,11 @@ public class Commands implements CommandExecutor {
                     int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
 
-
-
                     // If 0 it will not execute
                     if (tokenCommand < 0) {
                         p.sendMessage(Strings.red + "Please don't enter a minus number!.");
                         return true;
                     }
-
-
 
 
 
@@ -297,8 +303,6 @@ public class Commands implements CommandExecutor {
 
 
 
-
-
                     // Check if player exist, if not adding the player
                     if (!cfgM.getPlayers().contains(targetUUID)) {
                         cfgM.getPlayers().set(targetUUID + ".tokens", 0);
@@ -319,29 +323,21 @@ public class Commands implements CommandExecutor {
                     }
 
 
-
-
                     cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerTokens - tokenCommand);
                     cfgM.getPlayers().set(targetUUID + ".tokens", tokenCommand + targetTokens);
                     cfgM.savePlayers();
 
+
                     p.sendMessage(Strings.green + "You payed " + getName(targetUUID) + " " + tokenCommand);
 
-
                     Player playerReceiver = Bukkit.getPlayerExact(getName(targetUUID));
-
                     playerReceiver.sendMessage(Strings.green + "You received " + tokenCommand + " Tokens from " + p.getName());
-
-
 
 
                     return true;
 
                 }
             }
-
-
-
 
             return true;
         }
