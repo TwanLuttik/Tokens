@@ -1,9 +1,11 @@
 package com.twanl.tokens;
 
+import com.twanl.tokens.items.CustomItems;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,6 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
+
 @SuppressWarnings("deprecation")
 public  class Commands implements CommandExecutor, TabCompleter {
 
@@ -27,6 +30,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     public ConfigManager cfgM;
+    private CustomItems CI = new CustomItems();
 
 
 
@@ -55,6 +59,66 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         + Strings.white + "/tokens add <amount> <player>\n"
                         + Strings.white + "/tokens set <amount> <player>\n");
 
+
+
+            } else if (args[0].equalsIgnoreCase("get")) {
+                if (p.hasPermission("tokens.get")) {
+
+                    // shows the command usage
+                    if (args.length == 1) {
+                        p.sendMessage(Strings.red + "/tokens get <amount>");
+                        return true;
+                    }
+
+                    // check if the its a number instead of a character
+                    try {
+                        int tokens = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException ex) {
+                        int tokens;
+                        p.sendMessage(Strings.red + "Use a valid number!");
+                        return true;
+                    }
+
+
+                    int tokenCommand = Integer.parseInt(args[1]);
+                    int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+
+                    // If 0 it will not execute
+                    if (tokenCommand == 0) {
+                        p.sendMessage(Strings.red + "Please enter a number higher than 0");
+                        return true;
+                    }
+
+                    // Check if the player has enough coins to remove
+                    if (tokenCommand > playerTokens) {
+                        p.sendMessage(Strings.red + "You don't have enough tokens!");
+                        return true;
+                    }
+
+
+                    CI.addToken(p, tokenCommand);
+
+
+
+
+
+
+
+                    return true;
+                }
+            } else if (args[0].equalsIgnoreCase("redeem")) {
+                if (p.hasPermission("tokens.redeem")) {
+
+                    if (p.getItemInHand().getType() != Material.DOUBLE_PLANT) {
+                        p.sendMessage(Strings.red + "You don't have any Tokens in your hand!");
+                        return true;
+                    }
+
+                    CI.removeToken(p);
+
+
+                    return true;
+                }
             } else if (args[0].equalsIgnoreCase("balance")) {
                 if (p.hasPermission("tokens.balance")) {
 
@@ -387,7 +451,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem");
         }
 
         return null;
