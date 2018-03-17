@@ -52,6 +52,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         + Strings.white + "/tokens balance\n"
                         + Strings.white + "/tokens balance <player>\n"
                         + Strings.white + "/tokens pay <amount> <player>\n"
+                        + Strings.white + "/tokens get <amount>\n"
+                        + Strings.white + "/tokens redeem\n"
                         + " \n"
                         + "     " + Strings.goldU + "Admin Commands\n" + Strings.reset
                         + " \n"
@@ -97,11 +99,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     CI.addToken(p, tokenCommand);
-
-
-
-
-
 
 
                     return true;
