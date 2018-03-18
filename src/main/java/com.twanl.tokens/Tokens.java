@@ -2,6 +2,7 @@ package com.twanl.tokens;
 
 import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.utils.ConfigManager;
+import com.twanl.tokens.utils.Metrics;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
 import org.bukkit.Bukkit;
@@ -9,7 +10,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
 
 public class Tokens extends JavaPlugin {
 
@@ -21,11 +21,9 @@ public class Tokens extends JavaPlugin {
     public ConfigManager cfgM;
 
 
-    private File playerFolder;
-
-
 
     public void onEnable() {
+        Metrics metrics = new Metrics(this);
 
 
         /*
