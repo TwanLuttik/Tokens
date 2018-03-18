@@ -1,6 +1,5 @@
 package com.twanl.tokens;
 
-import com.twanl.tokens.utils.ConfigManager;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,11 +13,11 @@ public class Functions {
 
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-    public ConfigManager cfgM;
-
+/*
     public Functions(Tokens plugin) {
 
     }
+    */
 
 
 

@@ -1,9 +1,9 @@
 package com.twanl.tokens;
 
+import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.CustomItems;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
-import org.apache.commons.io.IOUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -11,16 +11,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.json.simple.parser.ParseException;
 
-import java.io.IOException;
-import java.net.URL;
+
 import java.util.Arrays;
 import java.util.List;
-
+import java.util.UUID;
 
 
 @SuppressWarnings("deprecation")
@@ -31,6 +26,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     public ConfigManager cfgM;
     private CustomItems CI = new CustomItems();
+    private TokensAPI tokenApi = new TokensAPI();
+    private Functions F = new Functions();
 
 
 
@@ -106,6 +103,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("redeem")) {
                 if (p.hasPermission("tokens.redeem")) {
 
+                    //check if player
                     if (p.getItemInHand().getType() != Material.DOUBLE_PLANT) {
                         p.sendMessage(Strings.red + "You don't have any Tokens in your hand!");
                         return true;
@@ -140,7 +138,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     if (args.length == 2) {
-                        p.sendMessage(Strings.green + getName(targetUUID) + " has " + targetTokens + " Tokens");
+                        p.sendMessage(Strings.green + F.getName(targetUUID) + " has " + targetTokens + " Tokens");
                         return true;
                     }
 
@@ -205,13 +203,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    cfgM.getPlayers().set(targetUUID + ".tokens", intTokens + tokenCommand);
-                    cfgM.savePlayers();
 
-                    p.sendMessage(Strings.green + tokenCommand + " Tokens are added to " + getName(targetUUID));
-
-
-
+                    tokenApi.addTokens(UUID.fromString(targetUUID), p, tokenCommand);
                     return true;
                 }
 
@@ -276,16 +269,12 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     // Check if the player has enough coins to remove
                     if (tokenCommand > intTokens) {
-                        p.sendMessage(Strings.red + getName(targetUUID) + " does not have that much Tokens!");
+                        p.sendMessage(Strings.red + F.getName(targetUUID) + " does not have that much Tokens!");
                         return true;
                     }
 
-                    cfgM.getPlayers().set(targetUUID + ".tokens", intTokens - tokenCommand);
-                    cfgM.savePlayers();
 
-                    p.sendMessage(Strings.green + tokenCommand + " Tokens are removed from " + getName(targetUUID));
-
-
+                    tokenApi.removeTokens(UUID.fromString(targetUUID), p, tokenCommand);
                     return true;
                 }
 
@@ -340,12 +329,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
 
-                    cfgM.getPlayers().set(targetUUID + ".tokens", tokenCommand);
-                    cfgM.savePlayers();
-
-                    p.sendMessage(Strings.green + tokenCommand + " Tokens are set to " + getName(targetUUID));
-
-
+                    tokenApi.setTokens(UUID.fromString(targetUUID), p, tokenCommand);
+                    return true;
                 }
 
             } else if (args[0].equalsIgnoreCase("pay")) {
@@ -428,9 +413,9 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     cfgM.savePlayers();
 
 
-                    p.sendMessage(Strings.green + "You payed " + getName(targetUUID) + " " + tokenCommand);
+                    p.sendMessage(Strings.green + "You payed " + F.getName(targetUUID) + " " + tokenCommand);
 
-                    Player playerReceiver = Bukkit.getPlayerExact(getName(targetUUID));
+                    Player playerReceiver = Bukkit.getPlayerExact(F.getName(targetUUID));
                     playerReceiver.sendMessage(Strings.green + "You received " + tokenCommand + " Tokens from " + p.getName());
 
 
@@ -454,20 +439,4 @@ public  class Commands implements CommandExecutor, TabCompleter {
         return null;
     }
 
-
-    // convert UUID to playername(String)
-    public String getName(String uuid) {
-        String url = "https://api.mojang.com/user/profiles/"+uuid.replace("-", "")+"/names";
-        try {
-            @SuppressWarnings("deprecation")
-            String nameJson = IOUtils.toString(new URL(url));
-            JSONArray nameValue = (JSONArray) JSONValue.parseWithException(nameJson);
-            String playerSlot = nameValue.get(nameValue.size()-1).toString();
-            JSONObject nameObject = (JSONObject) JSONValue.parseWithException(playerSlot);
-            return nameObject.get("name").toString();
-        } catch (IOException | ParseException e) {
-            e.printStackTrace();
-        }
-        return "error";
-    }
 }

@@ -65,7 +65,6 @@ public class CustomItems implements Listener {
         p.getInventory().remove(item);
 
 
-
         return false;
     }
 }
