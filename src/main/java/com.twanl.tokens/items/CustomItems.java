@@ -6,8 +6,14 @@ import com.twanl.tokens.utils.Strings;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 
+import org.bukkit.block.Block;
+import org.bukkit.block.FlowerPot;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -79,7 +85,6 @@ public class CustomItems implements Listener {
         int tokensAmount = Integer.parseInt(firstword);
         int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
         p.sendMessage(Strings.green + "You converted " + Strings.greenB + tokensAmount + " Tokens" + Strings.green + " to your account");
-        p.sendMessage(getLoreId);
 
         cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerTokens + tokensAmount);
         cfgM.savePlayers();
@@ -89,6 +94,24 @@ public class CustomItems implements Listener {
 
         return false;
     }
+
+
+    // preventing from placing a Token
+    @SuppressWarnings("deprecation")
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        Player p = e.getPlayer();
+
+        // get the first word(int in this case) and convert to to a string without any color codes
+        String[] tokenItem = ChatColor.stripColor(p.getItemInHand().getItemMeta().getDisplayName()).split(" ");
+        String firstword = tokenItem[0];
+
+        if (p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(Strings.goldB + firstword + " Tokens")){
+            p.sendMessage(ChatColor.RED + "You cannot place your token");
+            e.setCancelled(true);
+        }
+    }
+
 }
 
 

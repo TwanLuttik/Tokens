@@ -25,7 +25,7 @@ public class JoinEvent implements Listener {
 
 
         if (plugin.getConfig().getBoolean("update_message")) {
-            if (p.hasPermission("playercounts.update")) {
+            if (p.hasPermission("tokens.update")) {
                 final Player p1 = e.getPlayer();
                 final PlayerConnection connection = ((CraftPlayer) p).getHandle().playerConnection;
                 final PacketPlayOutChat packet = new PacketPlayOutChat(IChatBaseComponent.ChatSerializer.a("{\"text\":\"Tokens is outdated!\",\"color\":\"red\",\"clickEvent\":{\"action\":\"open_url\",\"value\":\"https://www.spigotmc.org/resources/tokens.53944/\"},\"hoverEvent\":{\"action\":\"show_text\",\"value\":{\"text\":\"\",\"extra\":[{\"text\":\"Click to download the newest version of Tokens\",\"color\":\"gold\"}]}}}"));

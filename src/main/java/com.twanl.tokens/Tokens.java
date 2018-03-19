@@ -1,6 +1,7 @@
 package com.twanl.tokens;
 
 import com.twanl.tokens.events.JoinEvent;
+import com.twanl.tokens.items.CustomItems;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Metrics;
 import com.twanl.tokens.utils.Strings;
@@ -78,6 +79,7 @@ public class Tokens extends JavaPlugin {
     public void Load() {
         // Register listeners
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
+        getServer().getPluginManager().registerEvents(new CustomItems(), this);
 
         // Register Command Class
         Commands commands = new Commands();
