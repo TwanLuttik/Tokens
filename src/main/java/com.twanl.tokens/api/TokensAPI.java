@@ -49,6 +49,16 @@ public class TokensAPI {
     }
 
 
+    // Check if player exist in file
+    public boolean playerCheck (UUID uuid) {
+        if (!cfgM.getPlayers().contains(String.valueOf(uuid))) {
+            cfgM.getPlayers().set(uuid + ".tokens", 0);
+            cfgM.savePlayers();
+            return false;
+        }
+        return false;
+    }
+
 
 
 

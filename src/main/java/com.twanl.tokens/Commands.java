@@ -5,6 +5,7 @@ import com.twanl.tokens.items.CustomItems;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,6 +39,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
         cfgM = new ConfigManager();
         cfgM.setup();
+
+
 
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
@@ -117,6 +120,9 @@ public  class Commands implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("balance")) {
                 if (p.hasPermission("tokens.balance")) {
 
+                    // Check if player exist, if not adding the player
+                    tokenApi.playerCheck(p.getUniqueId());
+
                     int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                     if (args.length == 1) {
                         p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
@@ -132,10 +138,14 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
+
+
                     String targetUUID;
                     targetUUID = Bukkit.getPlayerExact(args[1]).getUniqueId().toString();
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
+                    // Check if player exist, if not adding the player
+                    tokenApi.playerCheck(UUID.fromString(targetUUID));
 
                     if (args.length == 2) {
                         p.sendMessage(Strings.green + F.getName(targetUUID) + " has " + targetTokens + " Tokens");
@@ -189,11 +199,15 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
 
-                    // Check if player exist, if not adding the player
+                    /*
                     if (!cfgM.getPlayers().contains(targetUUID)) {
                         cfgM.getPlayers().set(targetUUID + ".tokens", 0);
                         cfgM.savePlayers();
                     }
+                    */
+
+                    // Check if player exist, if not adding the player
+                    tokenApi.playerCheck(UUID.fromString(targetUUID));
 
 
                     // If 0 it will not execute
@@ -388,11 +402,16 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
 
-                    // Check if player exist, if not adding the player
+                    /*
+
                     if (!cfgM.getPlayers().contains(targetUUID)) {
                         cfgM.getPlayers().set(targetUUID + ".tokens", 0);
                         cfgM.savePlayers();
                     }
+                    */
+
+                    // Check if player exist, if not adding the player
+                    tokenApi.playerCheck(UUID.fromString(targetUUID));
 
 
                     // If 0 it will not execute
@@ -403,7 +422,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     // Check if the player has enough coins to remove
                     if (tokenCommand > playerTokens) {
-                        p.sendMessage(Strings.red +"You don't have enough tokens!");
+                        p.sendMessage(Strings.red + "You don't have enough tokens!");
                         return true;
                     }
 
