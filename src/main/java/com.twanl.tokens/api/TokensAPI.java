@@ -21,32 +21,48 @@ public class TokensAPI {
 
 
 
-    public void addTokens (UUID uuid, Player p, int commandOutput) {
-        int tokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+    public void addTokens (UUID uuid, Player p, int tokens) {
+        int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
 
-        cfgM.getPlayers().set(uuid + ".tokens", tokens + commandOutput);
+        cfgM.getPlayers().set(uuid + ".tokens", playerTokens + tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + commandOutput + " Tokens are added to " + F.getName(String.valueOf(uuid)));
+        p.sendMessage(Strings.green + tokens + " Tokens are added to " + F.getName(String.valueOf(uuid)));
     }
 
-    public void removeTokens (UUID uuid, Player p, int commandOutput) {
+    public void removeTokens (UUID uuid, Player p, int tokens) {
 
-        int tokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+        int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
 
-        cfgM.getPlayers().set(uuid + ".tokens", tokens - commandOutput);
+        cfgM.getPlayers().set(uuid + ".tokens", playerTokens - tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + commandOutput + " Tokens are removed from " + F.getName(String.valueOf(uuid)));
+        p.sendMessage(Strings.green + tokens + " Tokens are removed from " + F.getName(String.valueOf(uuid)));
     }
 
-    public void setTokens (UUID uuid, Player p, int commandOutput) {
+    public void setTokens (UUID uuid, Player p, int tokens) {
 
-        cfgM.getPlayers().set(uuid + ".tokens", commandOutput);
+        cfgM.getPlayers().set(uuid + ".tokens", tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + commandOutput + " Tokens are set to " + F.getName(String.valueOf(uuid)));
+        p.sendMessage(Strings.green + tokens + " Tokens are set to " + F.getName(String.valueOf(uuid)));
     }
+
+    public void giveallTokens (Player p, int tokens) {
+
+        String tokens1 = String.valueOf(tokens);
+        String defaultMessage = plugin.getConfig().getString("bonus_message");
+        String replacedMessage = defaultMessage.replace("{tokens}", tokens1);
+
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            int playerTokens = cfgM.getPlayers().getInt(onlinePlayer.getUniqueId() + ".tokens");
+            cfgM.getPlayers().set(onlinePlayer.getUniqueId() + ".tokens", playerTokens + tokens);
+
+            Strings.translateColorCodes(onlinePlayer, replacedMessage);
+        }
+        cfgM.savePlayers();
+    }
+
 
 
     // Check if player exist in file
