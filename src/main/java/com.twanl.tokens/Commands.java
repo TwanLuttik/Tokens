@@ -57,6 +57,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         + " \n"
                         + "     " + Strings.goldU + "Admin Commands\n" + Strings.reset
                         + " \n"
+                        + Strings.white + "/tokens reload\n"
+                        + Strings.white + "/tokens bonus <amount>\n"
                         + Strings.white + "/tokens remove <amount> <player>\n"
                         + Strings.white + "/tokens add <amount> <player>\n"
                         + Strings.white + "/tokens set <amount> <player>\n");
@@ -401,15 +403,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-
-                    /*
-
-                    if (!cfgM.getPlayers().contains(targetUUID)) {
-                        cfgM.getPlayers().set(targetUUID + ".tokens", 0);
-                        cfgM.savePlayers();
-                    }
-                    */
-
                     // Check if player exist, if not adding the player
                     tokenApi.playerCheck(UUID.fromString(targetUUID));
 
@@ -441,6 +434,47 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     return true;
 
                 }
+            } else if (args[0].equalsIgnoreCase("bonus")) {
+                if (p.hasPermission("tokens.admin.bonus")) {
+
+                    // shows the command usage
+                    if (args.length == 1) {
+                        p.sendMessage(Strings.red + "/tokens bonus <amount>");
+                        return true;
+                    }
+
+                    // check if the its a number instead of a character
+                    try {
+                        int tokens = Integer.parseInt(args[1]);
+                    } catch (NumberFormatException ex) {
+                        int tokens;
+                        p.sendMessage(Strings.red + "Use a valid number!");
+                        return true;
+                    }
+
+                    int tokenCommand = Integer.parseInt(args[1]);
+
+                    // If 0 it will not execute
+                    if (tokenCommand == 0) {
+                        p.sendMessage(Strings.red + "You cannot pay with 0.");
+                        return true;
+                    }
+
+
+                    tokenApi.giveallTokens(p, tokenCommand);
+                }
+
+            } else if (args[0].equalsIgnoreCase("reload")) {
+                if (p.hasPermission("tokens.admin.reload")) {
+
+                    plugin.saveDefaultConfig();
+                    plugin.reloadConfig();
+
+                    cfgM.savePlayers();
+                    cfgM.reloadplayers();
+                    p.sendMessage(Strings.greenI + "configuration files are reloaded");
+                }
+
             }
 
             return true;
@@ -452,7 +486,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload");
         }
 
         return null;
