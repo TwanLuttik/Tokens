@@ -18,12 +18,9 @@ import java.util.logging.Logger;
 
 public class Tokens extends JavaPlugin {
 
+    //TODO: API Support so that other Dev can use this Plugin
     //TODO: SQL Support
-    //TODO: Vault Support
-    //TODO: Getting the 2 commands working
     //TODO: Change the reload command for better checking for file or path or someting.
-    //TODO: API Support so thath other Dev can use this Plugin
-
 
     private static final Logger log = Logger.getLogger("Minecraft");
     protected PluginDescriptionFile pdfFile = getDescription();
@@ -31,6 +28,7 @@ public class Tokens extends JavaPlugin {
     private final String PluginVersionOff = ChatColor.RED + "(" + pdfFile.getVersion() + ")";
     private UpdateChecker checker;
 
+    public static Economy economy;
     public ConfigManager cfgM;
     //public TokensAPI tokensApi;
 
@@ -46,17 +44,6 @@ public class Tokens extends JavaPlugin {
         } else {
             getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "VAULT NOT DETECTED, Some commands won't work.");
         }
-
-
-/*
-        if (!setupEconomy() ) {
-            log.severe(String.format("[%s] - Disabled due to no Vault dependency found!", getDescription().getName()));
-            //getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-        */
-
-
 
 
         checker = new UpdateChecker(this);
@@ -111,12 +98,6 @@ public class Tokens extends JavaPlugin {
         cfgM.savePlayers();
         cfgM.reloadplayers();
     }
-
-
-
-
-
-    public static Economy economy;
 
     private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
