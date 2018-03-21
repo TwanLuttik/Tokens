@@ -1,2 +1,7 @@
 update_message: true
-bonus_message: &7you received {tokens} Tokens from your boss
+bonus_message: &7you received {tokens} TokenItem from your boss
+
+
+tokens:
+  buy_price: 100
+  sell_price: 100

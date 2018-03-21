@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Tokens:OUT-PUT">
+    <output-path>$PROJECT_DIR$/../OUT-PUT</output-path>
+    <root id="archive" name="Tokens.jar">
+      <element id="module-output" name="Tokens" />
+    </root>
+  </artifact>
+</component>
