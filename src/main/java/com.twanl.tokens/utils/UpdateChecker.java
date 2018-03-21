@@ -7,6 +7,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+/**
+ * Created by Twan on 3/22/2018.
+ **/
+
 public class UpdateChecker {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);

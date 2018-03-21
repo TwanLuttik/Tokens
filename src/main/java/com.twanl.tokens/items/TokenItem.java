@@ -14,19 +14,13 @@ import java.util.Random;
 
 import static org.bukkit.Material.DOUBLE_PLANT;
 
+/**
+ * Created by Twan on 3/22/2018.
+ **/
+
 public class TokenItem implements Listener{
 
     private ConfigManager cfgM = new ConfigManager();
-
-
-
-
-
-
-
-
-
-
 
     public void addToken(Player p, int tokens) {
 

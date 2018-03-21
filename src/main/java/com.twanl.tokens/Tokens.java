@@ -1,5 +1,6 @@
 package com.twanl.tokens;
 
+import com.twanl.tokens.commands.Commands;
 import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.utils.ConfigManager;
@@ -13,8 +14,9 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Logger;
-
+/**
+ * Created by Twan on 3/22/2018.
+ **/
 
 public class Tokens extends JavaPlugin {
 
@@ -22,7 +24,7 @@ public class Tokens extends JavaPlugin {
     //TODO: SQL Support
     //TODO: Change the reload command for better checking for file or path or someting.
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+
     protected PluginDescriptionFile pdfFile = getDescription();
     private final String PluginVersionOn = ChatColor.GREEN + "(" + pdfFile.getVersion() + ")";
     private final String PluginVersionOff = ChatColor.RED + "(" + pdfFile.getVersion() + ")";

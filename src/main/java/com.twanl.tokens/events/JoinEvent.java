@@ -1,7 +1,6 @@
 package com.twanl.tokens.events;
 
 import com.twanl.tokens.Tokens;
-import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
 import net.minecraft.server.v1_12_R1.IChatBaseComponent;
@@ -13,8 +12,11 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class JoinEvent implements Listener {
+/**
+ * Created by Twan on 3/22/2018.
+ **/
 
+public class JoinEvent implements Listener {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
 

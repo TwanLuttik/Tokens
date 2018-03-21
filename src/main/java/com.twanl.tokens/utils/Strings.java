@@ -3,6 +3,10 @@ package com.twanl.tokens.utils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+/**
+ * Created by Twan on 3/22/2018.
+ **/
+
 public class Strings {
 
 

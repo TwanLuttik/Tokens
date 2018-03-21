@@ -8,6 +8,10 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * Created by Twan on 3/22/2018.
+ **/
+
 public class ConfigManager {
 
 
