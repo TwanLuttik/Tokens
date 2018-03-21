@@ -1,11 +1,10 @@
 package com.twanl.tokens;
 
 import com.twanl.tokens.api.TokensAPI;
-import com.twanl.tokens.items.CustomItems;
+import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,7 +25,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     public ConfigManager cfgM;
-    private CustomItems CI = new CustomItems();
+    private TokenItem CI = new TokenItem();
     private TokensAPI tokenApi = new TokensAPI();
     private Functions F = new Functions();
 
@@ -45,23 +44,25 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
-                p.sendMessage(Strings.goldB + "       Tokens " + Strings.gold + plugin.getDescription().getVersion() + "\n"
+                p.sendMessage(Strings.DgrayBS + "-                                    \n"
+                        + Strings.goldB + "       Tokens " + Strings.gold + plugin.getDescription().getVersion() + "\n"
                         + " \n"
-                        + "     " + Strings.goldU + "Users Commands\n" + Strings.reset
-                        + " \n"
+                        + "     " + Strings.gold + "Users Commands\n" + Strings.reset
                         + Strings.white + "/tokens balance\n"
                         + Strings.white + "/tokens balance <player>\n"
                         + Strings.white + "/tokens pay <amount> <player>\n"
                         + Strings.white + "/tokens get <amount>\n"
                         + Strings.white + "/tokens redeem\n"
+                        + Strings.white + "/tokens buy <amount>\n"
+                        + Strings.white + "/tokens sell <amount>\n"
                         + " \n"
-                        + "     " + Strings.goldU + "Admin Commands\n" + Strings.reset
-                        + " \n"
+                        + "     " + Strings.gold + "Admin Commands\n" + Strings.reset
                         + Strings.white + "/tokens reload\n"
                         + Strings.white + "/tokens bonus <amount>\n"
                         + Strings.white + "/tokens remove <amount> <player>\n"
                         + Strings.white + "/tokens add <amount> <player>\n"
-                        + Strings.white + "/tokens set <amount> <player>\n");
+                        + Strings.white + "/tokens set <amount> <player>\n"
+                        + Strings.DgrayBS + "-                                    \n");
 
 
 
@@ -475,6 +476,73 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     p.sendMessage(Strings.greenI + "configuration files are reloaded");
                 }
 
+            } else if (args[0].equalsIgnoreCase("buy")) {
+                if (p.hasPermission("tokens.buy")) {
+                    if (plugin.getServer().getPluginManager().getPlugin("Vault") != null) {
+                        // shows the command usage
+                        if (args.length == 1) {
+                            p.sendMessage(Strings.red + "/tokens buy <tokens> ");
+                            return true;
+                        }
+
+                        // check if the its a number instead of a character
+                        try {
+                            int tokens = Integer.parseInt(args[1]);
+                        } catch (NumberFormatException ex) {
+                            int tokens;
+                            p.sendMessage(Strings.red + "Use a valid number!");
+                            return true;
+                        }
+
+                        int token = Integer.parseInt(args[1]);
+
+                        // If 0 it will not execute
+                        if (token == 0) {
+                            p.sendMessage(Strings.red + "You cannot buy 0 Tokens");
+                            return true;
+                        }
+
+                        tokenApi.convertToTokens(p.getUniqueId(), token, p);
+                    } else {
+                        p.sendMessage(Strings.red + "Command is disabled!");
+                    }
+
+                    return true;
+                }
+            } else if (args[0].equalsIgnoreCase("sell")) {
+                if (p.hasPermission("tokens.sell")) {
+                    if (plugin.getServer().getPluginManager().getPlugin("Vault") != null) {
+                        // shows the command usage
+                        if (args.length == 1) {
+                            p.sendMessage(Strings.red + "/tokens sell <tokens> ");
+                            return true;
+                        }
+
+                        // check if the its a number instead of a character
+                        try {
+                            int tokens = Integer.parseInt(args[1]);
+                        } catch (NumberFormatException ex) {
+                            int tokens;
+                            p.sendMessage(Strings.red + "Use a valid number!");
+                            return true;
+                        }
+
+                        int token = Integer.parseInt(args[1]);
+
+                        // If 0 it will not execute
+                        if (token == 0) {
+                            p.sendMessage(Strings.red + "You cannot sell 0 Tokens");
+                            return true;
+                        }
+
+                        tokenApi.convertToMoney(p.getUniqueId(), token, p);
+                    } else {
+                        p.sendMessage(Strings.red + "Command is disabled!");
+                    }
+
+                    return true;
+
+                }
             }
 
             return true;
@@ -483,10 +551,12 @@ public  class Commands implements CommandExecutor, TabCompleter {
     }
 
 
+
+
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell");
         }
 
         return null;
