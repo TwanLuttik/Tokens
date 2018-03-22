@@ -15,7 +15,7 @@ import java.util.UUID;
  * Created by Twan on 3/22/2018.
  **/
 
-@SuppressWarnings("UnusedReturnValue")
+@SuppressWarnings({"UnusedReturnValue", "UnnecessaryLocalVariable"})
 public class TokensAPI {
 
     private static Tokens plugin = Tokens.getPlugin(Tokens.class);
@@ -69,8 +69,6 @@ public class TokensAPI {
         }
         cfgM.savePlayers();
     }
-
-
 
 
     public boolean convertToTokens (UUID playerUUID, int amount) {
@@ -159,8 +157,15 @@ public class TokensAPI {
             cfgM.savePlayers();
             Bukkit.getServer().getConsoleSender().sendMessage(targetUUID + " added to players.yml file");
         }
-
     }
+
+
+
+    public int balanceInt(UUID playerUUID) {
+        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+        return playerTokens;
+    }
+
 
 
 
