@@ -1,5 +1,7 @@
-package com.twanl.tokens;
+package com.twanl.tokens.commands;
 
+import com.twanl.tokens.utils.Functions;
+import com.twanl.tokens.Tokens;
 import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.utils.ConfigManager;
@@ -17,6 +19,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Created by Twan on 3/22/2018.
+ **/
 
 @SuppressWarnings("deprecation")
 public  class Commands implements CommandExecutor, TabCompleter {
@@ -124,11 +129,11 @@ public  class Commands implements CommandExecutor, TabCompleter {
                 if (p.hasPermission("tokens.balance")) {
 
                     // Check if player exist, if not adding the player
-                    tokenApi.playerCheck(p.getUniqueId());
+                    tokenApi.hasAccount(p.getUniqueId());
 
                     int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                     if (args.length == 1) {
-                        p.sendMessage(Strings.green + "You have " + intTokens + " Tokens");
+                        tokenApi.balance(p);
                         return true;
                     }
 
@@ -148,10 +153,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
                     // Check if player exist, if not adding the player
-                    tokenApi.playerCheck(UUID.fromString(targetUUID));
+                    tokenApi.hasAccount(UUID.fromString(targetUUID));
+
+
+
 
                     if (args.length == 2) {
-                        p.sendMessage(Strings.green + F.getName(targetUUID) + " has " + targetTokens + " Tokens");
+                        tokenApi.balance(UUID.fromString(targetUUID), p);
                         return true;
                     }
 
@@ -210,7 +218,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     */
 
                     // Check if player exist, if not adding the player
-                    tokenApi.playerCheck(UUID.fromString(targetUUID));
+                    tokenApi.hasAccount(UUID.fromString(targetUUID));
 
 
                     // If 0 it will not execute
@@ -405,7 +413,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if player exist, if not adding the player
-                    tokenApi.playerCheck(UUID.fromString(targetUUID));
+                    tokenApi.hasAccount(UUID.fromString(targetUUID));
 
 
                     // If 0 it will not execute
