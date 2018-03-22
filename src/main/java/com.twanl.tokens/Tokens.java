@@ -1,5 +1,6 @@
 package com.twanl.tokens;
 
+import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.commands.Commands;
 import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.items.TokenItem;
@@ -9,7 +10,6 @@ import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -20,20 +20,23 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tokens extends JavaPlugin {
 
-    //TODO: API Support so that other Dev can use this Plugin
+    //TODO: Make the plugin API-Ready
     //TODO: SQL Support
-    //TODO: Change the reload command for better checking for file or path or someting.
     //TODO: OfflinePlayer Support (uuid)
+    //TODO: SubCommands in a other class
+    //TODO: make TabCompletion better
 
 
     protected PluginDescriptionFile pdfFile = getDescription();
-    private final String PluginVersionOn = ChatColor.GREEN + "(" + pdfFile.getVersion() + ")";
-    private final String PluginVersionOff = ChatColor.RED + "(" + pdfFile.getVersion() + ")";
+    private final String PluginVersionOn = Strings.green + "(" + pdfFile.getVersion() + ")";
+    private final String PluginVersionOff = Strings.red + "(" + pdfFile.getVersion() + ")";
     private UpdateChecker checker;
 
     public static Economy economy;
     public ConfigManager cfgM;
-    //public TokensAPI tokensApi;
+
+    public TokensAPI tokensApi;
+
 
 
 
@@ -42,7 +45,7 @@ public class Tokens extends JavaPlugin {
         Metrics metrics = new Metrics(this);
 
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
-            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + "Detected Vault.");
+            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + "DETECTED VAULT.");
             setupEconomy();
         } else {
             getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "VAULT NOT DETECTED, Some commands won't work.");

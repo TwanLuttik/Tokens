@@ -1,5 +1,5 @@
 update_message: true
-bonus_message: &7you received {tokens} TokenItem from your boss
+bonus_message: '&7you received {tokens} Tokens from your boss'
 
 
 tokens:
