@@ -23,6 +23,7 @@ public class Tokens extends JavaPlugin {
     //TODO: API Support so that other Dev can use this Plugin
     //TODO: SQL Support
     //TODO: Change the reload command for better checking for file or path or someting.
+    //TODO: OfflinePlayer Support (uuid)
 
 
     protected PluginDescriptionFile pdfFile = getDescription();
