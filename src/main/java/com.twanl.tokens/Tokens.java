@@ -24,6 +24,7 @@ public class Tokens extends JavaPlugin {
     //TODO: OfflinePlayer Support (uuid)
     //TODO: SubCommands in a other class
     //TODO: make TabCompletion better
+    //TODO: make the config file with comments
 
 
     protected PluginDescriptionFile pdfFile = getDescription();
