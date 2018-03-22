@@ -2,6 +2,7 @@ package com.twanl.tokens.utils;
 
 import com.twanl.tokens.Tokens;
 import org.apache.commons.io.IOUtils;
+import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -18,12 +19,6 @@ public class Functions {
 
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-/*
-    public Functions(Tokens plugin) {
-
-    }
-    */
-
 
 
     // convert UUID to playername(String)
@@ -41,6 +36,23 @@ public class Functions {
         }
         return "error";
     }
+
+    //private TokensAPI tokenApi = new TokensAPI();
+    private UpdateChecker checker = new UpdateChecker(this.plugin);
+
+
+    public String updateCheck() {
+        if (checker.hasUpdate()) {
+            String hasUpdate = Strings.red + "✖";
+            return hasUpdate;
+        } else {
+            String noUpdate = Strings.green + "✔";
+            return noUpdate;
+        }
+    }
+
+
+
 
 
 
