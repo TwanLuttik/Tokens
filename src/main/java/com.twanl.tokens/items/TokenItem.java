@@ -31,9 +31,9 @@ public class TokenItem implements Listener{
         // CODE of the custom item
         ItemStack item = new ItemStack(Material.DOUBLE_PLANT, 1);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Strings.goldB+ + tokens + " Tokens");
+        meta.setDisplayName(Strings.gold + tokens +  Strings.gray + " Tokens");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add(Strings.goldB + "/tokens redeem " + Strings.white + "to redeem the tokens");
+        lore.add(Strings.gold + "/tokens redeem " + Strings.gray + "to redeem the tokens");
         lore.add(" ");
         lore.add(Strings.grayI + "ID: " + String.valueOf(n));
         meta.setLore(lore);
@@ -43,7 +43,7 @@ public class TokenItem implements Listener{
 
 
         int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
-        p.sendMessage(Strings.greenB + tokens + " Tokens " + Strings.green + "are converted to your inventory");
+        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + "are converted to your inventory");
 
         cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerTokens - tokens);
         cfgM.savePlayers();
@@ -51,7 +51,7 @@ public class TokenItem implements Listener{
 
 
     @SuppressWarnings("deprecation")
-    public boolean removeToken(Player p) {
+    public void removeToken(Player p) {
 
         // get the int from the itemlore(Custom item) specific line
         String[] getLoreList = ChatColor.stripColor(p.getInventory().getItemInMainHand().getItemMeta().getLore().toString()).split(" ");
@@ -65,9 +65,9 @@ public class TokenItem implements Listener{
         // CODE for getting the item
         ItemStack item = new ItemStack(DOUBLE_PLANT, 1);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Strings.goldB + firstword + " Tokens");
+        meta.setDisplayName(Strings.gold + firstword +  Strings.gray + " Tokens");
         ArrayList<String> lore = new ArrayList<String>();
-        lore.add(Strings.goldB + "/tokens redeem " + Strings.white + "to redeem the tokens");
+        lore.add(Strings.gold + "/tokens redeem " + Strings.gray + "to redeem the tokens");
         lore.add(" ");
         lore.add(Strings.grayI + "ID: " + getLoreId);
         meta.setLore(lore);
@@ -76,7 +76,7 @@ public class TokenItem implements Listener{
 
         int tokensAmount = Integer.parseInt(firstword);
         int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
-        p.sendMessage(Strings.green + "You converted " + Strings.greenB + tokensAmount + " Tokens" + Strings.green + " to your account");
+        p.sendMessage(Strings.gray + "You converted " + Strings.green + tokensAmount + " Tokens" + Strings.gray + " to your account");
 
         cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerTokens + tokensAmount);
         cfgM.savePlayers();
@@ -84,7 +84,6 @@ public class TokenItem implements Listener{
         p.getInventory().remove(item);
 
 
-        return false;
     }
 
 
