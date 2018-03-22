@@ -90,12 +90,9 @@ public class TokensAPI {
         // ....
         EconomyResponse r = economy.withdrawPlayer(buyer, totalCheckOut);
         if (r.transactionSuccess()) {
-
-
             cfgM.getPlayers().set(uuid + ".tokens", playerTokens + amount);
             cfgM.savePlayers();
             p.sendMessage(Strings.gray + "You bought " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
-
             return true;
         } else {
             p.sendMessage("An error accured!");
@@ -155,6 +152,7 @@ public class TokensAPI {
         if (!cfgM.getPlayers().contains(uuid.toString())) {
             cfgM.getPlayers().set(uuid.toString() + ".tokens", 0);
             cfgM.savePlayers();
+            Bukkit.getServer().getConsoleSender().sendMessage(uuid + " added to players.yml file");
         }
 
     }
