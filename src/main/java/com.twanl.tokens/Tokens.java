@@ -20,7 +20,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class Tokens extends JavaPlugin {
 
-    //TODO: Make the plugin API-Ready
     //TODO: SQL Support
     //TODO: OfflinePlayer Support (uuid)
     //TODO: SubCommands in a other class
@@ -41,7 +40,8 @@ public class Tokens extends JavaPlugin {
 
 
     public void onEnable() {
-        //tokensApi = new TokensAPI();
+        // Api for other DEV
+        tokensApi = new TokensAPI();
         Metrics metrics = new Metrics(this);
 
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
