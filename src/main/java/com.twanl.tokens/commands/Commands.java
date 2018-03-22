@@ -49,28 +49,11 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
-                p.sendMessage(Strings.DgrayBS + "-                                    \n"
-                        + Strings.goldB + "       Tokens " + Strings.gold + plugin.getDescription().getVersion() + "\n"
-                        + " \n"
-                        + "     " + Strings.gold + "Users Commands\n" + Strings.reset
-                        + Strings.white + "/tokens balance\n"
-                        + Strings.white + "/tokens balance <player>\n"
-                        + Strings.white + "/tokens pay <amount> <player>\n"
-                        + Strings.white + "/tokens get <amount>\n"
-                        + Strings.white + "/tokens redeem\n"
-                        + Strings.white + "/tokens buy <amount>\n"
-                        + Strings.white + "/tokens sell <amount>\n"
-                        + " \n"
-                        + "     " + Strings.gold + "Admin Commands\n" + Strings.reset
-                        + Strings.white + "/tokens reload\n"
-                        + Strings.white + "/tokens bonus <amount>\n"
-                        + Strings.white + "/tokens remove <amount> <player>\n"
-                        + Strings.white + "/tokens add <amount> <player>\n"
-                        + Strings.white + "/tokens set <amount> <player>\n"
-                        + Strings.DgrayBS + "-                                    \n");
+
+                String PlayerTokens = String.valueOf(tokenApi.balanceInt(p.getUniqueId()));
 
 
-
+                p.sendMessage(Strings.gray + "You have now " + Strings.green + PlayerTokens + " Tokens");
             } else if (args[0].equalsIgnoreCase("get")) {
                 if (p.hasPermission("tokens.get")) {
 
@@ -551,6 +534,29 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     return true;
 
                 }
+            } else if (args[0].equalsIgnoreCase("help")) {
+                if (p.hasPermission("tokens.help")) {
+                    p.sendMessage(Strings.DgrayBS + "-                                    \n"
+                            + Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n"
+                            + " \n"
+                            + "     " + Strings.green + "Users Commands\n" + Strings.reset
+                            + Strings.gray + "/tokens balance\n"
+                            + Strings.gray + "/tokens balance <player>\n"
+                            + Strings.gray + "/tokens pay <amount> <player>\n"
+                            + Strings.gray + "/tokens get <amount>\n"
+                            + Strings.gray + "/tokens redeem\n"
+                            + Strings.gray + "/tokens buy <amount>\n"
+                            + Strings.gray + "/tokens sell <amount>\n"
+                            + " \n"
+                            + "     " + Strings.green + "Admin Commands\n" + Strings.reset
+                            + Strings.gray + "/tokens reload\n"
+                            + Strings.gray + "/tokens bonus <amount>\n"
+                            + Strings.gray + "/tokens remove <amount> <player>\n"
+                            + Strings.gray + "/tokens add <amount> <player>\n"
+                            + Strings.gray + "/tokens set <amount> <player>\n"
+                            + Strings.DgrayBS + "-                                    \n");
+                    return true;
+                }
             }
 
             return true;
@@ -564,10 +570,12 @@ public  class Commands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help");
         }
 
         return null;
     }
+
+
 
 }
