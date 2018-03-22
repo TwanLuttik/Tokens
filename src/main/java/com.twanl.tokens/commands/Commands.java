@@ -133,7 +133,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                     if (args.length == 1) {
-                        tokenApi.balance(p);
+                        tokenApi.balance(p.getUniqueId());
                         return true;
                     }
 
@@ -159,7 +159,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     if (args.length == 2) {
-                        tokenApi.balance(UUID.fromString(targetUUID), p);
+                        tokenApi.balance(p.getUniqueId(), UUID.fromString(targetUUID));
                         return true;
                     }
 
@@ -229,7 +229,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
 
-                    tokenApi.addTokens(UUID.fromString(targetUUID), p, tokenCommand);
+                    tokenApi.addTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
                     return true;
                 }
 
@@ -299,7 +299,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    tokenApi.removeTokens(UUID.fromString(targetUUID), p, tokenCommand);
+                    tokenApi.removeTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
                     return true;
                 }
 
@@ -354,7 +354,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
 
-                    tokenApi.setTokens(UUID.fromString(targetUUID), p, tokenCommand);
+                    tokenApi.setTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
                     return true;
                 }
 
@@ -470,7 +470,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    tokenApi.giveallTokens(p, tokenCommand);
+                    tokenApi.giveallTokens(tokenCommand);
                 }
 
             } else if (args[0].equalsIgnoreCase("reload")) {
@@ -510,7 +510,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
-                        tokenApi.convertToTokens(p.getUniqueId(), token, p);
+                        tokenApi.convertToTokens(p.getUniqueId(), token);
                     } else {
                         p.sendMessage(Strings.red + "Command is disabled!");
                     }
@@ -543,7 +543,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
-                        tokenApi.convertToMoney(p.getUniqueId(), token, p);
+                        tokenApi.convertToMoney(p.getUniqueId(), token);
                     } else {
                         p.sendMessage(Strings.red + "Command is disabled!");
                     }
