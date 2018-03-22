@@ -536,8 +536,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
                 }
             } else if (args[0].equalsIgnoreCase("help")) {
                 if (p.hasPermission("tokens.help")) {
+
+
+                    String test = F.updateCheck();
                     p.sendMessage(Strings.DgrayBS + "-                                    \n"
                             + Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n"
+                            + " \n"
+                            + Strings.gray + "Up To Date: " + test + "\n"
                             + " \n"
                             + "     " + Strings.green + "Users Commands\n" + Strings.reset
                             + Strings.gray + "/tokens balance\n"
