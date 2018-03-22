@@ -25,34 +25,37 @@ public class TokensAPI {
 
 
 
-    public void addTokens (UUID uuid, Player p, int tokens) {
-        int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+    public void addTokens (UUID targetUUID, UUID playerUUID, int tokens) {
+        int playerTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
-        cfgM.getPlayers().set(uuid + ".tokens", playerTokens + tokens);
+        cfgM.getPlayers().set(targetUUID + ".tokens", playerTokens + tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are added to " + Strings.green + F.getName(String.valueOf(uuid)));
+        Player p = Bukkit.getPlayer(playerUUID);
+        p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are added to " + Strings.green + F.getName(String.valueOf(targetUUID)));
     }
 
-    public void removeTokens (UUID uuid, Player p, int tokens) {
+    public void removeTokens (UUID targetUUID, UUID playerUUID, int tokens) {
 
-        int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+        int playerTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
-        cfgM.getPlayers().set(uuid + ".tokens", playerTokens - tokens);
+        cfgM.getPlayers().set(targetUUID + ".tokens", playerTokens - tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(uuid)));
+        Player p = Bukkit.getPlayer(playerUUID);
+        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(targetUUID)));
     }
 
-    public void setTokens (UUID uuid, Player p, int tokens) {
+    public void setTokens (UUID targetUUID, UUID playerUUID, int tokens) {
 
-        cfgM.getPlayers().set(uuid + ".tokens", tokens);
+        cfgM.getPlayers().set(targetUUID + ".tokens", tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + " are set to " + Strings.green + F.getName(String.valueOf(uuid)));
+        Player p = Bukkit.getPlayer(playerUUID);
+        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + " are set to " + Strings.green + F.getName(String.valueOf(targetUUID)));
     }
 
-    public void giveallTokens (Player p, int tokens) {
+    public void giveallTokens (int tokens) {
 
         String tokens1 = String.valueOf(tokens);
         String defaultMessage = plugin.getConfig().getString("bonus_message");
@@ -70,13 +73,14 @@ public class TokensAPI {
 
 
 
-    public boolean convertToTokens (UUID uuid, int amount, Player p) {
+    public boolean convertToTokens (UUID playerUUID, int amount) {
 
+        Player p = Bukkit.getPlayer(playerUUID);
         // getting some information
         int tokensValue = plugin.getConfig().getInt("tokens.buy_price");
         int totalCheckOut = amount * tokensValue;
         Player buyer = p.getPlayer();
-        int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
 
         // check if the player has enough balance to continue the transaction
         if (totalCheckOut > economy.getBalance(buyer)) {
@@ -90,7 +94,7 @@ public class TokensAPI {
         // ....
         EconomyResponse r = economy.withdrawPlayer(buyer, totalCheckOut);
         if (r.transactionSuccess()) {
-            cfgM.getPlayers().set(uuid + ".tokens", playerTokens + amount);
+            cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens + amount);
             cfgM.savePlayers();
             p.sendMessage(Strings.gray + "You bought " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
             return true;
@@ -100,11 +104,12 @@ public class TokensAPI {
         }
     }
 
-    public boolean convertToMoney (UUID uuid, int amount, Player p) {
+    public boolean convertToMoney (UUID playerUUID, int amount) {
 
+        Player p = Bukkit.getPlayer(playerUUID);
         // getting some information
         int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
-        int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
         int totalCheckOut = amount * tokensValue;
         Player buyer = p.getPlayer();
 
@@ -122,7 +127,7 @@ public class TokensAPI {
         EconomyResponse r = economy.depositPlayer(buyer, totalCheckOut);
         if (r.transactionSuccess()) {
 
-            cfgM.getPlayers().set(uuid + ".tokens", playerTokens - amount);
+            cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - amount);
             cfgM.savePlayers();
             p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
 
@@ -134,25 +139,25 @@ public class TokensAPI {
 
     }
 
-    public void balance (Player p) {
-        int tokensBalance = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+    public void balance (UUID playerUUID) {
+        int tokensBalance = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+        Player p = Bukkit.getPlayer(playerUUID);
         p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " Tokens");
-
     }
 
 
-    public void balance (UUID uuid, Player p) {
-        int tokensBalance = cfgM.getPlayers().getInt(uuid + ".tokens");
-
-        p.sendMessage(Strings.gray + F.getName(uuid.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
+    public void balance (UUID playerUUID, UUID targetUUID) {
+        int tokensBalance = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+        Player p = Bukkit.getPlayer(playerUUID);
+        p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
     }
 
 
-    public void hasAccount (UUID uuid) {
-        if (!cfgM.getPlayers().contains(uuid.toString())) {
-            cfgM.getPlayers().set(uuid.toString() + ".tokens", 0);
+    public void hasAccount (UUID targetUUID) {
+        if (!cfgM.getPlayers().contains(targetUUID.toString())) {
+            cfgM.getPlayers().set(targetUUID.toString() + ".tokens", 0);
             cfgM.savePlayers();
-            Bukkit.getServer().getConsoleSender().sendMessage(uuid + " added to players.yml file");
+            Bukkit.getServer().getConsoleSender().sendMessage(targetUUID + " added to players.yml file");
         }
 
     }
