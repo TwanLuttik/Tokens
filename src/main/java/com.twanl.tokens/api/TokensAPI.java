@@ -1,6 +1,6 @@
 package com.twanl.tokens.api;
 
-import com.twanl.tokens.Functions;
+import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.Tokens;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
@@ -11,13 +11,17 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+/**
+ * Created by Twan on 3/22/2018.
+ **/
 
+@SuppressWarnings("UnusedReturnValue")
 public class TokensAPI {
 
     private static Tokens plugin = Tokens.getPlugin(Tokens.class);
     private ConfigManager cfgM = new ConfigManager();
     private Functions F = new Functions();
-
+    private Economy economy = Tokens.economy;
 
 
 
@@ -27,7 +31,7 @@ public class TokensAPI {
         cfgM.getPlayers().set(uuid + ".tokens", playerTokens + tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + tokens + " Tokens are added to " + F.getName(String.valueOf(uuid)));
+        p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are added to " + Strings.green + F.getName(String.valueOf(uuid)));
     }
 
     public void removeTokens (UUID uuid, Player p, int tokens) {
@@ -37,7 +41,7 @@ public class TokensAPI {
         cfgM.getPlayers().set(uuid + ".tokens", playerTokens - tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + tokens + " Tokens are removed from " + F.getName(String.valueOf(uuid)));
+        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(uuid)));
     }
 
     public void setTokens (UUID uuid, Player p, int tokens) {
@@ -45,7 +49,7 @@ public class TokensAPI {
         cfgM.getPlayers().set(uuid + ".tokens", tokens);
         cfgM.savePlayers();
 
-        p.sendMessage(Strings.green + tokens + " Tokens are set to " + F.getName(String.valueOf(uuid)));
+        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + " are set to " + Strings.green + F.getName(String.valueOf(uuid)));
     }
 
     public void giveallTokens (Player p, int tokens) {
@@ -63,43 +67,9 @@ public class TokensAPI {
         cfgM.savePlayers();
     }
 
-/*
-    public void balance(UUID uuid, Player p) {
-        String balanceTokens = String.valueOf(cfgM.getPlayers().getInt(uuid + ".tokens"));
-        p.sendMessage(Strings.green + "You have " + balanceTokens + " Tokens");
-    }
 
 
-    public void hasAcount (UUID uuid, Player p) {
 
-        if (!cfgM.getPlayers().contains(uuid.toString())) {
-
-        }
-
-    }
-
-*/
-
-
-    /**
-     *
-     * Example:
-     *
-     * 1 Tokens costs = 100 money
-     * /tokens buy <amount_of_tokens>
-     *
-     *
-     *
-     *
-     * 1 Tokens is worth = 90 Money
-     * /tokens sell <amount_of_tokens>
-     *
-     */
-
-
-    private Economy economy = Tokens.economy;
-
-    @SuppressWarnings("deprecation")
     public boolean convertToTokens (UUID uuid, int amount, Player p) {
 
         // getting some information
@@ -124,7 +94,7 @@ public class TokensAPI {
 
             cfgM.getPlayers().set(uuid + ".tokens", playerTokens + amount);
             cfgM.savePlayers();
-            p.sendMessage(Strings.green + "You bought " + amount + " Tokens for " + totalCheckOut);
+            p.sendMessage(Strings.gray + "You bought " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
 
             return true;
         } else {
@@ -133,8 +103,7 @@ public class TokensAPI {
         }
     }
 
-    public boolean
-    convertToMoney (UUID uuid, int amount, Player p) {
+    public boolean convertToMoney (UUID uuid, int amount, Player p) {
 
         // getting some information
         int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
@@ -158,7 +127,7 @@ public class TokensAPI {
 
             cfgM.getPlayers().set(uuid + ".tokens", playerTokens - amount);
             cfgM.savePlayers();
-            p.sendMessage(Strings.green + "You sold " + amount + " Tokens for " + totalCheckOut);
+            p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
 
             return true;
         } else {
@@ -168,21 +137,27 @@ public class TokensAPI {
 
     }
 
+    public void balance (Player p) {
+        int tokensBalance = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+        p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " Tokens");
 
-
-
-
-
-    // Check if player exist in file
-    public boolean playerCheck (UUID uuid) {
-        if (!cfgM.getPlayers().contains(String.valueOf(uuid))) {
-            cfgM.getPlayers().set(uuid + ".tokens", 0);
-            cfgM.savePlayers();
-            return false;
-        }
-        return false;
     }
 
+
+    public void balance (UUID uuid, Player p) {
+        int tokensBalance = cfgM.getPlayers().getInt(uuid + ".tokens");
+
+        p.sendMessage(Strings.gray + F.getName(uuid.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
+    }
+
+
+    public void hasAccount (UUID uuid) {
+        if (!cfgM.getPlayers().contains(uuid.toString())) {
+            cfgM.getPlayers().set(uuid.toString() + ".tokens", 0);
+            cfgM.savePlayers();
+        }
+
+    }
 
 
 
