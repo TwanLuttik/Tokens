@@ -9,6 +9,8 @@ import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -52,7 +54,7 @@ public class TokensAPI {
         cfgM.savePlayers();
 
         Player p = Bukkit.getPlayer(playerUUID);
-        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + " are set to " + Strings.green + F.getName(String.valueOf(targetUUID)));
+        p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are set to " + Strings.green + F.getName(String.valueOf(targetUUID)));
     }
 
     public void giveallTokens (int tokens) {
@@ -155,15 +157,56 @@ public class TokensAPI {
         if (!cfgM.getPlayers().contains(targetUUID.toString())) {
             cfgM.getPlayers().set(targetUUID.toString() + ".tokens", 0);
             cfgM.savePlayers();
-            Bukkit.getServer().getConsoleSender().sendMessage(targetUUID + " added to players.yml file");
+            Bukkit.getServer().getConsoleSender().sendMessage(targetUUID.toString() + " added to players.yml file");
         }
     }
 
 
 
-    public int balanceInt(UUID playerUUID) {
+
+    // Value of the balance of the player :: INT
+    public int balanceInt (UUID playerUUID) {
         int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
         return playerTokens;
+    }
+
+
+    /*
+    public boolean hasEnoughBalance (UUID playerUUID, int tokens) {
+        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+        Player p = Bukkit.getPlayer(playerUUID);
+        if (tokens > playerTokens) {
+
+            p.sendMessage(Strings.red + "You don't have enough tokens to pay!");
+            return true;
+        }
+
+        p.sendMessage("test");
+        return true;
+    }
+    */
+
+    public void payPlayer(UUID playerUUID, UUID targetUUID, int tokens) {
+        int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+
+        cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - tokens);
+        cfgM.getPlayers().set(targetUUID + ".tokens", tokens + targetTokens);
+        cfgM.savePlayers();
+
+        Player p = Bukkit.getPlayer(playerUUID);
+        p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(targetUUID)) + " " + tokens);
+
+        Player playerReceiver = Bukkit.getPlayerExact(F.getName(String.valueOf(targetUUID)));
+        playerReceiver.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
+
+
+        Object transactionTime = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd").format(new Date());
+
+        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.date", transactionTime);
+        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.player", F.getName(playerUUID.toString()));
+        cfgM.savePlayers();
+
     }
 
 
