@@ -10,6 +10,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Collection;
 
 /**
  * Created by Twan on 3/22/2018.
@@ -36,24 +37,6 @@ public class Functions {
         }
         return "error";
     }
-
-    //private TokensAPI tokenApi = new TokensAPI();
-    private UpdateChecker checker = new UpdateChecker(this.plugin);
-
-
-    public String updateCheck() {
-        if (checker.hasUpdate()) {
-            String hasUpdate = Strings.red + "✖";
-            return hasUpdate;
-        } else {
-            String noUpdate = Strings.green + "✔";
-            return noUpdate;
-        }
-    }
-
-
-
-
 
 
 
