@@ -25,6 +25,7 @@ public class Tokens extends JavaPlugin {
     //TODO: SubCommands in a other class
     //TODO: make TabCompletion better
     //TODO: make the config file with comments
+    //TODO: Top 10 command
 
 
     protected PluginDescriptionFile pdfFile = getDescription();
