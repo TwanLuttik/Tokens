@@ -2,7 +2,6 @@ package com.twanl.tokens.utils;
 
 import com.twanl.tokens.Tokens;
 import org.apache.commons.io.IOUtils;
-import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -10,7 +9,6 @@ import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Collection;
 
 /**
  * Created by Twan on 3/22/2018.
