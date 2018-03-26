@@ -7,6 +7,7 @@ import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -37,6 +38,11 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(Strings.logName + ChatColor.RED + "Only a player can execute commands!");
+            return true;
+        }
+
         Player p = (Player) sender;
 
         cfgM = new ConfigManager();
