@@ -187,7 +187,6 @@ public class Strings {
     public static String whiteS = ChatColor.WHITE + "" + ChatColor.STRIKETHROUGH;
 
     public static String reset = ChatColor.RESET + "";
-    //public static String translateColorCodes = ChatColor.translateAlternateColorCodes('&', "");
 
     public static String logName = ChatColor.GREEN + "[Tokens] ";
     public static String noPerm = ChatColor.RED + "" + ChatColor.BOLD + "* You don't have permissions to do that!";
@@ -196,5 +195,10 @@ public class Strings {
 
     public static void translateColorCodes (Player p, String text) {
         p.sendMessage(ChatColor.translateAlternateColorCodes('&', text));
+    }
+
+    public static String stripColor (String text) {
+        return ChatColor.stripColor(text);
+
     }
 }
