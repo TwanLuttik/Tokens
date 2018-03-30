@@ -1,6 +1,7 @@
 package com.twanl.tokens.commands;
 
 import com.twanl.tokens.Tokens;
+import com.twanl.tokens.api.ObjectAPI;
 import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.utils.ConfigManager;
@@ -9,11 +10,13 @@ import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +31,10 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-    public ConfigManager cfgM;
+    private ConfigManager cfgM = new ConfigManager();
     private TokenItem CI = new TokenItem();
     private TokensAPI tokenApi = new TokensAPI();
+    private ObjectAPI objectApi = new ObjectAPI();
     private Functions F = new Functions();
 
 
@@ -45,15 +49,15 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
         Player p = (Player) sender;
 
-        cfgM = new ConfigManager();
         cfgM.setup();
 
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
 
-                Object transactionDate = cfgM.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.date");
-                Object transactionPlayer = cfgM.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.player");
+                String transactionPlayer = objectApi.transactionPlayer(p.getUniqueId());
+                String transactionDate = objectApi.transactionDate(p.getUniqueId());
+                String transactionAmount = objectApi.transactionAmount(p.getUniqueId());
 
                 String PlayerTokens = String.valueOf(tokenApi.balanceInt(p.getUniqueId()));
 
@@ -64,6 +68,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         + Strings.gray + "Latest received transaction:\n"
                         + Strings.gray + "  Data: " + Strings.green + transactionDate + "\n"
                         + Strings.gray + "  From: " + Strings.green + transactionPlayer + "\n"
+                        + Strings.gray + "  Amount: " + Strings.green + transactionAmount + "\n"
                         + Strings.DgrayBS + "-                                    \n");
 
 
@@ -113,10 +118,10 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         return true;
                     }
 
+
                     CI.removeToken(p);
 
 
-                    return true;
                 }
             } else if (args[0].equalsIgnoreCase("balance")) {
                 if (p.hasPermission("tokens.balance")) {
@@ -132,7 +137,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if its a real player
-                    Player playerCheck = Bukkit.getPlayerExact(args[1]);
+                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[1]); //Bukkit.getPlayerExact(args[1]);
                     if (playerCheck == null) {
                         p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
@@ -140,7 +145,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     String targetUUID;
-                    targetUUID = Bukkit.getPlayerExact(args[1]).getUniqueId().toString();
+                    //targetUUID = Bukkit.getPlayerExact(args[1]).getUniqueId().toString();
+                    targetUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString();
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
                     // Check if player exist, if not adding the player
@@ -180,7 +186,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
                     // Check if its a real player
-                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[2]);
                     if (playerCheck == null) {
                         p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
@@ -189,7 +195,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
-                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+                    targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
                     String pathTokens;
                     pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
@@ -244,7 +250,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
                     // Check if its a real player
-                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[2]);
                     if (playerCheck == null) {
                         p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
@@ -253,7 +259,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
-                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+                    targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
                     String pathTokens;
                     pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
@@ -311,7 +317,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if its a real player
-                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[2]);
                     if (playerCheck == null) {
                         p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
@@ -320,7 +326,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
-                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+                    targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
                     String pathTokens;
                     pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
@@ -364,7 +370,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
                     // Check if its a real player
-                    Player playerCheck = Bukkit.getPlayerExact(args[2]);
+                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[2]);
                     if (playerCheck == null) {
                         p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
@@ -373,7 +379,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
-                    targetUUID = Bukkit.getPlayerExact(args[2]).getUniqueId().toString();
+                    targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
 
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
