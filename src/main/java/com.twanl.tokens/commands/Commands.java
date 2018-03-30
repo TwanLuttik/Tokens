@@ -135,7 +135,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if its a real player
-                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[1]); //Bukkit.getPlayerExact(args[1]);
+                    OfflinePlayer playerCheck = Bukkit.getOfflinePlayer(args[1]);
                     if (playerCheck == null) {
                         p.sendMessage(Strings.red + "Player offline or invalid!");
                         return true;
@@ -143,7 +143,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     String targetUUID;
-                    //targetUUID = Bukkit.getPlayerExact(args[1]).getUniqueId().toString();
                     targetUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString();
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
@@ -201,13 +200,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
 
-
-                    /*
-                    if (!cfgM.getPlayers().contains(targetUUID)) {
-                        cfgM.getPlayers().set(targetUUID + ".tokens", 0);
-                        cfgM.savePlayers();
-                    }
-                    */
 
                     // Check if player exist, if not adding the player
                     tokenApi.hasAccount(UUID.fromString(targetUUID));
@@ -409,22 +401,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         return true;
                     }
 
-                    //tokenApi.hasEnoughBalance(p.getUniqueId(), tokenCommand);
                     tokenApi.payPlayer(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
-                    //p.sendMessage("this message will not show if its working");
-
-                    /*
-                    cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerTokens - tokenCommand);
-                    cfgM.getPlayers().set(targetUUID + ".tokens", tokenCommand + targetTokens);
-                    cfgM.savePlayers();
-
-
-                    p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(targetUUID) + " " + tokenCommand);
-
-                    Player playerReceiver = Bukkit.getPlayerExact(F.getName(targetUUID));
-                    playerReceiver.sendMessage(Strings.gray + "You received " + Strings.green + tokenCommand + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
-                    */
-
 
                 }
             } else if (args[0].equalsIgnoreCase("bonus")) {
