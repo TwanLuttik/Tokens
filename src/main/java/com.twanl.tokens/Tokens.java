@@ -12,6 +12,7 @@ import com.twanl.tokens.NMS.v1_8.v1_8_R1;
 import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.commands.Commands;
 import com.twanl.tokens.events.JoinEvent;
+import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Metrics;
@@ -33,10 +34,8 @@ import java.util.logging.Level;
 public class Tokens extends JavaPlugin {
 
     //TODO: SQL Support
-    //TODO: OfflinePlayer Support (uuid)
     //TODO: SubCommands in a other class
     //TODO: make TabCompletion better
-    //TODO: make the config file with comments
     //TODO: Top 10 command
 
 
@@ -104,6 +103,7 @@ public class Tokens extends JavaPlugin {
         // Register listeners
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
+        getServer().getPluginManager().registerEvents(new SignEvent(), this);
 
         // Register Command Class
         Commands commands = new Commands();
