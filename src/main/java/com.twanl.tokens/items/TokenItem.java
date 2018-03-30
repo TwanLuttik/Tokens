@@ -22,7 +22,7 @@ public class TokenItem implements Listener{
 
     private ConfigManager cfgM = new ConfigManager();
 
-    public void addToken(Player p, int tokens) {
+    public void addToken (Player p, int tokens) {
 
         // get a random number to prevent stacking items
         Random rand = new Random();
@@ -54,9 +54,13 @@ public class TokenItem implements Listener{
     public void removeToken(Player p) {
 
         // get the int from the itemlore(Custom item) specific line
-        String[] getLoreList = ChatColor.stripColor(p.getInventory().getItemInMainHand().getItemMeta().getLore().toString()).split(" ");
+        //String[] getLoreList = ChatColor.stripColor(p.getInventory().getItemInMainHand().getItemMeta().getLore().toString()).split(" ");
+        String[] getLoreList =  Strings.stripColor(p.getItemInHand().getItemMeta().getLore().toString()).split(" ");
+
+
         String getLoreLine = getLoreList[9];
         String getLoreId = getLoreLine.replaceAll("]", "");
+
 
         // get the first word(int in this case) and convert to to a string without any color codes
         String[] tokenItem = ChatColor.stripColor(p.getItemInHand().getItemMeta().getDisplayName()).split(" ");
@@ -82,6 +86,7 @@ public class TokenItem implements Listener{
         cfgM.savePlayers();
 
         p.getInventory().remove(item);
+
 
 
     }
