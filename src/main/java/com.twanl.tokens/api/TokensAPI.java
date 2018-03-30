@@ -7,6 +7,7 @@ import com.twanl.tokens.utils.Strings;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.text.SimpleDateFormat;
@@ -33,7 +34,7 @@ public class TokensAPI {
         cfgM.getPlayers().set(targetUUID + ".tokens", playerTokens + tokens);
         cfgM.savePlayers();
 
-        Player p = Bukkit.getPlayer(playerUUID);
+        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
         p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are added to " + Strings.green + F.getName(String.valueOf(targetUUID)));
     }
 
@@ -44,7 +45,7 @@ public class TokensAPI {
         cfgM.getPlayers().set(targetUUID + ".tokens", playerTokens - tokens);
         cfgM.savePlayers();
 
-        Player p = Bukkit.getPlayer(playerUUID);
+        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
         p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(targetUUID)));
     }
 
@@ -148,6 +149,7 @@ public class TokensAPI {
 
     public void balance (UUID playerUUID, UUID targetUUID) {
         int tokensBalance = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+        //Player p = Bukkit.getPlayer(playerUUID);
         Player p = Bukkit.getPlayer(playerUUID);
         p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
     }
@@ -164,11 +166,6 @@ public class TokensAPI {
 
 
 
-    // Value of the balance of the player :: INT
-    public int balanceInt (UUID playerUUID) {
-        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
-        return playerTokens;
-    }
 
 
     /*
@@ -194,23 +191,33 @@ public class TokensAPI {
         cfgM.getPlayers().set(targetUUID + ".tokens", tokens + targetTokens);
         cfgM.savePlayers();
 
-        Player p = Bukkit.getPlayer(playerUUID);
+        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
         p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(targetUUID)) + " " + tokens);
 
-        Player playerReceiver = Bukkit.getPlayerExact(F.getName(String.valueOf(targetUUID)));
-        playerReceiver.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
+        OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(targetUUID)));
+        if (playerReceiver.isOnline()) {
+            Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
+            pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
+        }
 
 
-        Object transactionTime = new SimpleDateFormat("HH:mm:ss yyyy-MM-dd").format(new Date());
+        Object transactionTime_HMS = new SimpleDateFormat("HH:mm:ss").format(new Date());
+        Object transactionTime_YMD = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.date", transactionTime);
+        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.date", transactionTime_HMS + " | " + transactionTime_YMD );
         cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.player", F.getName(playerUUID.toString()));
+        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.amount", tokens);
         cfgM.savePlayers();
 
     }
 
 
 
+    // Value of the balance of the player :: INT
+    public int balanceInt (UUID playerUUID) {
+        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+        return playerTokens;
+    }
 
 
 
