@@ -1,3 +1,9 @@
+#
+#
+#                     <--- Tokens --->
+#          Created by Twan Luttik, Config version 1.0
+#
+
 update_message: true
 bonus_message: '&7you received {tokens} Tokens from your boss'
 
