@@ -23,11 +23,12 @@ public class SignEvent implements Listener {
     public void onSignChange(SignChangeEvent e) {
         Player p = e.getPlayer();
 
-
-        if (e.getLine(0).equalsIgnoreCase("[tokens]")) {
-            e.setLine(0, Strings.gold + "Tokens");
-            e.setLine(1, Strings.gray + "-------------");
-            e.setLine(2, "Right Click");
+        if (p.hasPermission("tokens.sign.place")) {
+            if (e.getLine(0).equalsIgnoreCase("[tokens]")) {
+                e.setLine(0, Strings.gold + "Tokens");
+                e.setLine(1, Strings.gray + "-------------");
+                e.setLine(2, "Right Click");
+            }
         }
     }
 
