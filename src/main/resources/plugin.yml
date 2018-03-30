@@ -7,4 +7,4 @@ commands:
   tokens:
     usage: /<command>
     description: main command
-    aliases: [tokens, t]
+    aliases: [t]
