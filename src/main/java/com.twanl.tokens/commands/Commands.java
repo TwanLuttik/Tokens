@@ -53,6 +53,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
 
+
                 String transactionPlayer = objectApi.transactionPlayer(p.getUniqueId());
                 String transactionDate = objectApi.transactionDate(p.getUniqueId());
                 String transactionAmount = objectApi.transactionAmount(p.getUniqueId());
@@ -125,7 +126,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                 if (p.hasPermission("tokens.balance")) {
 
                     // Check if player exist, if not adding the player
-                    tokenApi.hasAccount(p.getUniqueId());
+                    //tokenApi.hasAccount(p.getUniqueId());
 
                     int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                     if (args.length == 1) {
@@ -147,7 +148,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
                     // Check if player exist, if not adding the player
-                    tokenApi.hasAccount(UUID.fromString(targetUUID));
+                    //tokenApi.hasAccount(UUID.fromString(targetUUID));
 
 
                     if (args.length == 2) {
@@ -202,7 +203,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if player exist, if not adding the player
-                    tokenApi.hasAccount(UUID.fromString(targetUUID));
+                    //tokenApi.hasAccount(UUID.fromString(targetUUID));
 
 
                     // If 0 it will not execute
@@ -385,7 +386,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if player exist, if not adding the player
-                    tokenApi.hasAccount(UUID.fromString(targetUUID));
+                    //tokenApi.hasAccount(UUID.fromString(targetUUID));
 
 
                     // If 0 it will not execute
@@ -401,6 +402,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                         return true;
                     }
 
+                    //tokenApi.transactionSuccess(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
                     tokenApi.payPlayer(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
 
                 }
