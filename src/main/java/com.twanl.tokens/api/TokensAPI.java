@@ -14,6 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
+
 /**
  * Created by Twan on 3/22/2018.
  **/
@@ -148,69 +149,65 @@ public class TokensAPI {
 
 
     public void balance (UUID playerUUID, UUID targetUUID) {
-        int tokensBalance = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-        //Player p = Bukkit.getPlayer(playerUUID);
-        Player p = Bukkit.getPlayer(playerUUID);
-        p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
-    }
-
-
-    public void hasAccount (UUID targetUUID) {
-        if (!cfgM.getPlayers().contains(targetUUID.toString())) {
-            cfgM.getPlayers().set(targetUUID.toString() + ".tokens", 0);
-            cfgM.savePlayers();
-            Bukkit.getServer().getConsoleSender().sendMessage(targetUUID.toString() + " added to players.yml file");
+        // check if player exist before paying
+        if (!cfgM.getPlayers().contains(String.valueOf(targetUUID))) {
+            Player p = Bukkit.getPlayer(playerUUID);
+            p.sendMessage(Strings.red + "Player not found");
+        } else {
+            int tokensBalance = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+            //Player p = Bukkit.getPlayer(playerUUID);
+            Player p = Bukkit.getPlayer(playerUUID);
+            p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
         }
     }
 
 
-
-
-
-
-    /*
-    public boolean hasEnoughBalance (UUID playerUUID, int tokens) {
-        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
-        Player p = Bukkit.getPlayer(playerUUID);
-        if (tokens > playerTokens) {
-
-            p.sendMessage(Strings.red + "You don't have enough tokens to pay!");
-            return true;
-        }
-
-        p.sendMessage("test");
-        return true;
-    }
-    */
 
     public void payPlayer(UUID playerUUID, UUID targetUUID, int tokens) {
-        int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-        int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
 
-        cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - tokens);
-        cfgM.getPlayers().set(targetUUID + ".tokens", tokens + targetTokens);
-        cfgM.savePlayers();
+        // check if player exist before paying
+        if (!cfgM.getPlayers().contains(String.valueOf(targetUUID))) {
+            Player p = Bukkit.getPlayer(playerUUID);
+            p.sendMessage(Strings.red + "Player not found");
+        } else {
 
-        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-        p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(targetUUID)) + " " + tokens);
+            int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+            int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
 
-        OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(targetUUID)));
-        if (playerReceiver.isOnline()) {
-            Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
-            pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
+            cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - tokens);
+            cfgM.getPlayers().set(targetUUID + ".tokens", tokens + targetTokens);
+            cfgM.savePlayers();
+
+            Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
+            p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(targetUUID)) + " " + tokens);
+
+            OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(targetUUID)));
+            if (playerReceiver.isOnline()) {
+                Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
+                pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
+            }
+
+
+            Object transactionTime_HMS = new SimpleDateFormat("HH:mm:ss").format(new Date());
+            Object transactionTime_YMD = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+
+            cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.date", transactionTime_HMS + " | " + transactionTime_YMD);
+            cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.player", F.getName(playerUUID.toString()));
+            cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.amount", tokens);
+            cfgM.savePlayers();
+
+
         }
-
-
-        Object transactionTime_HMS = new SimpleDateFormat("HH:mm:ss").format(new Date());
-        Object transactionTime_YMD = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-
-        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.date", transactionTime_HMS + " | " + transactionTime_YMD );
-        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.player", F.getName(playerUUID.toString()));
-        cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.amount", tokens);
-        cfgM.savePlayers();
-
     }
 
+
+    // add player to database if player not exist
+    public void creatAccount(UUID uuid) {
+        if (!cfgM.getPlayers().contains(String.valueOf(uuid))) {
+            cfgM.getPlayers().set(uuid + ".tokens", 0);
+            cfgM.savePlayers();
+        }
+    }
 
 
     // Value of the balance of the player :: INT
@@ -219,6 +216,23 @@ public class TokensAPI {
         return playerTokens;
     }
 
+
+    public void transactionSuccess(UUID uuid, UUID targetUUID, int tokens) {
+        Player p = Bukkit.getPlayer(uuid);
+        int targetPBalance_before = balanceInt(targetUUID);
+
+
+        payPlayer(uuid, targetUUID, tokens);
+
+        int targetPBalance_after = balanceInt(targetUUID);
+
+        if (targetPBalance_before == targetPBalance_after) {
+            p.sendMessage(Strings.redI + "failed to send the tokens!");
+        } else {
+            // send nothing when transaction worked
+        }
+
+    }
 
 
 
