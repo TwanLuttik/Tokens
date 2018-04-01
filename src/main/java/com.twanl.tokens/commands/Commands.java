@@ -128,7 +128,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     // Check if player exist, if not adding the player
                     //tokenApi.hasAccount(p.getUniqueId());
 
-                    int intTokens = cfgM.getPlayers().getInt(p.getUniqueId().toString() + ".tokens");
                     if (args.length == 1) {
                         tokenApi.balance(p.getUniqueId());
                         return true;
@@ -145,7 +144,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[1]).getUniqueId().toString();
-                    int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
                     // Check if player exist, if not adding the player
                     //tokenApi.hasAccount(UUID.fromString(targetUUID));
@@ -194,12 +192,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
-
-                    String pathTokens;
-                    pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
-
-                    int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-
 
 
                     // Check if player exist, if not adding the player
@@ -251,9 +243,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     int tokenCommand = Integer.parseInt(args[1]);
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
-
-                    String pathTokens;
-                    pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
 
                     int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
 
@@ -319,12 +308,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
-                    String pathTokens;
-                    pathTokens = String.valueOf(cfgM.getPlayers().get(targetUUID + ".tokens"));
-
-                    int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-
-
                     // If 0 it will not execute
                     if (tokenCommand < 0) {
                         p.sendMessage(Strings.red + "Please don't enter a minus number!.");
@@ -372,8 +355,6 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
-
-                    int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
                     int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
 
 
