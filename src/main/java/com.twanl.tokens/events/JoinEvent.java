@@ -59,6 +59,7 @@ public class JoinEvent implements Listener {
         }
 
 
-        tokenApi.hasAccount(p.getUniqueId());
+        //tokenApi.hasAccount(p.getUniqueId());
+        tokenApi.creatAccount(p.getUniqueId());
     }
 }
