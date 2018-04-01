@@ -11,6 +11,8 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import java.util.ArrayList;
+
 /**
  * Created by Twan on 3/29/2018.
  **/
@@ -31,7 +33,6 @@ public class SignEvent implements Listener {
             }
         }
     }
-
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
