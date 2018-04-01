@@ -34,6 +34,8 @@ public class Tokens extends JavaPlugin {
     //TODO: SubCommands in a other class
     //TODO: make TabCompletion better
     //TODO: Top 10 command
+    //TODO: Recode the API for better performance
+    //TODO: add a cooldown when clicking on the sign
 
 
     protected PluginDescriptionFile pdfFile = getDescription();
@@ -50,7 +52,6 @@ public class Tokens extends JavaPlugin {
 
 
     public void onEnable() {
-
 
         getServerVersion();
         // Api for other DEV
