@@ -54,8 +54,7 @@ public class TokenItem implements Listener{
     public void removeToken(Player p) {
 
         // get the int from the itemlore(Custom item) specific line
-        //String[] getLoreList = ChatColor.stripColor(p.getInventory().getItemInMainHand().getItemMeta().getLore().toString()).split(" ");
-        String[] getLoreList =  Strings.stripColor(p.getItemInHand().getItemMeta().getLore().toString()).split(" ");
+        String[] getLoreList = Strings.stripColor(p.getItemInHand().getItemMeta().getLore().toString()).split(" ");
 
 
         String getLoreLine = getLoreList[9];
@@ -87,37 +86,6 @@ public class TokenItem implements Listener{
 
         p.getInventory().remove(item);
 
-
-
     }
-
-
-
-/*
-    // preventing from placing a Token
-    @EventHandler
-    public boolean onBlockPlace(BlockPlaceEvent e) {
-        Player p = e.getPlayer();
-
-
-        if (p.getItemInHand() == null) {
-            return false;
-        }
-
-
-        if (p.getItemInHand().getItemMeta().getDisplayName().equalsIgnoreCase(Strings.goldB + "10 Tokens")) {
-            p.sendMessage(Strings.red + "You cannot place your tokens!");
-            e.setCancelled(true);
-        } else {
-            p.sendMessage("test");
-            return true;
-        }
-
-
-        return true;
-
-    }
-    */
-
 
 }
