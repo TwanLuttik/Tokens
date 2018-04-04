@@ -1,14 +1,18 @@
 package com.twanl.tokens.utils;
 
-import net.milkbowl.vault.chat.Chat;
+import com.twanl.tokens.Tokens;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginDescriptionFile;
+import sun.security.x509.DistributionPoint;
 
 /**
  * Created by Twan on 3/22/2018.
  **/
 
+@SuppressWarnings("ALL")
 public class Strings {
+
 
 
     /**
@@ -59,6 +63,7 @@ public class Strings {
     public static String greenISU = ChatColor.GREEN + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String greenS = ChatColor.GREEN + "" + ChatColor.STRIKETHROUGH;
     public static String greenSU = ChatColor.GREEN + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String greenU = ChatColor.GREEN + "" + ChatColor.UNDERLINE;
 
     public static String Dgreen = ChatColor.DARK_GREEN + "";
     public static String DgreenB = ChatColor.DARK_GREEN + "" + ChatColor.BOLD;
@@ -75,6 +80,7 @@ public class Strings {
     public static String DgreenISU = ChatColor.DARK_GREEN + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String DgreenS = ChatColor.DARK_GREEN + "" + ChatColor.STRIKETHROUGH;
     public static String DgreenSU = ChatColor.DARK_GREEN + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String DgreenU = ChatColor.DARK_GREEN + "" + ChatColor.UNDERLINE;
 
 
     // Red + Dark
@@ -93,6 +99,7 @@ public class Strings {
     public static String redISU = ChatColor.RED + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String redS = ChatColor.RED + "" + ChatColor.STRIKETHROUGH;
     public static String redSU = ChatColor.RED + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String redU = ChatColor.RED + "" + ChatColor.UNDERLINE;
 
     public static String Dred = ChatColor.DARK_RED + "";
     public static String DredB = ChatColor.DARK_RED + "" + ChatColor.BOLD;
@@ -109,6 +116,7 @@ public class Strings {
     public static String DredISU = ChatColor.DARK_RED + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String DredS = ChatColor.DARK_RED + "" + ChatColor.STRIKETHROUGH;
     public static String DredSU = ChatColor.DARK_RED + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String DredU = ChatColor.DARK_RED + "" + ChatColor.UNDERLINE;
 
 
     // Aqua + Dark
@@ -127,6 +135,7 @@ public class Strings {
     public static String aquaISU = ChatColor.AQUA + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String aquaS = ChatColor.AQUA + "" + ChatColor.STRIKETHROUGH;
     public static String aquaSU = ChatColor.AQUA + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String aquanU = ChatColor.AQUA + "" + ChatColor.UNDERLINE;
 
     public static String Daqua = ChatColor.DARK_AQUA + "";
     public static String DaquaB = ChatColor.DARK_AQUA + "" + ChatColor.BOLD;
@@ -143,6 +152,7 @@ public class Strings {
     public static String DaquaISU = ChatColor.DARK_AQUA + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String DaquaS = ChatColor.DARK_AQUA + "" + ChatColor.STRIKETHROUGH;
     public static String DaquaSU = ChatColor.DARK_AQUA + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String DaquaU = ChatColor.DARK_AQUA + "" + ChatColor.UNDERLINE;
 
 
 
@@ -162,6 +172,7 @@ public class Strings {
     public static String blueISU = ChatColor.BLUE + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String blueS = ChatColor.BLUE + "" + ChatColor.STRIKETHROUGH;
     public static String blueSU = ChatColor.BLUE + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String blueU = ChatColor.BLUE + "" + ChatColor.UNDERLINE;
 
     public static String Dblue = ChatColor.DARK_BLUE + "";
     public static String DblueB = ChatColor.DARK_BLUE + "" + ChatColor.BOLD;
@@ -178,6 +189,7 @@ public class Strings {
     public static String DblueISU = ChatColor.DARK_BLUE + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String DblueS = ChatColor.DARK_BLUE + "" + ChatColor.STRIKETHROUGH;
     public static String DblueSU = ChatColor.DARK_BLUE + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String DblueU = ChatColor.DARK_BLUE + "" + ChatColor.UNDERLINE;
 
 
     // Gray + Dark
@@ -196,6 +208,7 @@ public class Strings {
     public static String grayISU = ChatColor.GRAY + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String grayS = ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH;
     public static String graySU = ChatColor.GRAY + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String grayU = ChatColor.GRAY + "" + ChatColor.UNDERLINE;
 
     public static String Dgray = ChatColor.DARK_GRAY + "";
     public static String DgrayB = ChatColor.DARK_GRAY + "" + ChatColor.BOLD;
@@ -212,6 +225,7 @@ public class Strings {
     public static String DgrayISU = ChatColor.DARK_GRAY + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String DgrayS = ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH;
     public static String DgraySU = ChatColor.DARK_GRAY + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String DgrayU = ChatColor.DARK_GRAY + "" + ChatColor.UNDERLINE;
 
 
     // Purple + Dark
@@ -230,6 +244,7 @@ public class Strings {
     public static String purpleISU = ChatColor.LIGHT_PURPLE + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String purpleS = ChatColor.LIGHT_PURPLE + "" + ChatColor.STRIKETHROUGH;
     public static String purpleSU = ChatColor.LIGHT_PURPLE + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String purplenU = ChatColor.LIGHT_PURPLE + "" + ChatColor.UNDERLINE;
 
     public static String Dpurple = ChatColor.DARK_PURPLE + "";
     public static String DpurpleB = ChatColor.DARK_PURPLE + "" + ChatColor.BOLD;
@@ -246,6 +261,7 @@ public class Strings {
     public static String DpurpleISU = ChatColor.DARK_PURPLE + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String DpurpleS = ChatColor.DARK_PURPLE + "" + ChatColor.STRIKETHROUGH;
     public static String DpurpleSU = ChatColor.DARK_PURPLE + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String DpurpleU = ChatColor.DARK_PURPLE + "" + ChatColor.UNDERLINE;
 
 
     // Gold
@@ -264,6 +280,7 @@ public class Strings {
     public static String goldISU = ChatColor.GOLD + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String goldS = ChatColor.GOLD + "" + ChatColor.STRIKETHROUGH;
     public static String goldSU = ChatColor.GOLD + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String goldU = ChatColor.GOLD + "" + ChatColor.UNDERLINE;
 
 
     // Yellow
@@ -282,6 +299,7 @@ public class Strings {
     public static String yellowISU = ChatColor.YELLOW + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String yellowS = ChatColor.YELLOW + "" + ChatColor.STRIKETHROUGH;
     public static String yellowSU = ChatColor.YELLOW + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String yellowU = ChatColor.YELLOW + "" + ChatColor.UNDERLINE;
 
 
     // White
@@ -300,11 +318,31 @@ public class Strings {
     public static String whiteISU = ChatColor.WHITE + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
     public static String whiteS = ChatColor.WHITE + "" + ChatColor.STRIKETHROUGH;
     public static String whiteSU = ChatColor.WHITE + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String whiteU = ChatColor.WHITE + "" + ChatColor.UNDERLINE;
+
+    // Black
+    public static String black = ChatColor.BLACK + "";
+    public static String blackB = ChatColor.BLACK + "" + ChatColor.BOLD;
+    public static String blackBU = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.UNDERLINE;
+    public static String blackBI = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.ITALIC;
+    public static String blackBIU = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.UNDERLINE;
+    public static String blackBIS = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.STRIKETHROUGH;
+    public static String blackBISU = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String blackBS = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.STRIKETHROUGH;
+    public static String blackBSU = ChatColor.BLACK + "" + ChatColor.BOLD + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String blackI = ChatColor.BLACK + "" + ChatColor.ITALIC;
+    public static String blackIU = ChatColor.BLACK + "" + ChatColor.ITALIC + ChatColor.UNDERLINE;
+    public static String blackIS = ChatColor.BLACK + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH;
+    public static String blackISU = ChatColor.BLACK + "" + ChatColor.ITALIC + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String blackS = ChatColor.BLACK + "" + ChatColor.STRIKETHROUGH;
+    public static String blackSU = ChatColor.BLACK + "" + ChatColor.STRIKETHROUGH + ChatColor.UNDERLINE;
+    public static String blackU = ChatColor.BLACK + "" + ChatColor.UNDERLINE;
 
 
 
     public static String magic = ChatColor.MAGIC + "";
     public static String reset = ChatColor.RESET + "";
+
 
     public static String logName = ChatColor.GREEN + "[Tokens] ";
     public static String noPerm = ChatColor.RED + "" + ChatColor.BOLD + "* You don't have permissions to do that!";
