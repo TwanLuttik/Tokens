@@ -50,7 +50,7 @@ public class Tokens extends JavaPlugin {
     public ConfigManager cfgM;
 
     private TokenShop tshopApi = (TokenShop) Bukkit.getServer().getPluginManager().getPlugin("TokenShop");
-    public TokensAPI tokensApi;
+    public TokensAPI TokensAPI;
 
 
 
@@ -58,14 +58,20 @@ public class Tokens extends JavaPlugin {
 
         getServerVersion();
         // Api for other DEV
-        tokensApi = new TokensAPI();
+        TokensAPI = new TokensAPI();
         Metrics metrics = new Metrics(this);
 
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
-            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + "DETECTED VAULT.");
+            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + "++ Vault HOOKED");
             setupEconomy();
         } else {
             getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "VAULT NOT DETECTED, Some commands won't work.");
+        }
+
+        if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
+            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + "++ TokenShop HOOKED.");
+        } else {
+            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "TokenShop is not found. /token shop is disabled");
         }
 
 
