@@ -1,14 +1,12 @@
 package com.twanl.tokens.commands;
 
 import com.twanl.tokens.Tokens;
-import com.twanl.tokens.api.ObjectAPI;
-import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
+import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -31,8 +29,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     private ConfigManager cfgM = new ConfigManager();
     private TokenItem CI = new TokenItem();
-    private TokensAPI tokenApi = new TokensAPI();
-    private ObjectAPI objectApi = new ObjectAPI();
+    private Lib lib = new Lib();
     private Functions F = new Functions();
 
 
@@ -41,7 +38,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(Strings.logName + ChatColor.RED + "Only a player can execute commands!");
+            sender.sendMessage(Strings.logName + Strings.red + "Only a player can execute commands!");
             return true;
         }
 
@@ -54,11 +51,11 @@ public  class Commands implements CommandExecutor, TabCompleter {
             if (args.length == 0) {
 
 
-                String transactionPlayer = objectApi.transactionPlayer(p.getUniqueId());
-                String transactionDate = objectApi.transactionDate(p.getUniqueId());
-                String transactionAmount = objectApi.transactionAmount(p.getUniqueId());
+                String transactionPlayer = lib.transactionPlayer(p.getUniqueId());
+                String transactionDate = lib.transactionDate(p.getUniqueId());
+                String transactionAmount = lib.transactionAmount(p.getUniqueId());
 
-                String PlayerTokens = String.valueOf(tokenApi.balanceInt(p.getUniqueId()));
+                String PlayerTokens = String.valueOf(lib.balanceInt(p.getUniqueId()));
 
 
 
@@ -129,7 +126,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     //tokenApi.hasAccount(p.getUniqueId());
 
                     if (args.length == 1) {
-                        tokenApi.balance(p.getUniqueId());
+                        lib.balance(p.getUniqueId());
                         return true;
                     }
 
@@ -150,7 +147,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     if (args.length == 2) {
-                        tokenApi.balance(p.getUniqueId(), UUID.fromString(targetUUID));
+                        lib.balance(p.getUniqueId(), UUID.fromString(targetUUID));
                         return true;
                     }
 
@@ -205,7 +202,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    tokenApi.addTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
+                    lib.addTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
                 }
 
             } else if (args[0].equalsIgnoreCase("remove")) {
@@ -268,7 +265,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    tokenApi.removeTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
+                    lib.removeTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
                 }
 
             } else if (args[0].equalsIgnoreCase("set")) {
@@ -315,7 +312,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    tokenApi.setTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
+                    lib.setTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
                 }
 
             } else if (args[0].equalsIgnoreCase("pay")) {
@@ -384,7 +381,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
                     //tokenApi.transactionSuccess(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
-                    tokenApi.payPlayer(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
+                    lib.payPlayer(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
 
                 }
             } else if (args[0].equalsIgnoreCase("bonus")) {
@@ -414,7 +411,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    tokenApi.giveallTokens(tokenCommand);
+                    lib.giveallTokens(tokenCommand);
                 }
 
             } else if (args[0].equalsIgnoreCase("reload")) {
@@ -454,7 +451,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
-                        tokenApi.convertToTokens(p.getUniqueId(), token);
+                        lib.convertToTokens(p.getUniqueId(), token);
                     } else {
                         p.sendMessage(Strings.red + "Command is disabled!");
                     }
@@ -486,7 +483,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             return true;
                         }
 
-                        tokenApi.convertToMoney(p.getUniqueId(), token);
+                        lib.convertToMoney(p.getUniqueId(), token);
                     } else {
                         p.sendMessage(Strings.red + "Command is disabled!");
                     }

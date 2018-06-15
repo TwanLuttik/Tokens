@@ -1,7 +1,7 @@
 package com.twanl.tokens.events;
 
 import com.twanl.tokens.Tokens;
-import com.twanl.tokens.api.TokensAPI;
+import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class JoinEvent implements Listener {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-    private TokensAPI tokenApi = new TokensAPI();
+    private Lib lib = new Lib();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
@@ -60,6 +60,6 @@ public class JoinEvent implements Listener {
 
 
         //tokenApi.hasAccount(p.getUniqueId());
-        tokenApi.creatAccount(p.getUniqueId());
+        lib.creatAccount(p.getUniqueId());
     }
 }

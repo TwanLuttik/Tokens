@@ -1,7 +1,7 @@
 package com.twanl.tokens.events;
 
 import com.twanl.tokens.Tokens;
-import com.twanl.tokens.api.TokensAPI;
+import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
@@ -11,15 +11,13 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
-import java.util.ArrayList;
-
 /**
  * Created by Twan on 3/29/2018.
  **/
 public class SignEvent implements Listener {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-    private TokensAPI tokenApi = new TokensAPI();
+    private Lib lib = new Lib();
 
     @EventHandler
     public void onSignChange(SignChangeEvent e) {
@@ -44,7 +42,7 @@ public class SignEvent implements Listener {
 
             if (s.getLine(0).equalsIgnoreCase(Strings.gold + "Tokens")) {
                 Player p = e.getPlayer();
-                String balance = String.valueOf(tokenApi.balanceInt(p.getUniqueId()));
+                String balance = String.valueOf(lib.balanceInt(p.getUniqueId()));
                 e.getPlayer().sendMessage(Strings.gray + "You have " + Strings.green + balance + " Tokens");
             }
 
