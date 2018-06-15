@@ -101,7 +101,7 @@ public class Lib {
             int playerTokens = cfgM.getPlayers().getInt(onlinePlayer.getUniqueId() + ".tokens");
             cfgM.getPlayers().set(onlinePlayer.getUniqueId() + ".tokens", playerTokens + tokens);
 
-            Strings.translateColorCodes(onlinePlayer, replacedMessage);
+            Strings.translateColorCodesPlayer(onlinePlayer, replacedMessage);
         }
         cfgM.savePlayers();
     }
