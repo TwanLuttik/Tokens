@@ -130,7 +130,7 @@ public class Lib {
         if (r.transactionSuccess()) {
             cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens + amount);
             cfgM.savePlayers();
-            p.sendMessage(Strings.gray + "You bought " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
+            p.sendMessage(Strings.gray + "You bought " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + "$" + totalCheckOut);
             return true;
         } else {
             p.sendMessage("An error accured!");
@@ -163,7 +163,7 @@ public class Lib {
 
             cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - amount);
             cfgM.savePlayers();
-            p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + totalCheckOut);
+            p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + "$" + totalCheckOut);
 
             return true;
         } else {
