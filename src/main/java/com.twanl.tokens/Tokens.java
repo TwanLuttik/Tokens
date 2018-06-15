@@ -19,6 +19,7 @@ import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Metrics;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
+import com.twanl.tokenshop.TokenShop;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -48,6 +49,7 @@ public class Tokens extends JavaPlugin {
     public static Economy economy;
     public ConfigManager cfgM;
 
+    private TokenShop tshopApi = (TokenShop) Bukkit.getServer().getPluginManager().getPlugin("TokenShop");
     public TokensAPI tokensApi;
 
 
