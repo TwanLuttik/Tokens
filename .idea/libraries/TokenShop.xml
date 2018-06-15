@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="TokensShop">
+  <library name="TokenShop">
     <CLASSES>
-      <root url="jar://D:/Users/Twan/Desktop/Localhost/plugins/TokensShop.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../TokenShop.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
