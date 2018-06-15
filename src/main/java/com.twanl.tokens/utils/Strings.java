@@ -349,9 +349,14 @@ public class Strings {
 
 
 
-    public static void translateColorCodes (Player p, String text) {
+    public static void translateColorCodesPlayer (Player p, String text) {
         p.sendMessage(ChatColor.translateAlternateColorCodes('&', text));
     }
+
+    public static String translateColorCodes (String text) {
+        return ChatColor.translateAlternateColorCodes('&', text);
+    }
+
 
     public static String stripColor (String text) {
         return ChatColor.stripColor(text);
