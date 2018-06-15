@@ -1,11 +1,13 @@
 package com.twanl.tokens.commands;
 
 import com.twanl.tokens.Tokens;
+import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
+import com.twanl.tokenshop.TokenShop;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -17,6 +19,8 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+
+import static org.bukkit.Bukkit.getServer;
 
 /**
  * Created by Twan on 3/22/2018.
@@ -422,6 +426,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     cfgM.savePlayers();
                     cfgM.reloadplayers();
+
+                    tshopApi.menuApi.saveData();
                     p.sendMessage(Strings.greenI + "configuration files are reloaded");
                 }
 
@@ -505,6 +511,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             + Strings.gray + "/tokens redeem\n"
                             + Strings.gray + "/tokens buy <amount>\n"
                             + Strings.gray + "/tokens sell <amount>\n"
+                            + Strings.gray + "/tokens shop\n"
                             + Strings.gray + "/tokens help"
                             + " \n"
                             + "     " + Strings.green + "Admin Commands\n" + Strings.reset
@@ -516,6 +523,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             + Strings.DgrayBS + "-                                    \n");
 
                 }
+            } else if (args[0].equalsIgnoreCase("shop")) {
+                if (p.hasPermission("tokens.shop")) {
+                    if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
+
+                        tshopApi.menuApi.inventory(p);
+                    }
+                }
             }
 
             return true;
@@ -523,13 +537,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
         return false;
     }
 
-
+    private TokenShop tshopApi = (TokenShop) getServer().getPluginManager().getPlugin("TokenShop");
 
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help", "shop");
         }
 
         return null;
