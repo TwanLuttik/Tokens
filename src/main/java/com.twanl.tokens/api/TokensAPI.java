@@ -1,9 +1,6 @@
 package com.twanl.tokens.api;
 
-import com.twanl.tokens.Tokens;
 import com.twanl.tokens.utils.ConfigManager;
-import com.twanl.tokens.utils.Functions;
-import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -17,9 +14,7 @@ import java.util.UUID;
 
 public class TokensAPI {
 
-    private static Tokens plugin = Tokens.getPlugin(Tokens.class);
     private ConfigManager cfgM = new ConfigManager();
-    private Functions F = new Functions();
 
 
     public void playerRemoveTokens(Player p, int tokens) {
@@ -52,7 +47,6 @@ public class TokensAPI {
         if (!cfgM.getPlayers().contains(String.valueOf(p.getUniqueId()))) {
             return false;
         }
-
         return true;
     }
 
