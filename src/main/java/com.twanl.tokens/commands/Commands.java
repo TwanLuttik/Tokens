@@ -527,7 +527,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
                 if (p.hasPermission("tokens.shop")) {
                     if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
 
-                        tshopApi.menuApi.inventory(p);
+                        //tshopApi.menuApi.inventory(p);
+                        tshopApi.menuApi.defaultInv(p);
                     }
                 }
             }
