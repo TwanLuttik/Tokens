@@ -26,6 +26,8 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+
 /**
  * Created by Twan on 3/22/2018.
  **/
@@ -36,7 +38,6 @@ public class Tokens extends JavaPlugin {
     //TODO: SubCommands in a other class
     //TODO: make TabCompletion better
     //TODO: Top 10 command
-    //TODO: Recode the API for better performance
     //TODO: add a cooldown when clicking on the sign
 
 
@@ -49,6 +50,7 @@ public class Tokens extends JavaPlugin {
     public static Economy economy;
     public ConfigManager cfgM;
 
+    @SuppressWarnings("unused")
     private TokenShop tshopApi = (TokenShop) Bukkit.getServer().getPluginManager().getPlugin("TokenShop");
     public TokensAPI TokensAPI;
 
@@ -59,6 +61,8 @@ public class Tokens extends JavaPlugin {
         getServerVersion();
         // Api for other DEV
         TokensAPI = new TokensAPI();
+
+        //noinspection unused
         Metrics metrics = new Metrics(this);
 
         if (getServer().getPluginManager().getPlugin("Vault") != null) {
@@ -117,9 +121,50 @@ public class Tokens extends JavaPlugin {
         Commands commands = new Commands();
         getCommand("tokens").setExecutor(commands);
 
-        //LoadConfig
-        getConfig().options().copyDefaults(true);
-        saveConfig();
+        // Config File
+
+
+        // check if path is set else create an new file
+        if (!getConfig().isSet("ConfigVersion")) {
+
+            /*
+            getConfig().options().copyDefaults(true);
+            saveDefaultConfig();
+            reloadConfig();
+            */
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+
+            getServer().getConsoleSender().sendMessage(Strings.white + "---- CONFIGVERSION IS NOT SET. creating an new file");
+            return;
+        } else {
+            // if configversion is not match, than back-up the file and create the updated file
+            double a = getConfig().getDouble("ConfigVersion");
+            if (a != 1.0) {
+                File configFile = new File(getDataFolder(), "config.yml");
+                File file2 = new File(getDataFolder(), "config_old.yml");
+
+                if (configFile.exists()) {
+                    Bukkit.getConsoleSender().sendMessage(Strings.green + "Succsesfully created a new config file!");
+
+                    configFile.renameTo(file2);
+
+                    getConfig().options().copyDefaults(true);
+                    saveDefaultConfig();
+                    reloadConfig();
+
+                    getServer().getConsoleSender().sendMessage(Strings.white + "---- NEW FILE GENERATED");
+                }
+
+            } else {
+                // just the default reload
+                getConfig().options().copyDefaults(true);
+                saveDefaultConfig();
+                reloadConfig();
+                getServer().getConsoleSender().sendMessage(Strings.white + "---- DEFAULT RELOADING");
+            }
+        }
+
 
     }
 
@@ -133,6 +178,7 @@ public class Tokens extends JavaPlugin {
     private boolean setupEconomy() {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
+            //noinspection RedundantCast
             economy = (Economy)economyProvider.getProvider();
         }
         return economy != null;
@@ -164,5 +210,6 @@ public class Tokens extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(Strings.red + "This plugin wil not work properly with version" + version);
         }
     }
+
 
 }
