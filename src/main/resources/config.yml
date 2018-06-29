@@ -1,13 +1,25 @@
 #
 #
 #                     <--- Tokens --->
-#          Created by Twan Luttik, Config version 1.0
+#                   Created by Twan Luttik
 #
-
+#
+ConfigVersion: 1.0
 update_message: true
 bonus_message: '&7you received {tokens} Tokens from your boss'
 
+prefix:
+  prefix: 'custom tokens'
+  enable: true
 
 tokens:
   buy_price: 100
   sell_price: 100
+
+sign:
+  line1: '&a   Tokens '
+  line2: '&8&m-------------'
+  line3: '  &fRight Click'
+  line4: '&8&m-------------'
+
+
