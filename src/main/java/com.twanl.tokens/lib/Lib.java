@@ -68,7 +68,7 @@ public class Lib {
         cfgM.savePlayers();
 
         Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-        p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are added to " + Strings.green + F.getName(String.valueOf(targetUUID)));
+        p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(targetUUID)));
     }
 
     public void removeTokens (UUID targetUUID, UUID playerUUID, int tokens) {
@@ -79,7 +79,7 @@ public class Lib {
         cfgM.savePlayers();
 
         Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-        p.sendMessage(Strings.green + tokens + " Tokens " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(targetUUID)));
+        p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(targetUUID)));
     }
 
     public void setTokens (UUID targetUUID, UUID playerUUID, int tokens) {
@@ -88,7 +88,7 @@ public class Lib {
         cfgM.savePlayers();
 
         Player p = Bukkit.getPlayer(playerUUID);
-        p.sendMessage(Strings.green + tokens + " Tokens" + Strings.gray + " are set to " + Strings.green + F.getName(String.valueOf(targetUUID)));
+        p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(targetUUID)));
     }
 
     public void giveallTokens (int tokens) {
@@ -150,9 +150,9 @@ public class Lib {
 
         // Check if player has enough tokens
         if (amount > playerTokens) {
-            p.sendMessage(Strings.red + "You don't have that many tokens to sell!\n" +
+            p.sendMessage(Strings.red + "You don't have that many " + getPrefix() +" to sell!\n" +
                     " \n" +
-                    Strings.gold + "Total Tokens: " + playerTokens);
+                    Strings.green + "Total " + getPrefix() + ": " + playerTokens);
             return true;
         }
 
@@ -163,7 +163,7 @@ public class Lib {
 
             cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - amount);
             cfgM.savePlayers();
-            p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + "$" + totalCheckOut);
+            p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " " + getPrefix() + " " + Strings.gray + "for " + Strings.green + "$" + totalCheckOut);
 
             return true;
         } else {
@@ -176,7 +176,7 @@ public class Lib {
     public void balance (UUID playerUUID) {
         int tokensBalance = cfgM.getPlayers().getInt(playerUUID + ".tokens");
         Player p = Bukkit.getPlayer(playerUUID);
-        p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " Tokens");
+        p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " " + getPrefix());
     }
 
 
@@ -189,7 +189,7 @@ public class Lib {
             int tokensBalance = cfgM.getPlayers().getInt(targetUUID + ".tokens");
             //Player p = Bukkit.getPlayer(playerUUID);
             Player p = Bukkit.getPlayer(playerUUID);
-            p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " Tokens");
+            p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " " + getPrefix());
         }
     }
 
@@ -216,7 +216,7 @@ public class Lib {
             OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(targetUUID)));
             if (playerReceiver.isOnline()) {
                 Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
-                pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " Tokens " + Strings.gray + "from " + Strings.green + p.getName());
+                pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "from " + Strings.green + p.getName());
             }
 
 
@@ -265,5 +265,15 @@ public class Lib {
         }
 
     }
+
+
+    public String getPrefix() {
+        if (plugin.getConfig().getBoolean("prefix.enable")) {
+            return (String) plugin.getConfig().get("prefix.prefix");
+        } else {
+            return "Tokens";
+        }
+    }
+
 
 }
