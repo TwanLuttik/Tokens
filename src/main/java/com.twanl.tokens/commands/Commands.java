@@ -1,7 +1,6 @@
 package com.twanl.tokens.commands;
 
 import com.twanl.tokens.Tokens;
-import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.ConfigManager;
@@ -16,6 +15,11 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -64,7 +68,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                 p.sendMessage(Strings.DgrayBS + "-                                    \n"
-                        + Strings.gray + "Balance: " + Strings.green + PlayerTokens + " Tokens\n"
+                        + Strings.gray + "Balance: " + Strings.green + PlayerTokens + " " + lib.getPrefix() + "\n"
                         + Strings.gray + "Latest received transaction:\n"
                         + Strings.gray + "  Data: " + Strings.green + transactionDate + "\n"
                         + Strings.gray + "  From: " + Strings.green + transactionPlayer + "\n"
@@ -102,7 +106,12 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     // Check if the player has enough coins to remove
                     if (tokenCommand > playerTokens) {
-                        p.sendMessage(Strings.red + "You don't have enough tokens!");
+                        p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
+                        return true;
+                    }
+
+                    if (p.getInventory().firstEmpty() == -1) {
+                        p.sendMessage(Strings.red + "You don't have enough inventory space!");
                         return true;
                     }
 
@@ -264,7 +273,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                     // Check if the player has enough coins to remove
                     if (tokenCommand > intTokens) {
-                        p.sendMessage(Strings.red + F.getName(targetUUID) + " does not have that much Tokens!");
+                        p.sendMessage(Strings.red + F.getName(targetUUID) + " does not have that much " + lib.getPrefix() + "!");
                         return true;
                     }
 
@@ -380,7 +389,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     // Check if the player has enough coins to remove
 
                     if (tokenCommand > playerTokens) {
-                        p.sendMessage(Strings.red + "You don't have enough tokens!");
+                        p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
                         return true;
                     }
 
@@ -421,13 +430,17 @@ public  class Commands implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("reload")) {
                 if (p.hasPermission("tokens.admin.reload")) {
 
+
                     plugin.saveDefaultConfig();
                     plugin.reloadConfig();
 
                     cfgM.savePlayers();
                     cfgM.reloadplayers();
 
-                    tshopApi.menuApi.saveData();
+                    if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
+                        tshopApi.menuApi.saveData();
+                    }
+
                     p.sendMessage(Strings.greenI + "configuration files are reloaded");
                 }
 
@@ -453,7 +466,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                         // If 0 it will not execute
                         if (token == 0) {
-                            p.sendMessage(Strings.red + "You cannot buy 0 Tokens");
+                            p.sendMessage(Strings.red + "You cannot buy 0 " + lib.getPrefix());
                             return true;
                         }
 
@@ -485,7 +498,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
                         // If 0 it will not execute
                         if (token == 0) {
-                            p.sendMessage(Strings.red + "You cannot sell 0 Tokens");
+                            p.sendMessage(Strings.red + "You cannot sell 0 " + lib.getPrefix());
                             return true;
                         }
 
