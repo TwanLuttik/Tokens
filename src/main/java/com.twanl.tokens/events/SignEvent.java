@@ -25,9 +25,10 @@ public class SignEvent implements Listener {
 
         if (p.hasPermission("tokens.sign.place")) {
             if (e.getLine(0).equalsIgnoreCase("[tokens]")) {
-                e.setLine(0, Strings.gold + "Tokens");
-                e.setLine(1, Strings.gray + "-------------");
-                e.setLine(2, "Right Click");
+                e.setLine(0, Strings.translateColorCodes(plugin.getConfig().getString("sign.line1")));
+                e.setLine(1, Strings.translateColorCodes(plugin.getConfig().getString("sign.line2")));
+                e.setLine(2, Strings.translateColorCodes(plugin.getConfig().getString("sign.line3")));
+                e.setLine(3, Strings.translateColorCodes(plugin.getConfig().getString("sign.line4")));
             }
         }
     }
@@ -40,10 +41,10 @@ public class SignEvent implements Listener {
         if (e.getClickedBlock().getState() instanceof Sign) {
             Sign s = (Sign) e.getClickedBlock().getState();
 
-            if (s.getLine(0).equalsIgnoreCase(Strings.gold + "Tokens")) {
+            if (s.getLine(0).equalsIgnoreCase(Strings.translateColorCodes(plugin.getConfig().getString("sign.line1")))) {
                 Player p = e.getPlayer();
                 String balance = String.valueOf(lib.balanceInt(p.getUniqueId()));
-                e.getPlayer().sendMessage(Strings.gray + "You have " + Strings.green + balance + " Tokens");
+                e.getPlayer().sendMessage(Strings.gray + "You have " + Strings.green + balance + " " + lib.getPrefix());
             }
 
         }
