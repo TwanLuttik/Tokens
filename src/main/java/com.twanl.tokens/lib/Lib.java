@@ -95,7 +95,7 @@ public class Lib {
 
         String tokens1 = String.valueOf(tokens);
         String defaultMessage = plugin.getConfig().getString("bonus_message");
-        String replacedMessage = defaultMessage.replace("{tokens}", tokens1);
+        String replacedMessage = defaultMessage.replace("{tokens}", tokens1 ).replace("{prefix}", getPrefix() + Strings.reset);
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             int playerTokens = cfgM.getPlayers().getInt(onlinePlayer.getUniqueId() + ".tokens");
@@ -118,9 +118,9 @@ public class Lib {
 
         // check if the player has enough balance to continue the transaction
         if (totalCheckOut > economy.getBalance(buyer)) {
-            p.sendMessage(Strings.red + "You don't have enough money to buy Tokens!\n" +
+            p.sendMessage(Strings.red + "You don't Fhave enough money to buy " + getPrefix() + "\n" +
                     " \n" +
-                    Strings.gold + "Total costs: $" + totalCheckOut);
+                    Strings.white + "Total costs: $" + Strings.green + totalCheckOut);
             return true;
         }
 
@@ -269,7 +269,7 @@ public class Lib {
 
     public String getPrefix() {
         if (plugin.getConfig().getBoolean("prefix.enable")) {
-            return (String) plugin.getConfig().get("prefix.prefix");
+            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
         } else {
             return "Tokens";
         }
