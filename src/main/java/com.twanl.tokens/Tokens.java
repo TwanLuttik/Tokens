@@ -27,6 +27,7 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Created by Twan on 3/22/2018.
@@ -35,7 +36,6 @@ import java.io.File;
 public class Tokens extends JavaPlugin {
 
     //TODO: SQL Support
-    //TODO: SubCommands in a other class
     //TODO: make TabCompletion better
     //TODO: Top 10 command
     //TODO: add a cooldown when clicking on the sign
@@ -124,18 +124,31 @@ public class Tokens extends JavaPlugin {
         // Config File
 
 
+        File file = new File(getDataFolder(), "config.yml");
+        if (!file.exists()) {
+            saveConfig();
+            return;
+        }
+
+
         // check if path is set else create an new file
         if (!getConfig().isSet("ConfigVersion")) {
 
-            /*
-            getConfig().options().copyDefaults(true);
-            saveDefaultConfig();
-            reloadConfig();
-            */
+            File configFile = new File(getDataFolder(), "config.yml");
+            try {
+                configFile.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             getConfig().options().copyDefaults(true);
             saveConfig();
 
-            getServer().getConsoleSender().sendMessage(Strings.white + "---- CONFIGVERSION IS NOT SET. creating an new file");
+            /*
+            getConfig().options().copyDefaults(true);
+            saveConfig();
+            */
+
+
             return;
         } else {
             // if configversion is not match, than back-up the file and create the updated file
@@ -153,7 +166,6 @@ public class Tokens extends JavaPlugin {
                     saveDefaultConfig();
                     reloadConfig();
 
-                    getServer().getConsoleSender().sendMessage(Strings.white + "---- NEW FILE GENERATED");
                 }
 
             } else {
@@ -161,7 +173,6 @@ public class Tokens extends JavaPlugin {
                 getConfig().options().copyDefaults(true);
                 saveDefaultConfig();
                 reloadConfig();
-                getServer().getConsoleSender().sendMessage(Strings.white + "---- DEFAULT RELOADING");
             }
         }
 
