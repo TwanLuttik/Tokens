@@ -1,6 +1,8 @@
 package com.twanl.tokens.api;
 
+import com.twanl.tokens.Tokens;
 import com.twanl.tokens.utils.ConfigManager;
+import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -15,19 +17,23 @@ import java.util.UUID;
 public class TokensAPI {
 
     private ConfigManager cfgM = new ConfigManager();
+    private Tokens plugin = Tokens.getPlugin(Tokens.class);
 
 
+    // remove tokens from the player
     public void playerRemoveTokens(Player p, int tokens) {
 
         cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p) - tokens);
         cfgM.savePlayers();
     }
 
+    // add tokens to the player
     public void playerAddTokens(Player p, int tokens) {
 
         cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p) + tokens);
         cfgM.savePlayers();
     }
+
 
     public void playerSetTokens(Player p, int tokens) {
 
@@ -48,6 +54,15 @@ public class TokensAPI {
             return false;
         }
         return true;
+    }
+
+
+    public String getPrefix() {
+        if (plugin.getConfig().getBoolean("prefix.enable")) {
+            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
+        } else {
+            return "Tokens";
+        }
     }
 
 
