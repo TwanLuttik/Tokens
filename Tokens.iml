@@ -19,8 +19,8 @@
     <orderEntry type="library" name="craftbukkit-1.9.4" level="project" />
     <orderEntry type="library" name="craftbukkit-1.10.2" level="project" />
     <orderEntry type="library" name="craftbukkit-1.11.2" level="project" />
+    <orderEntry type="library" name="TokenShop" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations-java5:16.0.2" level="project" />
     <orderEntry type="library" name="Maven: org.bstats:bstats-bukkit:1.2" level="project" />
-    <orderEntry type="library" name="TokenShop" level="project" />
   </component>
 </module>

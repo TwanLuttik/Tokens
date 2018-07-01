@@ -4,13 +4,15 @@
 #                   Created by Twan Luttik
 #
 #
+# Don't edit the ConfigVersion
 ConfigVersion: 1.0
+
 update_message: true
-bonus_message: '&7you received {tokens} Tokens from your boss'
+bonus_message: '&a&l» &r&freceived &a{tokens} {prefix} &ffrom your boss'
 
 prefix:
-  prefix: 'custom tokens'
-  enable: true
+  prefix: '&cB&6e&ea&au&bt&9y&5 &cT&6o&ek&ae&bn'
+  enable: false
 
 tokens:
   buy_price: 100
