@@ -36,6 +36,7 @@
                         </relocation>
                     </relocations>
                 </configuration>
+
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -59,11 +60,21 @@
             <version>RELEASE</version>
         </dependency>
 
+        <!-- bStats -->
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>1.2</version>
         </dependency>
+
+        <!-- this is for the config with comments -->
+        <dependency>
+            <groupId>de.articdive</groupId>
+            <artifactId>CommentedConfiguration</artifactId>
+            <version>2.0-RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+
 
 
     </dependencies>
