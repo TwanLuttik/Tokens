@@ -1,6 +1,7 @@
 package com.twanl.tokens.commands;
 
 import com.twanl.tokens.Tokens;
+import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.ConfigManager;
@@ -16,13 +17,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.bukkit.Bukkit.getServer;
 
@@ -538,11 +533,64 @@ public  class Commands implements CommandExecutor, TabCompleter {
                 }
             } else if (args[0].equalsIgnoreCase("shop")) {
                 if (p.hasPermission("tokens.shop")) {
-                    if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
+                    if (args.length == 1) {
+                        if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
 
-                        //tshopApi.menuApi.inventory(p);
-                        tshopApi.menuApi.defaultInv(p);
+                            //tshopApi.menuApi.inventory(p);
+                            tshopApi.menuApi.defaultInv(p);
+                        }
+                    } else if (args[1].equalsIgnoreCase("edit")) {
+
+                        // shows the command usage
+                        if (args.length == 2) {
+                            p.sendMessage(Strings.red + "/tokens shop edit");
+                            return true;
+                        }
+
+
                     }
+                }
+            } else if (args[0].equalsIgnoreCase("top")) {
+                if (p.hasPermission("tokens.top")) {
+
+
+                    HashMap<UUID, Integer> map = new HashMap<UUID, Integer>();
+
+                    for (String i : cfgM.getPlayers().getConfigurationSection("").getKeys(false)) {
+
+                        int getTokens = cfgM.getPlayers().getInt(i + ".tokens");
+                        UUID uuid = UUID.fromString(i);
+
+                        map.put(uuid, getTokens);
+                    }
+                    Object[] a = map.entrySet().toArray();
+
+                    //noinspection unchecked
+                    Arrays.sort(a, new Comparator() {
+                        @SuppressWarnings("unchecked")
+                        public int compare(Object o1, Object o2) {
+                            return ((Map.Entry<String, Integer>) o2).getValue().compareTo(((Map.Entry<String, Integer>) o1).getValue());
+                        }
+                    });
+
+                    p.sendMessage(Strings.DgrayBS + "----------" + Strings.reset + " " + Strings.greenB + "Top 10" + Strings.reset + " " + Strings.DgrayBS + "-----------");
+
+                    // i want to loop this "for loop" 10 times, how can i do thah?
+                    int count = 0;
+                    for (Object e : a) {
+                        if (count == 10) {
+                            break;
+                        }
+
+                        int playerPlace = count + 1;
+                        @SuppressWarnings("unchecked") OfflinePlayer p1 = Bukkit.getOfflinePlayer(((Map.Entry<UUID, Integer>) e).getKey());
+                        //noinspection unchecked
+                        p.sendMessage(Strings.yellow + "#" + playerPlace + " " + Strings.gold + p1.getName() + Strings.gray + ": " + Strings.white + ((Map.Entry<UUID, Integer>) e).getValue());
+                        count++;
+                    }
+                    p.sendMessage(Strings.DgrayBS + "----------------------------");
+
+
                 }
             }
 
@@ -551,16 +599,18 @@ public  class Commands implements CommandExecutor, TabCompleter {
         return false;
     }
 
+
     private TokenShop tshopApi = (TokenShop) getServer().getPluginManager().getPlugin("TokenShop");
 
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help", "shop");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help", "shop", "top");
         }
 
         return null;
     }
 
 }
+
