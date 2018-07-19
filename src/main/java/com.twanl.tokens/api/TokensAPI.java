@@ -4,6 +4,7 @@ import com.twanl.tokens.Tokens;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -23,14 +24,14 @@ public class TokensAPI {
     // remove tokens from the player
     public void playerRemoveTokens(Player p, int tokens) {
 
-        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p) - tokens);
+        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) - tokens);
         cfgM.savePlayers();
     }
 
     // add tokens to the player
     public void playerAddTokens(Player p, int tokens) {
 
-        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p) + tokens);
+        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) + tokens);
         cfgM.savePlayers();
     }
 
@@ -41,7 +42,13 @@ public class TokensAPI {
         cfgM.savePlayers();
     }
 
-    public int playerBalance(Player p) {
+//    public int playerBalance(Player p) {
+//
+//        return cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+//    }
+
+    public int playerBalance(UUID uuid) {
+        OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
 
         return cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
     }
