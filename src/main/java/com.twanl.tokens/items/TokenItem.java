@@ -52,6 +52,7 @@ public class TokenItem implements Listener{
     }
 
 
+    //TODO: is not removing the item from the player
     @SuppressWarnings("deprecation")
     public void removeToken(Player p) {
 
