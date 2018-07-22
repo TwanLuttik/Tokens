@@ -519,6 +519,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             + Strings.gray + "/tokens redeem\n"
                             + Strings.gray + "/tokens buy <amount>\n"
                             + Strings.gray + "/tokens sell <amount>\n"
+                            + Strings.gray + "/tokens top\n"
                             + Strings.gray + "/tokens shop\n"
                             + Strings.gray + "/tokens help"
                             + " \n"
