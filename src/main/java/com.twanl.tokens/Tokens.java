@@ -4,6 +4,7 @@ import com.twanl.tokens.NMS.VersionHandler;
 import com.twanl.tokens.NMS.v1_10.v1_10_R1;
 import com.twanl.tokens.NMS.v1_11.v1_11_R1;
 import com.twanl.tokens.NMS.v1_12.v1_12_R1;
+import com.twanl.tokens.NMS.v1_13.v1_13_R1;
 import com.twanl.tokens.NMS.v1_8.v1_8_R1;
 import com.twanl.tokens.NMS.v1_8.v1_8_R2;
 import com.twanl.tokens.NMS.v1_8.v1_8_R3;
@@ -213,8 +214,10 @@ public class Tokens extends JavaPlugin {
             nms = new v1_11_R1();
         } else if (version.equalsIgnoreCase("v1_12_R1")) {
             nms = new v1_12_R1();
+        } else if (version.equalsIgnoreCase("v1_13_R1")) {
+            nms = new v1_13_R1();
         } else {
-            getServer().getConsoleSender().sendMessage(Strings.red + "This plugin wil not work properly with version" + version);
+            getServer().getConsoleSender().sendMessage(Strings.logName + Strings.red + "This plugin wil not work properly with version " + version);
         }
     }
 
