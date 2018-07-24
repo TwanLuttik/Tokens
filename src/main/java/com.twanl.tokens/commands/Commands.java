@@ -52,25 +52,26 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
+                if (p.hasPermission("tokens.tokens")) {
 
 
-                String transactionPlayer = lib.transactionPlayer(p.getUniqueId());
-                String transactionDate = lib.transactionDate(p.getUniqueId());
-                String transactionAmount = lib.transactionAmount(p.getUniqueId());
+                    String transactionPlayer = lib.transactionPlayer(p.getUniqueId());
+                    String transactionDate = lib.transactionDate(p.getUniqueId());
+                    String transactionAmount = lib.transactionAmount(p.getUniqueId());
 
-                String PlayerTokens = String.valueOf(lib.balanceInt(p.getUniqueId()));
-
-
-
-                p.sendMessage(Strings.DgrayBS + "-                                    \n"
-                        + Strings.gray + "Balance: " + Strings.green + PlayerTokens + " " + lib.getPrefix() + "\n"
-                        + Strings.gray + "Latest received transaction:\n"
-                        + Strings.gray + "  Data: " + Strings.green + transactionDate + "\n"
-                        + Strings.gray + "  From: " + Strings.green + transactionPlayer + "\n"
-                        + Strings.gray + "  Amount: " + Strings.green + transactionAmount + "\n"
-                        + Strings.DgrayBS + "-                                    \n");
+                    String PlayerTokens = String.valueOf(lib.balanceInt(p.getUniqueId()));
 
 
+                    p.sendMessage(Strings.DgrayBS + "-                                    \n"
+                            + Strings.gray + "Balance: " + Strings.green + PlayerTokens + " " + lib.getPrefix() + "\n"
+                            + Strings.gray + "Latest received transaction:\n"
+                            + Strings.gray + "  Data: " + Strings.green + transactionDate + "\n"
+                            + Strings.gray + "  From: " + Strings.green + transactionPlayer + "\n"
+                            + Strings.gray + "  Amount: " + Strings.green + transactionAmount + "\n"
+                            + Strings.DgrayBS + "-                                    \n");
+
+
+                }
             } else if (args[0].equalsIgnoreCase("get")) {
                 if (p.hasPermission("tokens.get")) {
 
