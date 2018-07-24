@@ -46,19 +46,16 @@ public class Tokens extends JavaPlugin {
     public VersionHandler nms;
 
     public static Economy economy;
-    public ConfigManager cfgM;
+    private ConfigManager cfgM;
 
     @SuppressWarnings("unused")
     private TokenShop tshopApi = (TokenShop) Bukkit.getServer().getPluginManager().getPlugin("TokenShop");
-    public TokensAPI TokensAPI;
 
 
 
     public void onEnable() {
 
         getServerVersion();
-        // Api for other DEV
-        TokensAPI = new TokensAPI();
 
         //noinspection unused
         Metrics metrics = new Metrics(this);
