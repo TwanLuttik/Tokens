@@ -5,7 +5,8 @@
 #
 #
 # Don't edit the ConfigVersion
-ConfigVersion: 1.0
+ConfigVersion: 1.1
+database: file
 
 update_message: true
 bonus_message: '&a&l» &r&freceived &a{tokens} {prefix} &ffrom your boss'
@@ -23,6 +24,14 @@ sign:
   line2: '&8&m-------------'
   line3: '  &fRight Click'
   line4: '&8&m-------------'
+
+mySQL:
+  host: "localhost"
+  port: 3306
+  username: "root"
+  password: ""
+  database: "players"
+  table: "player_data"
 
 
 
