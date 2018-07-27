@@ -2,6 +2,7 @@ package com.twanl.tokens.events;
 
 import com.twanl.tokens.Tokens;
 import com.twanl.tokens.lib.Lib;
+import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
 import org.bukkit.entity.Player;
@@ -17,10 +18,12 @@ public class JoinEvent implements Listener {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
     private Lib lib = new Lib();
+    private SQLlib sql = new SQLlib();
 
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
+        sql.createTable();
 
 
         // Update message
@@ -59,7 +62,13 @@ public class JoinEvent implements Listener {
         }
 
 
+        if (lib.sqlUse()) {
+            if (!sql.hasAccount(p.getUniqueId())) {
+                sql.addPlayer(p.getUniqueId());
+            }
+        } else {
+            lib.creatAccount(p.getUniqueId());
+        }
         //tokenApi.hasAccount(p.getUniqueId());
-        lib.creatAccount(p.getUniqueId());
     }
 }
