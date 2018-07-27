@@ -344,8 +344,9 @@ public class Strings {
     public static String reset = ChatColor.RESET + "";
 
 
-    public static String logName = ChatColor.GREEN + "[Tokens] ";
-    public static String noPerm = ChatColor.RED + "" + ChatColor.BOLD + "* You don't have permissions to do that!";
+    public static String logName = green + "[Tokens] " + reset;
+    public static String prefix = Dgray + "[" + green + "PlayerCount" + Dgray + "] " + ChatColor.RESET;
+    public static String noPerm = redB + "* You don't have permissions to do that!";
 
 
 
