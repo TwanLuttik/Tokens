@@ -15,6 +15,7 @@ import com.twanl.tokens.commands.Commands;
 import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
+import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Metrics;
 import com.twanl.tokens.utils.Strings;
@@ -28,6 +29,9 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * Created by Twan on 3/22/2018.
@@ -47,6 +51,10 @@ public class Tokens extends JavaPlugin {
 
     public static Economy economy;
     private ConfigManager cfgM;
+    private Connection connection;
+    public String host, database, username, password, table;
+    public int port;
+
 
     @SuppressWarnings("unused")
     private TokenShop tshopApi = (TokenShop) Bukkit.getServer().getPluginManager().getPlugin("TokenShop");
@@ -54,6 +62,11 @@ public class Tokens extends JavaPlugin {
 
 
     public void onEnable() {
+
+        // if the database methode is SQL than use the sql else use the file methode
+        if (getConfig().get("database").equals("sql")) {
+            mysqlSetup();
+        }
 
         getServerVersion();
 
@@ -110,6 +123,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
+        getServer().getPluginManager().registerEvents(new SQLlib(), this);
 
         // Register Command Class
         Commands commands = new Commands();
@@ -147,7 +161,7 @@ public class Tokens extends JavaPlugin {
         } else {
             // if configversion is not match, than back-up the file and create the updated file
             double a = getConfig().getDouble("ConfigVersion");
-            if (a != 1.0) {
+            if (a != 1.1) {
                 File configFile = new File(getDataFolder(), "config.yml");
                 File file2 = new File(getDataFolder(), "config_old.yml");
 
@@ -218,5 +232,41 @@ public class Tokens extends JavaPlugin {
         }
     }
 
+    public void mysqlSetup() {
+        host = getConfig().getString("mySQL.host");
+        port = getConfig().getInt("mySQL.port");
+        database = getConfig().getString("mySQL.database");
+        username = getConfig().getString("mySQL.username");
+        password = getConfig().getString("mySQL.password");
+        table = getConfig().getString("mySQL.table");
+
+        try {
+
+            synchronized (this) {
+                if (getConnection() != null && !getConnection().isClosed()) {
+                    return;
+                }
+
+                Class.forName("com.mysql.jdbc.Driver");
+                setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":"
+                        + this.port + "/" + this.database, this.username, this.password));
+
+
+                Bukkit.getConsoleSender().sendMessage(Strings.logName + "mySQL connected to database: " +Strings.green + database);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "mySQL cannot find database");
+//            e.printStackTrace();
+
+        }
+    }
+
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
 }
