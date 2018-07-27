@@ -1,14 +1,15 @@
 package com.twanl.tokens.commands;
 
 import com.twanl.tokens.Tokens;
-import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
+import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokenshop.TokenShop;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -26,17 +27,16 @@ import static org.bukkit.Bukkit.getServer;
  **/
 
 @SuppressWarnings("deprecation")
-public  class Commands implements CommandExecutor, TabCompleter {
+public class Commands implements CommandExecutor, TabCompleter {
 
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-    private ConfigManager cfgM = new ConfigManager();
+    private ConfigManager config = new ConfigManager();
     private TokenItem CI = new TokenItem();
     private Lib lib = new Lib();
     private Functions F = new Functions();
-
-
-
+    private SQLlib sql = new SQLlib();
+    public static HashMap<UUID, Integer> map = new HashMap<>();
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -47,29 +47,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
         Player p = (Player) sender;
 
-        cfgM.setup();
+        config.setup();
 
 
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
                 if (p.hasPermission("tokens.tokens")) {
-
-
-                    String transactionPlayer = lib.transactionPlayer(p.getUniqueId());
-                    String transactionDate = lib.transactionDate(p.getUniqueId());
-                    String transactionAmount = lib.transactionAmount(p.getUniqueId());
-
-                    String PlayerTokens = String.valueOf(lib.balanceInt(p.getUniqueId()));
-
-
-                    p.sendMessage(Strings.DgrayBS + "-                                    \n"
-                            + Strings.gray + "Balance: " + Strings.green + PlayerTokens + " " + lib.getPrefix() + "\n"
-                            + Strings.gray + "Latest received transaction:\n"
-                            + Strings.gray + "  Data: " + Strings.green + transactionDate + "\n"
-                            + Strings.gray + "  From: " + Strings.green + transactionPlayer + "\n"
-                            + Strings.gray + "  Amount: " + Strings.green + transactionAmount + "\n"
-                            + Strings.DgrayBS + "-                                    \n");
-
+                    p.sendMessage(Strings.gray + "do "+Strings.green+"/tokens help" + Strings.gray + " for more information.");
 
                 }
             } else if (args[0].equalsIgnoreCase("get")) {
@@ -92,7 +76,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     int tokenCommand = Integer.parseInt(args[1]);
-                    int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+                    int playerTokens = config.getPlayers().getInt(p.getUniqueId() + ".tokens");
 
                     // If 0 it will not execute
                     if (tokenCommand == 0) {
@@ -196,8 +180,8 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     int tokenCommand = Integer.parseInt(args[1]);
-                    String targetUUID;
-                    targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
+                    UUID targetUUID;
+                    targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId();
 
 
                     // Check if player exist, if not adding the player
@@ -211,7 +195,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    lib.addTokens(UUID.fromString(targetUUID), p.getUniqueId(), tokenCommand);
+                    lib.addTokens(p.getUniqueId(), targetUUID, tokenCommand);
                 }
 
             } else if (args[0].equalsIgnoreCase("remove")) {
@@ -250,13 +234,13 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
-                    int intTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
+                    int intTokens = config.getPlayers().getInt(targetUUID + ".tokens");
 
 
                     // Check if player exist, if not adding the player
-                    if (!cfgM.getPlayers().contains(targetUUID)) {
-                        cfgM.getPlayers().set(targetUUID + ".tokens", 0);
-                        cfgM.savePlayers();
+                    if (!config.getPlayers().contains(targetUUID)) {
+                        config.getPlayers().set(targetUUID + ".tokens", 0);
+                        config.savePlayers();
                     }
 
 
@@ -268,9 +252,16 @@ public  class Commands implements CommandExecutor, TabCompleter {
 
 
                     // Check if the player has enough coins to remove
-                    if (tokenCommand > intTokens) {
-                        p.sendMessage(Strings.red + F.getName(targetUUID) + " does not have that much " + lib.getPrefix() + "!");
-                        return true;
+                    if (lib.sqlUse()) {
+                        if (tokenCommand > sql.getTokens(UUID.fromString(targetUUID))) {
+                            p.sendMessage(Strings.red + F.getName(targetUUID) + " does not have that much " + lib.getPrefix() + "!");
+                            return true;
+                        }
+                    } else {
+                        if (tokenCommand > intTokens) {
+                            p.sendMessage(Strings.red + F.getName(targetUUID) + " does not have that much " + lib.getPrefix() + "!");
+                            return true;
+                        }
                     }
 
 
@@ -361,7 +352,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     String targetUUID;
                     targetUUID = Bukkit.getOfflinePlayer(args[2]).getUniqueId().toString();
 
-                    int playerTokens = cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+                    int playerTokens = config.getPlayers().getInt(p.getUniqueId() + ".tokens");
 
 
                     // if he try to pay himself it wil exit the command
@@ -383,13 +374,19 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     }
 
                     // Check if the player has enough coins to remove
+                    if (lib.sqlUse()) {
+                        if (tokenCommand > sql.getTokens(p.getUniqueId())) {
+                            p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
+                            return true;
+                        }
 
-                    if (tokenCommand > playerTokens) {
-                        p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
-                        return true;
+                    } else {
+                        if (tokenCommand > playerTokens) {
+                            p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
+                            return true;
+                        }
                     }
 
-                    //tokenApi.transactionSuccess(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
                     lib.payPlayer(p.getUniqueId(), UUID.fromString(targetUUID), tokenCommand);
 
                 }
@@ -430,14 +427,14 @@ public  class Commands implements CommandExecutor, TabCompleter {
                     plugin.saveDefaultConfig();
                     plugin.reloadConfig();
 
-                    cfgM.savePlayers();
-                    cfgM.reloadplayers();
+                    config.savePlayers();
+                    config.reloadplayers();
 
                     if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
                         tshopApi.menuApi.saveData();
                     }
 
-                    p.sendMessage(Strings.greenI + "configuration files are reloaded");
+                    p.sendMessage(Strings.prefix + Strings.greenI + "configuration files are reloaded");
                 }
 
             } else if (args[0].equalsIgnoreCase("buy")) {
@@ -526,6 +523,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
                             + " \n"
                             + "     " + Strings.green + "Admin Commands\n" + Strings.reset
                             + Strings.gray + "/tokens reload\n"
+                            + Strings.gray + "/tokens convert sql\n"
                             + Strings.gray + "/tokens bonus <amount>\n"
                             + Strings.gray + "/tokens remove <amount> <player>\n"
                             + Strings.gray + "/tokens add <amount> <player>\n"
@@ -556,46 +554,121 @@ public  class Commands implements CommandExecutor, TabCompleter {
                 if (p.hasPermission("tokens.top")) {
 
 
-                    HashMap<UUID, Integer> map = new HashMap<UUID, Integer>();
+                    //TODO: get the total rows
+                    //TODO: get the information from each row
 
-                    for (String i : cfgM.getPlayers().getConfigurationSection("").getKeys(false)) {
+                    if (lib.sqlUse()) {
+                        sql.getAllRowstoHashMap();
+//                        HashMap<UUID, Integer> map = new HashMap<UUID, Integer>();
 
-                        int getTokens = cfgM.getPlayers().getInt(i + ".tokens");
-                        UUID uuid = UUID.fromString(i);
+//                        for (String i : config.getPlayers().getConfigurationSection("").getKeys(false)) {
+//
+//                            int getTokens = config.getPlayers().getInt(i + ".tokens");
+//                            UUID uuid = UUID.fromString(i);
+//
+//                            map.put(uuid, getTokens);
+//                        }
 
-                        map.put(uuid, getTokens);
-                    }
-                    Object[] a = map.entrySet().toArray();
+                        Object[] a = map.entrySet().toArray();
 
-                    //noinspection unchecked
-                    Arrays.sort(a, new Comparator() {
-                        @SuppressWarnings("unchecked")
-                        public int compare(Object o1, Object o2) {
-                            return ((Map.Entry<String, Integer>) o2).getValue().compareTo(((Map.Entry<String, Integer>) o1).getValue());
-                        }
-                    });
-
-                    p.sendMessage(Strings.DgrayBS + "----------" + Strings.reset + " " + Strings.greenB + "Top 10" + Strings.reset + " " + Strings.DgrayBS + "-----------");
-
-                    // i want to loop this "for loop" 10 times, how can i do thah?
-                    int count = 0;
-                    for (Object e : a) {
-                        if (count == 10) {
-                            break;
-                        }
-
-                        int playerPlace = count + 1;
-                        @SuppressWarnings("unchecked") OfflinePlayer p1 = Bukkit.getOfflinePlayer(((Map.Entry<UUID, Integer>) e).getKey());
                         //noinspection unchecked
-                        p.sendMessage(Strings.yellow + "#" + playerPlace + " " + Strings.gold + p1.getName() + Strings.gray + ": " + Strings.white + ((Map.Entry<UUID, Integer>) e).getValue());
-                        count++;
+                        Arrays.sort(a, new Comparator() {
+                            @SuppressWarnings("unchecked")
+                            public int compare(Object o1, Object o2) {
+                                return ((Map.Entry<String, Integer>) o2).getValue().compareTo(((Map.Entry<String, Integer>) o1).getValue());
+                            }
+                        });
+
+                        p.sendMessage(Strings.DgrayBS + "----------" + Strings.reset + " " + Strings.greenB + "Top 10" + Strings.reset + " " + Strings.DgrayBS + "-----------");
+
+                        // i want to loop this "for loop" 10 times, how can i do thah?
+                        int count = 0;
+                        for (Object e : a) {
+                            if (count == 10) {
+                                break;
+                            }
+
+                            int playerPlace = count + 1;
+                            @SuppressWarnings("unchecked") OfflinePlayer p1 = Bukkit.getOfflinePlayer(((Map.Entry<UUID, Integer>) e).getKey());
+                            //noinspection unchecked
+                            p.sendMessage(Strings.yellow + "#" + playerPlace + " " + Strings.gold + p1.getName() + Strings.gray + ": " + Strings.white + ((Map.Entry<UUID, Integer>) e).getValue());
+                            count++;
+                        }
+                        p.sendMessage(Strings.DgrayBS + "----------------------------");
+
+
+                    } else {
+//                        HashMap<UUID, Integer> map = new HashMap<UUID, Integer>();
+
+                        for (String i : config.getPlayers().getConfigurationSection("").getKeys(false)) {
+
+                            int getTokens = config.getPlayers().getInt(i + ".tokens");
+                            UUID uuid = UUID.fromString(i);
+
+                            map.put(uuid, getTokens);
+                        }
+                        Object[] a = map.entrySet().toArray();
+
+                        //noinspection unchecked
+                        Arrays.sort(a, new Comparator() {
+                            @SuppressWarnings("unchecked")
+                            public int compare(Object o1, Object o2) {
+                                return ((Map.Entry<String, Integer>) o2).getValue().compareTo(((Map.Entry<String, Integer>) o1).getValue());
+                            }
+                        });
+
+                        p.sendMessage(Strings.DgrayBS + "----------" + Strings.reset + " " + Strings.greenB + "Top 10" + Strings.reset + " " + Strings.DgrayBS + "-----------");
+
+                        // i want to loop this "for loop" 10 times, how can i do thah?
+                        int count = 0;
+                        for (Object e : a) {
+                            if (count == 10) {
+                                break;
+                            }
+
+                            int playerPlace = count + 1;
+                            @SuppressWarnings("unchecked") OfflinePlayer p1 = Bukkit.getOfflinePlayer(((Map.Entry<UUID, Integer>) e).getKey());
+                            //noinspection unchecked
+                            p.sendMessage(Strings.yellow + "#" + playerPlace + " " + Strings.gold + p1.getName() + Strings.gray + ": " + Strings.white + ((Map.Entry<UUID, Integer>) e).getValue());
+                            count++;
+                        }
+                        p.sendMessage(Strings.DgrayBS + "----------------------------");
                     }
-                    p.sendMessage(Strings.DgrayBS + "----------------------------");
+
+                }
+            } else if (args[0].equalsIgnoreCase("convert")) {
+                if (p.hasPermission("tokens.convert")) {
+
+                    String convertTO = args[1];
+                    if (convertTO.equals("sql")) {
+
+
+                        for (String key : config.getPlayers().getConfigurationSection("").getKeys(false)) {
+                            UUID uuid = UUID.fromString(key);
+                            int tokens = config.getPlayers().getInt(key + ".tokens");
+
+                            OfflinePlayer p1 = Bukkit.getOfflinePlayer(uuid);
+
+                            if (sql.hasAccount(p1.getUniqueId())) {
+                                sql.setTokens(uuid, tokens);
+                            } else {
+                                sql.addPlayer(uuid);
+                                sql.setTokens(uuid, tokens);
+                            }
+
+                        }
+                        p.sendMessage(Strings.prefix + "Data from flat-file converted to the sql database.");
+
+
+                    } else {
+                        p.sendMessage(Strings.prefix + Strings.red + "You can only convert to " + Strings.redB + "sql");
+                        return true;
+                    }
 
 
                 }
-            }
 
+            }
             return true;
         }
         return false;
@@ -608,7 +681,7 @@ public  class Commands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help", "shop", "top");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help", "shop", "top", "convert");
         }
 
         return null;
