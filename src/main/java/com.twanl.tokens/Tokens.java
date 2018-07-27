@@ -66,6 +66,8 @@ public class Tokens extends JavaPlugin {
         // if the database methode is SQL than use the sql else use the file methode
         if (getConfig().get("database").equals("sql")) {
             mysqlSetup();
+            SQLlib sql = new SQLlib();
+            sql.createTable();
         }
 
         getServerVersion();
