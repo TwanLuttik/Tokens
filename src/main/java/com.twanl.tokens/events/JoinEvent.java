@@ -23,7 +23,6 @@ public class JoinEvent implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player p = e.getPlayer();
-        sql.createTable();
 
 
         // Update message
