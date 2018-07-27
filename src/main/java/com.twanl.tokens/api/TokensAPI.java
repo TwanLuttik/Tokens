@@ -1,6 +1,8 @@
 package com.twanl.tokens.api;
 
 import com.twanl.tokens.Tokens;
+import com.twanl.tokens.lib.Lib;
+import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
 import org.bukkit.Bukkit;
@@ -19,48 +21,68 @@ public class TokensAPI {
 
     private ConfigManager cfgM = new ConfigManager();
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
+    private SQLlib sql = new SQLlib();
+    private Lib lib = new Lib();
 
 
     // remove tokens from the player
-    public void playerRemoveTokens(Player p, int tokens) {
-
-        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) - tokens);
-        cfgM.savePlayers();
+    public void playerRemoveTokens(UUID uuid, int tokens) {
+        if (lib.sqlUse()) {
+            sql.removeTokens(uuid, tokens);
+        } else {
+            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
+            cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) - tokens);
+            cfgM.savePlayers();
+        }
     }
 
     // add tokens to the player
-    public void playerAddTokens(Player p, int tokens) {
-
-        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) + tokens);
-        cfgM.savePlayers();
+    public void playerAddTokens(UUID uuid, int tokens) {
+        if (lib.sqlUse()) {
+            sql.addTokens(uuid, tokens);
+        } else {
+            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
+            cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) + tokens);
+            cfgM.savePlayers();
+        }
     }
 
 
-    public void playerSetTokens(Player p, int tokens) {
-
-        cfgM.getPlayers().set(p.getUniqueId() + ".tokens", tokens);
-        cfgM.savePlayers();
+    public void playerSetTokens(UUID uuid, int tokens) {
+        if (lib.sqlUse()) {
+            sql.setTokens(uuid, tokens);
+        } else {
+            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
+            cfgM.getPlayers().set(p.getUniqueId() + ".tokens", tokens);
+            cfgM.savePlayers();
+        }
     }
 
-//    public int playerBalance(Player p) {
-//
-//        return cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
-//    }
 
     public int playerBalance(UUID uuid) {
-        OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-
-        return cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+        if (lib.sqlUse()) {
+            return sql.getTokens(uuid);
+        } else {
+            OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
+            return cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+        }
     }
 
 
-    public boolean hasAccount(UUID playerUUID) {
-        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-
-        if (!cfgM.getPlayers().contains(String.valueOf(p.getUniqueId()))) {
-            return false;
+    public boolean hasAccount(UUID uuid) {
+        if (lib.sqlUse()) {
+            if (!sql.hasAccount(uuid)) {
+                return false;
+            }
+            return true;
+        } else {
+            Player p = (Player) Bukkit.getOfflinePlayer(uuid);
+            if (!cfgM.getPlayers().contains(String.valueOf(p.getUniqueId()))) {
+                return false;
+            } else {
+                return true;
+            }
         }
-        return true;
     }
 
 
