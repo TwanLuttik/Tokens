@@ -132,7 +132,7 @@ public class SQLlib implements Listener {
     private boolean tableExist() {
         try {
             DatabaseMetaData dbm = plugin.getConnection().getMetaData();
-            ResultSet tables = dbm.getTables(null, null, "player_data", null);
+            ResultSet tables = dbm.getTables(null, null, plugin.table, null);
             if (tables.next()) {
                 return true;
             } else {
@@ -149,7 +149,7 @@ public class SQLlib implements Listener {
     //TODO: get all the information from the table and put it in an HashMap
     public void getAllRowstoHashMap() {
         try {
-            PreparedStatement statement = plugin.getConnection().prepareStatement("SELECT * FROM player_data");
+            PreparedStatement statement = plugin.getConnection().prepareStatement("SELECT * FROM " + plugin.table);
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 UUID uuid = UUID.fromString(rs.getString("UUID"));
