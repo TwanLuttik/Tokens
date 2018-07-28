@@ -67,7 +67,10 @@ public class Tokens extends JavaPlugin {
         if (getConfig().get("database").equals("sql")) {
             mysqlSetup();
             SQLlib sql = new SQLlib();
-            sql.createTable();
+            try {
+                sql.createTable();
+            } catch (Exception ignored) {
+            }
         }
 
         getServerVersion();
