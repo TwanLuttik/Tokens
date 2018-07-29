@@ -13,6 +13,7 @@ import com.twanl.tokens.NMS.v1_9.v1_9_R2;
 import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.commands.Commands;
 import com.twanl.tokens.events.JoinEvent;
+import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.sql.SQLlib;
@@ -128,6 +129,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
+        getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);
 
         // Register Command Class
