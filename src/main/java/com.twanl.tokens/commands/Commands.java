@@ -90,15 +90,16 @@ public class Commands implements CommandExecutor, TabCompleter {
                         return true;
                     }
 
+                    // check if the player has enough space in thear inventory
                     if (p.getInventory().firstEmpty() == -1) {
                         p.sendMessage(Strings.red + "You don't have enough inventory space!");
                         return true;
                     }
 
 
-                    CI.addToken(p, tokenCommand);
+                    CI.addTokenNote(p, tokenCommand);
                 }
-            } else if (args[0].equalsIgnoreCase("redeem")) {
+            } /*else if (args[0].equalsIgnoreCase("redeem")) {
                 if (p.hasPermission("tokens.redeem")) {
 
                     //check if player
@@ -108,11 +109,11 @@ public class Commands implements CommandExecutor, TabCompleter {
                     }
 
 
-                    CI.removeToken(p);
+//                    CI.removeTokenNote(p);
 
 
                 }
-            } else if (args[0].equalsIgnoreCase("balance")) {
+            } */else if (args[0].equalsIgnoreCase("balance")) {
                 if (p.hasPermission("tokens.balance")) {
 
                     // Check if player exist, if not adding the player
@@ -514,7 +515,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                             + Strings.gray + "/tokens balance <player>\n"
                             + Strings.gray + "/tokens pay <amount> <player>\n"
                             + Strings.gray + "/tokens get <amount>\n"
-                            + Strings.gray + "/tokens redeem\n"
+                            /*+ Strings.gray + "/tokens redeem\n"*/
                             + Strings.gray + "/tokens buy <amount>\n"
                             + Strings.gray + "/tokens sell <amount>\n"
                             + Strings.gray + "/tokens top\n"
@@ -554,8 +555,6 @@ public class Commands implements CommandExecutor, TabCompleter {
                 if (p.hasPermission("tokens.top")) {
 
 
-                    //TODO: get the total rows
-                    //TODO: get the information from each row
 
                     if (lib.sqlUse()) {
                         sql.getAllRowstoHashMap();
@@ -681,7 +680,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "redeem", "bonus", "reload", "buy", "sell", "help", "shop", "top", "convert");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", /*"redeem",*/ "bonus", "reload", "buy", "sell", "help", "shop", "top", "convert");
         }
 
         return null;
