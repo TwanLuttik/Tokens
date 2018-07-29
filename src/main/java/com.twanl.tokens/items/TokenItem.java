@@ -36,7 +36,7 @@ public class TokenItem implements Listener {
         ArrayList<String> lore = new ArrayList<>();
         lore.add(Strings.white + amount + " " + lib.getPrefix());
         lore.add(" ");
-        lore.add(Strings.gray + "Owner: " + p.getName());
+        lore.add(Strings.gray + "Created By: " + p.getName());
         meta.setLore(lore);
         item.setItemMeta(meta);
 
@@ -74,7 +74,7 @@ public class TokenItem implements Listener {
         ArrayList<String> lore = new ArrayList<>();
         lore.add(Strings.white + amount + " " + lib.getPrefix());
         lore.add(" ");
-        lore.add(Strings.gray + "Owner: " + ownerName);
+        lore.add(Strings.gray + "Created By: " + ownerName);
         meta.setLore(lore);
         item.setItemMeta(meta);
 
