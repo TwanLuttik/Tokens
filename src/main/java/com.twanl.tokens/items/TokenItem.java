@@ -24,7 +24,7 @@ public class TokenItem implements Listener {
     private Lib lib = new Lib();
     private SQLlib sql = new SQLlib();
 
-
+    @SuppressWarnings("deprecation")
     public void addTokenNote(Player p, int amount) {
 
         // The custom item
@@ -54,7 +54,7 @@ public class TokenItem implements Listener {
 
     }
 
-
+    @SuppressWarnings("deprecation")
     public void removeTokenNote(Player p) {
         String[] getLoreList = Strings.stripColor(p.getItemInHand().getItemMeta().getLore().toString()).split(" ");
 
