@@ -5,10 +5,13 @@ import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.sql.SQLException;
 
 /**
  * Created by Twan on 3/22/2018.
@@ -62,12 +65,16 @@ public class JoinEvent implements Listener {
 
 
         if (lib.sqlUse()) {
-            if (!sql.hasAccount(p.getUniqueId())) {
-                sql.addPlayer(p.getUniqueId());
+            try {
+                if (!sql.hasAccount(p.getUniqueId())) {
+                    sql.addPlayer(p.getUniqueId());
+                }
+            } catch (Exception e1) {
+                p.sendMessage(Strings.prefix + Strings.red + "error, check console!");
+                Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "Probably failed to connect to the mySQL database");
             }
         } else {
             lib.creatAccount(p.getUniqueId());
         }
-        //tokenApi.hasAccount(p.getUniqueId());
     }
 }
