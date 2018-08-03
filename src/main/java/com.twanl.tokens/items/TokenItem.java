@@ -70,8 +70,8 @@ public class TokenItem implements Listener {
         ItemMeta meta = item.getItemMeta();
         //noinspection RedundantArrayCreation
         meta.addItemFlags(new ItemFlag[]{ItemFlag.HIDE_ATTRIBUTES});
-        meta.setDisplayName(Strings.green + "Note");
         ArrayList<String> lore = new ArrayList<>();
+        meta.setDisplayName(Strings.green + "Note");
         lore.add(Strings.white + amount + " " + lib.getPrefix());
         lore.add(" ");
         lore.add(Strings.gray + "Created By: " + ownerName);
