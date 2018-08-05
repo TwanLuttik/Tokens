@@ -16,12 +16,12 @@ import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
+import com.twanl.tokens.menu.ShopMenu;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Metrics;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
-import com.twanl.tokenshop.TokenShop;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -57,10 +57,6 @@ public class Tokens extends JavaPlugin {
     public int port;
 
 
-    @SuppressWarnings("unused")
-    private TokenShop tshopApi = (TokenShop) Bukkit.getServer().getPluginManager().getPlugin("TokenShop");
-
-
 
     public void onEnable() {
 
@@ -70,8 +66,7 @@ public class Tokens extends JavaPlugin {
             SQLlib sql = new SQLlib();
             try {
                 sql.createTable();
-            } catch (Exception ignored) {
-            }
+            } catch (Exception ignored) {}
         }
 
         getServerVersion();
@@ -84,12 +79,6 @@ public class Tokens extends JavaPlugin {
             setupEconomy();
         } else {
             getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "VAULT NOT DETECTED, Some commands won't work.");
-        }
-
-        if (getServer().getPluginManager().getPlugin("TokenShop") != null) {
-            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + "++ TokenShop HOOKED.");
-        } else {
-            getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "TokenShop is not found. /token shop is disabled");
         }
 
 
@@ -129,6 +118,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
+        getServer().getPluginManager().registerEvents(new ShopMenu(), this);
         getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);
 
@@ -215,7 +205,7 @@ public class Tokens extends JavaPlugin {
         String a = getServer().getClass().getPackage().getName();
         String version = a.substring(a.lastIndexOf('.') + 1);
 
-        // Check
+        // Check if the server has the same craftbukkit version as this plugin
         if (version.equalsIgnoreCase("v1_8_R1")) {
             nms = new v1_8_R1();
         } else if (version.equalsIgnoreCase("v1_8_R2")) {
