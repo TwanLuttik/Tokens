@@ -11,17 +11,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.UUID;
 
 public class Lib {
 
-    private ConfigManager cfgM = new ConfigManager();
+    private ConfigManager config = new ConfigManager();
 
     public String transactionPlayer(UUID uuid) {
         Player p = Bukkit.getPlayer(uuid);
-        Object transactionPlayer = cfgM.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.player");
+        Object transactionPlayer = config.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.player");
 
         if (transactionPlayer == null) {
             return "No player";
@@ -31,7 +29,7 @@ public class Lib {
 
     public String transactionDate(UUID uuid) {
         Player p = Bukkit.getPlayer(uuid);
-        Object transactionDate = cfgM.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.date");
+        Object transactionDate = config.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.date");
 
         if (transactionDate == null) {
             return "No data";
@@ -41,7 +39,7 @@ public class Lib {
 
     public String transactionAmount(UUID uuid) {
         Player p = Bukkit.getPlayer(uuid);
-        Object transactionDate = cfgM.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.amount");
+        Object transactionDate = config.getPlayers().get(p.getUniqueId() + ".LastTransactionActivity.amount");
 
         if (transactionDate == null) {
             return "No value";
@@ -73,26 +71,15 @@ public class Lib {
             p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
         } else {
 
-            int playerTokens = cfgM.getPlayers().getInt(target + ".tokens");
+            int playerTokens = config.getPlayers().getInt(target + ".tokens");
 
-            cfgM.getPlayers().set(target + ".tokens", playerTokens + tokens);
-            cfgM.savePlayers();
+            config.getPlayers().set(target + ".tokens", playerTokens + tokens);
+            config.savePlayers();
 
             Player p = Bukkit.getPlayer(uuid);
             p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
         }
     }
-
-//    public void addTokens (UUID targetUUID, UUID playerUUID, int tokens) {
-//
-//        int playerTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-//
-//        cfgM.getPlayers().set(targetUUID + ".tokens", playerTokens + tokens);
-//        cfgM.savePlayers();
-//
-//        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-//        p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(targetUUID)));
-//    }
 
 
     public void removeTokens(UUID uuid, UUID target, int tokens) {
@@ -100,28 +87,21 @@ public class Lib {
             sql.removeTokens(target, tokens);
 
             Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green + F.getName(String.valueOf(target)));
+            if (uuid != null) {
+                p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green + F.getName(String.valueOf(target)));
+            }
         } else {
-            int playerTokens = cfgM.getPlayers().getInt(target + ".tokens");
+            int playerTokens = config.getPlayers().getInt(target + ".tokens");
 
-            cfgM.getPlayers().set(target + ".tokens", playerTokens - tokens);
-            cfgM.savePlayers();
+            config.getPlayers().set(target + ".tokens", playerTokens - tokens);
+            config.savePlayers();
 
             Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green + F.getName(String.valueOf(target)));
+            if (uuid != null) {
+                p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green + F.getName(String.valueOf(target)));
+            }
         }
     }
-
-//    public void removeTokens (UUID targetUUID, UUID playerUUID, int tokens) {
-//
-//        int playerTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-//
-//        cfgM.getPlayers().set(targetUUID + ".tokens", playerTokens - tokens);
-//        cfgM.savePlayers();
-//
-//        Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-//        p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green +  F.getName(String.valueOf(targetUUID)));
-//    }
 
     public void setTokens(UUID uuid, UUID target, int tokens) {
         if (sqlUse()) {
@@ -131,23 +111,14 @@ public class Lib {
             p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(target)));
         } else {
 
-            cfgM.getPlayers().set(target + ".tokens", tokens);
-            cfgM.savePlayers();
+            config.getPlayers().set(target + ".tokens", tokens);
+            config.savePlayers();
 
             Player p = Bukkit.getPlayer(uuid);
             p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(target)));
         }
 
     }
-
-//    public void setTokens (UUID targetUUID, UUID playerUUID, int tokens) {
-//
-//        cfgM.getPlayers().set(targetUUID + ".tokens", tokens);
-//        cfgM.savePlayers();
-//
-//        Player p = Bukkit.getPlayer(playerUUID);
-//        p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(targetUUID)));
-//    }
 
     public void giveallTokens(int tokens) {
         if (sqlUse()) {
@@ -168,12 +139,12 @@ public class Lib {
             String replacedMessage = defaultMessage.replace("{tokens}", tokens1).replace("{prefix}", getPrefix() + Strings.reset);
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                int playerTokens = cfgM.getPlayers().getInt(onlinePlayer.getUniqueId() + ".tokens");
-                cfgM.getPlayers().set(onlinePlayer.getUniqueId() + ".tokens", playerTokens + tokens);
+                int playerTokens = config.getPlayers().getInt(onlinePlayer.getUniqueId() + ".tokens");
+                config.getPlayers().set(onlinePlayer.getUniqueId() + ".tokens", playerTokens + tokens);
 
                 Strings.translateColorCodesPlayer(onlinePlayer, replacedMessage);
             }
-            cfgM.savePlayers();
+            config.savePlayers();
         }
     }
 
@@ -214,7 +185,7 @@ public class Lib {
             int tokensValue = plugin.getConfig().getInt("tokens.buy_price");
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
-            int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+            int playerTokens = config.getPlayers().getInt(playerUUID + ".tokens");
 
             // check if the player has enough balance to continue the transaction
             if (totalCheckOut > economy.getBalance(buyer)) {
@@ -228,8 +199,8 @@ public class Lib {
             // ....
             EconomyResponse r = economy.withdrawPlayer(buyer, totalCheckOut);
             if (r.transactionSuccess()) {
-                cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens + amount);
-                cfgM.savePlayers();
+                config.getPlayers().set(playerUUID + ".tokens", playerTokens + amount);
+                config.savePlayers();
                 p.sendMessage(Strings.gray + "You bought " + Strings.green + amount + " Tokens " + Strings.gray + "for " + Strings.green + "$" + totalCheckOut);
                 return true;
             } else {
@@ -276,7 +247,7 @@ public class Lib {
             Player p = Bukkit.getPlayer(playerUUID);
             // getting some information
             int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
-            int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
+            int playerTokens = config.getPlayers().getInt(playerUUID + ".tokens");
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
 
@@ -294,8 +265,8 @@ public class Lib {
             EconomyResponse r = economy.depositPlayer(buyer, totalCheckOut);
             if (r.transactionSuccess()) {
 
-                cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - amount);
-                cfgM.savePlayers();
+                config.getPlayers().set(playerUUID + ".tokens", playerTokens - amount);
+                config.savePlayers();
                 p.sendMessage(Strings.gray + "You sold " + Strings.green + amount + " " + getPrefix() + " " + Strings.gray + "for " + Strings.green + "$" + totalCheckOut);
 
                 return true;
@@ -316,17 +287,12 @@ public class Lib {
             p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " " + getPrefix());
         } else {
 
-            int tokensBalance = cfgM.getPlayers().getInt(uuid + ".tokens");
+            int tokensBalance = config.getPlayers().getInt(uuid + ".tokens");
             Player p = Bukkit.getPlayer(uuid);
             p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " " + getPrefix());
         }
     }
 
-//    public void balance(UUID playerUUID) {
-//        int tokensBalance = cfgM.getPlayers().getInt(playerUUID + ".tokens");
-//        Player p = Bukkit.getPlayer(playerUUID);
-//        p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " " + getPrefix());
-//    }
 
     public void balance(UUID uuid, UUID target) {
         if (sqlUse()) {
@@ -340,11 +306,11 @@ public class Lib {
             }
         } else {
             // check if player exist before paying
-            if (!cfgM.getPlayers().contains(String.valueOf(target))) {
+            if (!config.getPlayers().contains(String.valueOf(target))) {
                 Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.red + "Player not found");
             } else {
-                int tokensBalance = cfgM.getPlayers().getInt(target + ".tokens");
+                int tokensBalance = config.getPlayers().getInt(target + ".tokens");
                 //Player p = Bukkit.getPlayer(playerUUID);
                 Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.gray + F.getName(target.toString()) + " has " + Strings.green + tokensBalance + " " + getPrefix());
@@ -352,18 +318,6 @@ public class Lib {
         }
     }
 
-//    public void balance(UUID playerUUID, UUID targetUUID) {
-//        // check if player exist before paying
-//        if (!cfgM.getPlayers().contains(String.valueOf(targetUUID))) {
-//            Player p = Bukkit.getPlayer(playerUUID);
-//            p.sendMessage(Strings.red + "Player not found");
-//        } else {
-//            int tokensBalance = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-//            //Player p = Bukkit.getPlayer(playerUUID);
-//            Player p = Bukkit.getPlayer(playerUUID);
-//            p.sendMessage(Strings.gray + F.getName(targetUUID.toString()) + " has " + Strings.green + tokensBalance + " " + getPrefix());
-//        }
-//    }
 
     public void payPlayer(UUID uuid, UUID target, int tokens) {
         if (sqlUse()) {
@@ -384,14 +338,11 @@ public class Lib {
                 p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(target)) + " " + tokens);
 
                 // tells the target thath he received an amount of tokens
-                OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(target)));
+                @SuppressWarnings("deprecation") OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(target)));
                 if (playerReceiver.isOnline()) {
                     Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
                     pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "from " + Strings.green + p.getName());
                 }
-
-
-
 
             }
 
@@ -399,22 +350,22 @@ public class Lib {
 
 
             // check if player exist before paying
-            if (!cfgM.getPlayers().contains(String.valueOf(target))) {
+            if (!config.getPlayers().contains(String.valueOf(target))) {
                 Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.red + "Player not found");
             } else {
 
-                int targetTokens = cfgM.getPlayers().getInt(target + ".tokens");
-                int playerTokens = cfgM.getPlayers().getInt(uuid + ".tokens");
+                int targetTokens = config.getPlayers().getInt(target + ".tokens");
+                int playerTokens = config.getPlayers().getInt(uuid + ".tokens");
 
-                cfgM.getPlayers().set(uuid + ".tokens", playerTokens - tokens);
-                cfgM.getPlayers().set(target + ".tokens", tokens + targetTokens);
-                cfgM.savePlayers();
+                config.getPlayers().set(uuid + ".tokens", playerTokens - tokens);
+                config.getPlayers().set(target + ".tokens", tokens + targetTokens);
+                config.savePlayers();
 
                 Player p = (Player) Bukkit.getOfflinePlayer(uuid);
                 p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(target)) + " " + tokens);
 
-                OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(target)));
+                @SuppressWarnings("deprecation") OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(target)));
                 if (playerReceiver.isOnline()) {
                     Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
                     pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "from " + Strings.green + p.getName());
@@ -425,56 +376,21 @@ public class Lib {
                 Object transactionTime_HMS = new SimpleDateFormat("HH:mm:ss").format(new Date());
                 Object transactionTime_YMD = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 
-                cfgM.getPlayers().set(target + ".LastTransactionActivity.date", transactionTime_HMS + " | " + transactionTime_YMD);
-                cfgM.getPlayers().set(target + ".LastTransactionActivity.player", F.getName(uuid.toString()));
-                cfgM.getPlayers().set(target + ".LastTransactionActivity.amount", tokens);
-                cfgM.savePlayers();
+                config.getPlayers().set(target + ".LastTransactionActivity.date", transactionTime_HMS + " | " + transactionTime_YMD);
+                config.getPlayers().set(target + ".LastTransactionActivity.player", F.getName(uuid.toString()));
+                config.getPlayers().set(target + ".LastTransactionActivity.amount", tokens);
+                config.savePlayers();
                 */
             }
         }
     }
 
-//    public void payPlayer(UUID playerUUID, UUID targetUUID, int tokens) {
-//
-//        // check if player exist before paying
-//        if (!cfgM.getPlayers().contains(String.valueOf(targetUUID))) {
-//            Player p = Bukkit.getPlayer(playerUUID);
-//            p.sendMessage(Strings.red + "Player not found");
-//        } else {
-//
-//            int targetTokens = cfgM.getPlayers().getInt(targetUUID + ".tokens");
-//            int playerTokens = cfgM.getPlayers().getInt(playerUUID + ".tokens");
-//
-//            cfgM.getPlayers().set(playerUUID + ".tokens", playerTokens - tokens);
-//            cfgM.getPlayers().set(targetUUID + ".tokens", tokens + targetTokens);
-//            cfgM.savePlayers();
-//
-//            Player p = (Player) Bukkit.getOfflinePlayer(playerUUID);
-//            p.sendMessage(Strings.gray + "You payed " + Strings.green + F.getName(String.valueOf(targetUUID)) + " " + tokens);
-//
-//            OfflinePlayer playerReceiver = Bukkit.getOfflinePlayer(F.getName(String.valueOf(targetUUID)));
-//            if (playerReceiver.isOnline()) {
-//                Player pOnline = Bukkit.getPlayer(playerReceiver.getUniqueId());
-//                pOnline.sendMessage(Strings.gray + "You received " + Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "from " + Strings.green + p.getName());
-//            }
-//
-//
-//            Object transactionTime_HMS = new SimpleDateFormat("HH:mm:ss").format(new Date());
-//            Object transactionTime_YMD = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
-//
-//            cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.date", transactionTime_HMS + " | " + transactionTime_YMD);
-//            cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.player", F.getName(playerUUID.toString()));
-//            cfgM.getPlayers().set(targetUUID + ".LastTransactionActivity.amount", tokens);
-//            cfgM.savePlayers();
-//        }
-//    }
-
 
     // add player to database if player not exist
     public void creatAccount(UUID uuid) {
-        if (!cfgM.getPlayers().contains(String.valueOf(uuid))) {
-            cfgM.getPlayers().set(uuid + ".tokens", 0);
-            cfgM.savePlayers();
+        if (!config.getPlayers().contains(String.valueOf(uuid))) {
+            config.getPlayers().set(uuid + ".tokens", 0);
+            config.savePlayers();
         }
     }
 
@@ -484,29 +400,9 @@ public class Lib {
         if (sqlUse()) {
             return sql.getTokens(uuid);
         } else {
-            return cfgM.getPlayers().getInt(uuid + ".tokens");
+            return config.getPlayers().getInt(uuid + ".tokens");
         }
     }
-
-
-//    public void transactionSuccess(UUID uuid, UUID targetUUID, int tokens) {
-//        Player p = Bukkit.getPlayer(uuid);
-//        int targetPBalance_before = balanceInt(targetUUID);
-//
-//
-//        payPlayer(uuid, targetUUID, tokens);
-//
-//        int targetPBalance_after = balanceInt(targetUUID);
-//
-//        if (targetPBalance_before == targetPBalance_after) {
-//            p.sendMessage(Strings.redI + "failed to send the tokens!");
-//        } else {
-//            // send nothing when transaction worked
-//        }
-//
-//    }
-
-
 
 
     public String getPrefix() {
@@ -517,6 +413,84 @@ public class Lib {
         }
     }
 
+    public boolean versionMatchForShop() {
+        String a = plugin.getServer().getClass().getPackage().getName();
+        String version = a.substring(a.lastIndexOf('.') + 1);
+
+        // Check if the server has the same craftbukkit version as this plugin
+        if (version.equalsIgnoreCase("v1_8_R1")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_8_R2")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_8_R3")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_9_R1")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_9_R2")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_10_R1")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_11_R1")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_12_R1")) {
+            return true;
+        } else if (version.equalsIgnoreCase("v1_13_R1")) {
+            return false;
+        }
+        return false;
+    }
+
+
+    // the amount of inventory slots
+    public int shopGetSlots(String menu) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".options.slot");
+    }
+
+    public String shopGetTitle(String menu) {
+        config.setup();
+        return config.getShop().getString("shop." + menu + ".options.title");
+    }
+
+    public String itemName(String menu, int i) {
+        config.setup();
+        if (!config.getShop().isSet("shop." + menu + ".slots." + i + ".name")) {
+            return "";
+        } else {
+            return config.getShop().getString("shop." + menu + ".slots." + i + ".name");
+        }
+    }
+
+
+    public int itemSlot(String menu, int i) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".slot");
+    }
+
+    public int itemAmount(String menu, int i) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".amount");
+    }
+
+    public int itemId(String menu, int i) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".Id");
+    }
+
+    public int itemByte(String menu, int i) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".Data");
+    }
+
+    public int itemPrice(String menu, int i) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".cost");
+    }
+
+    public String itemCommand(String menu, int i) {
+        config.setup();
+        return config.getShop().getString("shop." + menu + ".slots." + i + ".command");
+    }
 
 
 }
