@@ -4,6 +4,7 @@ import com.twanl.tokens.Tokens;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.jetbrains.annotations.NotNull;
 import sun.security.x509.DistributionPoint;
 
 /**
@@ -345,7 +346,7 @@ public class Strings {
 
 
     public static String logName = green + "[Tokens] " + reset;
-    public static String prefix = Dgray + "[" + green + "PlayerCount" + Dgray + "] " + ChatColor.RESET;
+    public static String prefix = Dgray + "[" + green + "Tokens" + Dgray + "] " + ChatColor.RESET;
     public static String noPerm = redB + "* You don't have permissions to do that!";
 
 
