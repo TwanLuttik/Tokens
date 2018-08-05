@@ -40,11 +40,11 @@ public class Commands implements CommandExecutor, TabCompleter {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+
         if (!(sender instanceof Player)) {
             sender.sendMessage(Strings.logName + Strings.red + "Only a player can execute commands!");
             return true;
         }
-
         Player p = (Player) sender;
 
         config.setup();
@@ -53,7 +53,7 @@ public class Commands implements CommandExecutor, TabCompleter {
         if (cmd.getName().equalsIgnoreCase("tokens")) {
             if (args.length == 0) {
                 if (p.hasPermission("tokens.tokens")) {
-                    p.sendMessage(Strings.gray + "do "+Strings.green+"/tokens help" + Strings.gray + " for more information.");
+                    p.sendMessage(Strings.gray + "do " + Strings.green + "/tokens help" + Strings.gray + " for more information.");
 
                 }
             } else if (args[0].equalsIgnoreCase("get")) {
@@ -85,10 +85,18 @@ public class Commands implements CommandExecutor, TabCompleter {
                     }
 
                     // Check if the player has enough coins to remove
-                    if (tokenCommand > playerTokens) {
-                        p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
-                        return true;
+                    if (lib.sqlUse()) {
+                        if (tokenCommand > sql.getTokens(p.getUniqueId())) {
+                            p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
+                            return true;
+                        }
+                    } else {
+                        if (tokenCommand > playerTokens) {
+                            p.sendMessage(Strings.red + "You don't have enough " + lib.getPrefix() + "!");
+                            return true;
+                        }
                     }
+
 
                     // check if the player has enough space in thear inventory
                     if (p.getInventory().firstEmpty() == -1) {
