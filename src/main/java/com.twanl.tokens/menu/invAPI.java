@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Twan
@@ -22,6 +23,8 @@ public class invAPI {
         inv.setItem(itemLocation, I);
     }
 
+
+
     public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, Enchantment Enchant, int i, boolean b) {
         ItemStack I = new ItemStack(itemType, Amount);
         ItemMeta IMeta = I.getItemMeta();
@@ -34,7 +37,7 @@ public class invAPI {
 
 
     public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType) {
-        ItemStack I = new ItemStack(itemType, Amount, (short)bty);
+        ItemStack I = new ItemStack(itemType, Amount, (short) bty);
         ItemMeta IMeta = I.getItemMeta();
         IMeta.setDisplayName(ItemName);
         I.setItemMeta(IMeta);
@@ -43,23 +46,23 @@ public class invAPI {
     }
 
 
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, String lore) {
-        ItemStack I = new ItemStack(itemType, Amount);
-        ItemMeta IMeta = I.getItemMeta();
-        IMeta.setDisplayName(ItemName);
-
-
-
-        ArrayList<String> lore1 = new ArrayList();
-        lore1.add(String.valueOf(lore));
-        IMeta.setLore(lore1);
-        I.setItemMeta(IMeta);
-
-        inv.setItem(itemLocation, I);
-    }
+//    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, String lore) {
+//        ItemStack I = new ItemStack(itemType, Amount);
+//        ItemMeta IMeta = I.getItemMeta();
+//        IMeta.setDisplayName(ItemName);
+//
+//
+//
+//        ArrayList<String> lore1 = new ArrayList();
+//        lore1.add(String.valueOf(lore));
+//        IMeta.setLore(lore1);
+//        I.setItemMeta(IMeta);
+//
+//        inv.setItem(itemLocation, I);
+//    }
 
     public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType, String lore1, String lore2) {
-        ItemStack I = new ItemStack(itemType, Amount, (short)bty);
+        ItemStack I = new ItemStack(itemType, Amount, (short) bty);
         ItemMeta IMeta = I.getItemMeta();
         IMeta.setDisplayName(ItemName);
         ArrayList<String> lore = new ArrayList();
@@ -70,6 +73,25 @@ public class invAPI {
             lore.add(String.valueOf(lore2));
         }
         IMeta.setLore(lore);
+        I.setItemMeta(IMeta);
+        inv.setItem(itemLocation, I);
+    }
+
+    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, List<String> list) {
+        ItemStack I = new ItemStack(itemType, Amount);
+        ItemMeta IMeta = I.getItemMeta();
+        IMeta.setDisplayName(ItemName);
+
+        ArrayList<String> lore = new ArrayList();
+        for (String s : list) {
+//            IMeta.setLore(Collections.singletonList(s));
+            lore.add(s);
+        }
+
+        IMeta.setLore(lore);
+
+
+//        IMeta.setLore(lore);
         I.setItemMeta(IMeta);
         inv.setItem(itemLocation, I);
     }
