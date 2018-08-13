@@ -535,7 +535,13 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                     // open the shop, just for normal users with limited permissions
                     if (args.length == 1) {
-//                        p.sendMessage(Strings.green + "-- open the shop for users");
+
+                        // check if there is an shop is set
+                        if (!config.getShop().isSet("shop")) {
+                            p.sendMessage(Strings.prefix + Strings.red + "no shop found!");
+                            return true;
+                        }
+
                         util.editMode.put(p, false);
                         String menuName = config.getShop().getString("default-shop");
                         sm.openMenu(p, menuName);
