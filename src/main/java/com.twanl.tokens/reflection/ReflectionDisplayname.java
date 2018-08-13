@@ -1,4 +1,4 @@
-package com.twanl.tokens.utils;
+package com.twanl.tokens.reflection;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
