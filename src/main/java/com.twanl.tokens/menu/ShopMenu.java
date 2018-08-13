@@ -54,7 +54,7 @@ public class ShopMenu implements Listener {
         //TODO: <PRIO = MED> support for Potions, enchanted Books and arrows
 
         // check if the edit mode is enalbed for the player thath opens the shop
-        if (!util.editMode.get(p)) {
+//        if (!util.editMode.get(p)) {
 
 
             // default shopName and pageName
@@ -62,6 +62,7 @@ public class ShopMenu implements Listener {
 
             for (String key1 : config.getShop().getConfigurationSection("shop").getKeys(false)) {
                 String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(key1));
+
 
                 if (open.getName().equals(colorTitle)) {
                     e.setCancelled(true);
@@ -104,6 +105,15 @@ public class ShopMenu implements Listener {
                                 return;
                             }
 
+//                            if (e.getClick() == ClickType.LEFT) {
+//
+//                                p.sendMessage("BUYING 1 ITEM");
+//                            }
+//
+//                            if (e.getClick() == ClickType.RIGHT) {
+//
+//                                p.sendMessage("SELLING 1 ITEM");
+//                            }
 
                             // some base information
                             int itemPrice = lib.itemPrice(key1, i);
@@ -161,11 +171,9 @@ public class ShopMenu implements Listener {
                 }
 
             }
-        }
+//        }
 
     }
-
-
 
 
     @EventHandler
@@ -191,9 +199,9 @@ public class ShopMenu implements Listener {
                     if (e.getInventory().getItem(i) == null) {
                         if (config.getShop().isSet("shop." + menu + ".slots." + i)) {
                             config.getShop().set("shop." + menu + ".slots." + i, null);
-//                            Bukkit.getConsoleSender().sendMessage(Strings.red + i + " REMOVED FROM FILE");
+//                            Bukkit.getConsoleSender().sendMessage(Strings.red + "SLOT: "+ i + " REMOVED FROM FILE");
                         } else {
-//                            Bukkit.getConsoleSender().sendMessage(Strings.blue + i + " NULL");
+//                            Bukkit.getConsoleSender().sendMessage(Strings.blue + "SLOT: " + i + " NULL");
                         }
 
 
@@ -201,31 +209,32 @@ public class ShopMenu implements Listener {
                         // if the slot has a item in, check if the item is the same as in the config file for preventing removing edited data from the file else remove the data from the file and put new data into the file
                         if (e.getInventory().getItem(i).getType().getId() == lib.itemId(menu, i) && e.getInventory().getItem(i).getDurability() == lib.itemByte(menu, i)) {
 
-//                        Bukkit.getConsoleSender().sendMessage(i + " ITEM IS THE SAME AS IN FILE!");
+//                            Bukkit.getConsoleSender().sendMessage("SLOT: " + i + " ITEM IS THE SAME AS IN FILE!");
 
 
-                    } else
-                        // set the data into a hashmap than after the forloop get all the data from the hashmap and save that
-                        if (e.getInventory().getItem(i) != null) {
-
-                        int amount1 = e.getInventory().getItem(i).getAmount();
-                        int itemID = e.getInventory().getItem(i).getType().getId();
-                        int itemByte = e.getInventory().getItem(i).getDurability();
-                        String B = ReflectionDisplayname.getFriendlyName(e.getInventory().getItem(i), true);
+                        } else
+                            // set the data into a hashmap than after the forloop get all the data from the hashmap and save that
+                            if (e.getInventory().getItem(i) != null) {
 
 
+                                int amount1 = e.getInventory().getItem(i).getAmount();
+                                int itemID = e.getInventory().getItem(i).getType().getId();
+                                int itemByte = e.getInventory().getItem(i).getDurability();
+                                String B = ReflectionDisplayname.getFriendlyName(e.getInventory().getItem(i), true);
 
-                        config.getShop().set("shop." + menu + ".slots." + i + ".name", B);
-                        config.getShop().set("shop." + menu + ".slots." + i + ".slot", i);
-                        config.getShop().set("shop." + menu + ".slots." + i + ".amount", amount1);
-                        config.getShop().set("shop." + menu + ".slots." + i + ".Id", itemID);
-                        config.getShop().set("shop." + menu + ".slots." + i + ".Data", itemByte);
-                        config.getShop().set("shop." + menu + ".slots." + i + ".cost", 0);
-                        config.getShop().set("shop." + menu + ".slots." + i + ".command", "<item>");
 
-//                        Bukkit.getConsoleSender().sendMessage(Strings.green + i + " ITEM HAS BEEN ADDED");
-                        config.saveShop();
-                    }
+
+                                config.getShop().set("shop." + menu + ".slots." + i + ".name", B);
+                                config.getShop().set("shop." + menu + ".slots." + i + ".slot", i);
+                                config.getShop().set("shop." + menu + ".slots." + i + ".amount", amount1);
+                                config.getShop().set("shop." + menu + ".slots." + i + ".Id", itemID);
+                                config.getShop().set("shop." + menu + ".slots." + i + ".Data", itemByte);
+                                config.getShop().set("shop." + menu + ".slots." + i + ".cost", 0);
+                                config.getShop().set("shop." + menu + ".slots." + i + ".command", "<item>");
+
+//                                Bukkit.getConsoleSender().sendMessage(Strings.green + "SLOT: " + i + " ITEM HAS BEEN ADDED");
+                                config.saveShop();
+                            }
 
                 }
 
@@ -233,7 +242,6 @@ public class ShopMenu implements Listener {
 //                Bukkit.getConsoleSender().sendMessage("----------------------------");
                 p.sendMessage(Strings.prefix + Strings.green + "inventory saved!");
                 util.editMode.put(p, false);
-
 
 
             }
