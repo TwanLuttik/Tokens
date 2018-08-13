@@ -492,5 +492,10 @@ public class Lib {
         return config.getShop().getString("shop." + menu + ".slots." + i + ".command");
     }
 
+    public int bankTotal(UUID uuid) {
+        config.setup();
+
+        return config.getBank().getInt("bank-1.tokens");
+    }
 
 }
