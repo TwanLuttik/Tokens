@@ -41,7 +41,7 @@ public class ShopMenu implements Listener {
         }
 
 
-        // check if the player is in edit mode
+        // check if the player is in edit mode && aand is the
         if (!util.editMode.containsKey(p) || util.editMode.get(p)) {
             if (p.hasPermission("tokens.shop.edit")) {
                 return;
@@ -49,61 +49,54 @@ public class ShopMenu implements Listener {
         }
 
 
-
         //TODO: <PRIO = LOW> instead of looking when a player click on an item with displayname, check for WhiceSlotClicked?
         //TODO: <PRIO = MED> support for Potions, enchanted Books and arrows
 
-        // check if the edit mode is enalbed for the player thath opens the shop
-//        if (!util.editMode.get(p)) {
+
+        for (String key1 : config.getShop().getConfigurationSection("shop").getKeys(false)) {
+            String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(key1));
 
 
-            // default shopName and pageName
+            if (open.getName().equals(colorTitle)) {
+                e.setCancelled(true);
+                if (item == null || !item.hasItemMeta()) {
+                    return;
+                }
 
 
-            for (String key1 : config.getShop().getConfigurationSection("shop").getKeys(false)) {
-                String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(key1));
+                // for loop, for the items
+                for (String key : config.getShop().getConfigurationSection("shop." + key1 + ".slots").getKeys(false)) {
+                    int i = Integer.parseInt(key);
 
 
-                if (open.getName().equals(colorTitle)) {
-                    e.setCancelled(true);
-                    if (item == null || !item.hasItemMeta()) {
-                        return;
-                    }
+                    String colorText = Strings.translateColorCodes(lib.itemName(key1, i));
+                    String colorText1 = Strings.reset + colorText;
+                    if (item.getItemMeta().getDisplayName().equals(colorText1)) {
 
 
-                    // for loop, for the items
-                    for (String key : config.getShop().getConfigurationSection("shop." + key1 + ".slots").getKeys(false)) {
-                        int i = Integer.parseInt(key);
-
-
-                        String colorText = Strings.translateColorCodes(lib.itemName(key1, i));
-                        String colorText1 = Strings.reset + colorText;
-                        if (item.getItemMeta().getDisplayName().equals(colorText1)) {
-
-
-                            // checks if the palyer has permission
-                            if (config.getShop().isSet("shop." + key1 + ".slots." + i + ".permissions")) {
-                                if (!p.hasPermission(config.getShop().getString("shop." + key1 + ".slots." + i + ".permissions"))) {
-                                    p.sendMessage(Strings.red + "You don't have permission for that!");
-                                    p.closeInventory();
-                                    return;
-                                }
-                            }
-
-                            // close the shop
-                            if (lib.itemCommand(key1, i).contains("<close>")) {
+                        // checks if the palyer has permission
+                        if (config.getShop().isSet("shop." + key1 + ".slots." + i + ".permissions")) {
+                            if (!p.hasPermission(config.getShop().getString("shop." + key1 + ".slots." + i + ".permissions"))) {
+                                p.sendMessage(Strings.red + "You don't have permission for that!");
                                 p.closeInventory();
                                 return;
                             }
+                        }
 
-                            // open a menu from the menu name
-                            if (lib.itemCommand(key1, i).contains("<open>")) {
-                                String[] page = lib.itemCommand(key1, i).split(" ");
-                                String menuFinal = page[1];
+                        // close the shop
+                        if (lib.itemCommand(key1, i).contains("<close>")) {
+                            p.closeInventory();
+                            return;
+                        }
 
-                                openMenu(p, menuFinal);
-                                return;
-                            }
+                        // open a menu from the menu name
+                        if (lib.itemCommand(key1, i).contains("<open>")) {
+                            String[] page = lib.itemCommand(key1, i).split(" ");
+                            String menuFinal = page[1];
+
+                            openMenu(p, menuFinal);
+                            return;
+                        }
 
 //                            if (e.getClick() == ClickType.LEFT) {
 //
@@ -115,63 +108,63 @@ public class ShopMenu implements Listener {
 //                                p.sendMessage("SELLING 1 ITEM");
 //                            }
 
-                            // some base information
-                            int itemPrice = lib.itemPrice(key1, i);
-                            int playerBalance = lib.balanceInt(p.getUniqueId());
+                        // some base information
+                        int itemPrice = lib.itemPrice(key1, i);
+                        int playerBalance = lib.balanceInt(p.getUniqueId());
 
 
-                            if (itemPrice > playerBalance) { // check if the player has enough tokens
-                                p.closeInventory();
-                                p.updateInventory(); // it will prevent from shift clicking the item to the inventory
-                                p.sendMessage(Strings.red + "You don't have enought to buy this!");
-                                return;
-                            } else { // the payment methode
+                        if (itemPrice > playerBalance) { // check if the player has enough tokens
+                            p.closeInventory();
+                            p.updateInventory(); // it will prevent from shift clicking the item to the inventory
+                            p.sendMessage(Strings.red + "You don't have enought to buy this!");
+                            return;
+                        } else { // the payment methode
 
 
-                                // so you don't need t write a command to give the player the iten with the amount (just for faster configuring)
-                                if (lib.itemCommand(key1, i).contains("<item>")) {
-                                    if (p.getInventory().firstEmpty() == -1) {
-                                        p.closeInventory();
-                                        p.updateInventory();
-                                        p.sendMessage(Strings.red + "You don't have enough inventory space");
-                                        return;
-                                    }
+                            // so you don't need t write a command to give the player the iten with the amount (just for faster configuring)
+                            if (lib.itemCommand(key1, i).contains("<item>")) {
+                                if (p.getInventory().firstEmpty() == -1) {
+                                    p.closeInventory();
+                                    p.updateInventory();
+                                    p.sendMessage(Strings.red + "You don't have enough inventory space");
+                                    return;
+                                }
 
-                                    int itemID = lib.itemId(key1, i);
-                                    int itemByte = lib.itemByte(key1, i);
-                                    int itemAmount = lib.itemAmount(key1, i);
-                                    ItemStack item1 = new ItemStack(Material.getMaterial(itemID), itemAmount, (short) itemByte);
+                                int itemID = lib.itemId(key1, i);
+                                int itemByte = lib.itemByte(key1, i);
+                                int itemAmount = lib.itemAmount(key1, i);
+                                ItemStack item1 = new ItemStack(Material.getMaterial(itemID), itemAmount, (short) itemByte);
 
 //                                    p.closeInventory();
-                                    p.getInventory().addItem(item1);
-                                    lib.removeTokens(null, p.getUniqueId(), itemPrice);
-                                    p.updateInventory(); // it will prevent from shift clicking the item to the inventory
-                                    p.sendMessage(Strings.gray + "You have got " + Strings.green + itemAmount + "X " + Strings.translateColorCodes(lib.itemName(key1, i)));
-                                    return;
-                                }
-
-                                // for executing a custom command
-                                if (lib.itemCommand(key1, i).contains("<command>")) {
-                                    String command = lib.itemCommand(key1, i).replace("<command>", "");
-                                    String command1 = command.replace("{player}", p.getName());
-
-                                    p.closeInventory();
-                                    lib.removeTokens(null, p.getUniqueId(), itemPrice);
-                                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command1);
-                                    return;
-                                }
+                                p.getInventory().addItem(item1);
+                                lib.removeTokens(null, p.getUniqueId(), itemPrice);
+                                p.updateInventory(); // it will prevent from shift clicking the item to the inventory
+                                p.sendMessage(Strings.gray + "You have got " + Strings.green + itemAmount + "X " + Strings.translateColorCodes(lib.itemName(key1, i)));
+                                return;
                             }
 
+                            // for executing a custom command
+                            if (lib.itemCommand(key1, i).contains("<command>")) {
+                                String command = lib.itemCommand(key1, i).replace("<command>", "");
+                                String command1 = command.replace("{player}", p.getName());
 
+                                p.closeInventory();
+                                lib.removeTokens(null, p.getUniqueId(), itemPrice);
+                                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command1);
+                                return;
+                            }
                         }
+
 
                     }
 
-
                 }
 
+
             }
-//        }
+
+        }
+
 
     }
 
@@ -221,7 +214,6 @@ public class ShopMenu implements Listener {
                                 int itemID = e.getInventory().getItem(i).getType().getId();
                                 int itemByte = e.getInventory().getItem(i).getDurability();
                                 String B = ReflectionDisplayname.getFriendlyName(e.getInventory().getItem(i), true);
-
 
 
                                 config.getShop().set("shop." + menu + ".slots." + i + ".name", B);
