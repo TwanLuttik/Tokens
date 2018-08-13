@@ -10,7 +10,6 @@ import com.twanl.tokens.NMS.v1_8.v1_8_R2;
 import com.twanl.tokens.NMS.v1_8.v1_8_R3;
 import com.twanl.tokens.NMS.v1_9.v1_9_R1;
 import com.twanl.tokens.NMS.v1_9.v1_9_R2;
-import com.twanl.tokens.api.TokensAPI;
 import com.twanl.tokens.commands.Commands;
 import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.RedeemNoteEvent;
@@ -51,7 +50,7 @@ public class Tokens extends JavaPlugin {
     public VersionHandler nms;
 
     public static Economy economy;
-    private ConfigManager cfgM;
+    private ConfigManager config;
     private Connection connection;
     public String host, database, username, password, table;
     public int port;
@@ -59,6 +58,7 @@ public class Tokens extends JavaPlugin {
 
 
     public void onEnable() {
+        Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Has been enabled " + PluginVersionOn);
 
         // if the database methode is SQL than use the sql else use the file methode
         if (getConfig().get("database").equals("sql")) {
@@ -104,7 +104,7 @@ public class Tokens extends JavaPlugin {
 
         Load();
         loadPlayers();
-        Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Has been enabled " + PluginVersionOn);
+
 
     }
 
@@ -119,6 +119,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
         getServer().getPluginManager().registerEvents(new ShopMenu(), this);
+//        getServer().getPluginManager().registerEvents(new BankMenu(), this);
         getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);
 
@@ -185,10 +186,12 @@ public class Tokens extends JavaPlugin {
     }
 
     public void loadPlayers() {
-        cfgM = new ConfigManager();
-        cfgM.setup();
-        cfgM.savePlayers();
-        cfgM.reloadplayers();
+        config = new ConfigManager();
+        config.setup();
+        config.savePlayers();
+//        config.saveBank();
+//        config.reloadBank();
+        config.reloadplayers();
     }
 
     private boolean setupEconomy() {
