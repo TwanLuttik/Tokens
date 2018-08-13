@@ -535,7 +535,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                     // open the shop, just for normal users with limited permissions
                     if (args.length == 1) {
-                        p.sendMessage(Strings.green + "-- open the shop for users");
+//                        p.sendMessage(Strings.green + "-- open the shop for users");
                         util.editMode.put(p, false);
                         String menuName = config.getShop().getString("default-shop");
                         sm.openMenu(p, menuName);
@@ -549,7 +549,12 @@ public class Commands implements CommandExecutor, TabCompleter {
                             }
 
                             String menuName = args[2].toLowerCase();
-                            p.sendMessage(menuName);
+
+                            // check if the shop exist
+                            if (!config.getShop().contains("shop." + menuName)) {
+                                p.sendMessage(Strings.prefix + Strings.redB + "'"+ menuName + "'"+ Strings.red + " doesn't exist!");
+                                return true;
+                            }
 
                             sm.openMenu(p, menuName);
 
@@ -747,7 +752,18 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                 }
 
-            }
+            } /*else if (args[0].equalsIgnoreCase("bank")) {
+                if (p.hasPermission("tokens.bank")) {
+
+                    util.editMode.put(p, false);
+                    BankMenu bm = new BankMenu();
+
+                    bm.inv(p);
+
+
+
+                }
+            }*/
             return true;
         }
         return true;
