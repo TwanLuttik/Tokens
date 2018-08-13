@@ -40,8 +40,18 @@ public class ShopMenu implements Listener {
             return;
         }
 
-        //TODO: instead of looking when a player click on an item with displayname, check for WhiceSlotClicked?
 
+        // check if the player is in edit mode
+        if (!util.editMode.containsKey(p) || util.editMode.get(p)) {
+            if (p.hasPermission("tokens.shop.edit")) {
+                return;
+            }
+        }
+
+
+
+        //TODO: <PRIO = LOW> instead of looking when a player click on an item with displayname, check for WhiceSlotClicked?
+        //TODO: <PRIO = MED> support for Potions, enchanted Books and arrows
 
         // check if the edit mode is enalbed for the player thath opens the shop
         if (!util.editMode.get(p)) {
