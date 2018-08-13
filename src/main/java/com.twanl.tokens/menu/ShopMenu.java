@@ -66,8 +66,8 @@ public class ShopMenu implements Listener {
 
 
                         String colorText = Strings.translateColorCodes(lib.itemName(key1, i));
-
-                        if (item.getItemMeta().getDisplayName().equals(colorText)) {
+                        String colorText1 = Strings.reset + colorText;
+                        if (item.getItemMeta().getDisplayName().equals(colorText1)) {
 
 
                             // checks if the palyer has permission
@@ -250,8 +250,9 @@ public class ShopMenu implements Listener {
 
             // if the itemname has color codes than translate it to colored text
             String itemNameColor = Strings.translateColorCodes(lib.itemName(menu, i1));
+            String itemNameColor1 = Strings.reset + itemNameColor;
 
-            inv.addItem(i, itemNameColor, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)), " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
+            inv.addItem(i, itemNameColor1, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)), " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
         }
 
         p.openInventory(i);
