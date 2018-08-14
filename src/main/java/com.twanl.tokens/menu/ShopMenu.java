@@ -70,8 +70,7 @@ public class ShopMenu implements Listener {
 
 
                     String colorText = Strings.translateColorCodes(lib.itemName(key1, i));
-                    String colorText1 = Strings.reset + colorText;
-                    if (item.getItemMeta().getDisplayName().equals(colorText1)) {
+                    if (item.getItemMeta().getDisplayName().equals(colorText)) {
 
 
                         // checks if the palyer has permission
@@ -192,46 +191,42 @@ public class ShopMenu implements Listener {
                     if (e.getInventory().getItem(i) == null) {
                         if (config.getShop().isSet("shop." + menu + ".slots." + i)) {
                             config.getShop().set("shop." + menu + ".slots." + i, null);
+                            config.saveShop();
 //                            Bukkit.getConsoleSender().sendMessage(Strings.red + "SLOT: "+ i + " REMOVED FROM FILE");
                         } else {
 //                            Bukkit.getConsoleSender().sendMessage(Strings.blue + "SLOT: " + i + " NULL");
                         }
 
 
-                    } else
+                    } else if (e.getInventory().getItem(i) != null) {
                         // if the slot has a item in, check if the item is the same as in the config file for preventing removing edited data from the file else remove the data from the file and put new data into the file
                         if (e.getInventory().getItem(i).getType().getId() == lib.itemId(menu, i) && e.getInventory().getItem(i).getDurability() == lib.itemByte(menu, i)) {
-
-//                            Bukkit.getConsoleSender().sendMessage("SLOT: " + i + " ITEM IS THE SAME AS IN FILE!");
-
-
-                        } else
-                            // set the data into a hashmap than after the forloop get all the data from the hashmap and save that
-                            if (e.getInventory().getItem(i) != null) {
-
-
-                                int amount1 = e.getInventory().getItem(i).getAmount();
-                                int itemID = e.getInventory().getItem(i).getType().getId();
-                                int itemByte = e.getInventory().getItem(i).getDurability();
-                                String B = ReflectionDisplayname.getFriendlyName(e.getInventory().getItem(i), true);
+                            Bukkit.getConsoleSender().sendMessage("SLOT: " + i + " ITEM IS THE SAME AS IN FILE!");
+                        } else {
+                            int amount1 = e.getInventory().getItem(i).getAmount();
+                            int itemID = e.getInventory().getItem(i).getType().getId();
+                            int itemByte = e.getInventory().getItem(i).getDurability();
+                            String itemName = ReflectionDisplayname.getFriendlyName(e.getInventory().getItem(i), true);
 
 
-                                config.getShop().set("shop." + menu + ".slots." + i + ".name", B);
-                                config.getShop().set("shop." + menu + ".slots." + i + ".slot", i);
-                                config.getShop().set("shop." + menu + ".slots." + i + ".amount", amount1);
-                                config.getShop().set("shop." + menu + ".slots." + i + ".Id", itemID);
-                                config.getShop().set("shop." + menu + ".slots." + i + ".Data", itemByte);
-                                config.getShop().set("shop." + menu + ".slots." + i + ".cost", 0);
-                                config.getShop().set("shop." + menu + ".slots." + i + ".command", "<item>");
+                            config.getShop().set("shop." + menu + ".slots." + i + ".name", itemName);
+                            config.getShop().set("shop." + menu + ".slots." + i + ".slot", i);
+                            config.getShop().set("shop." + menu + ".slots." + i + ".amount", amount1);
+                            config.getShop().set("shop." + menu + ".slots." + i + ".Id", itemID);
+                            config.getShop().set("shop." + menu + ".slots." + i + ".Data", itemByte);
+                            config.getShop().set("shop." + menu + ".slots." + i + ".cost", 0);
+                            config.getShop().set("shop." + menu + ".slots." + i + ".command", "<item>");
 
-//                                Bukkit.getConsoleSender().sendMessage(Strings.green + "SLOT: " + i + " ITEM HAS BEEN ADDED");
-                                config.saveShop();
-                            }
+                            Bukkit.getConsoleSender().sendMessage(Strings.green + "SLOT: " + i + " ITEM HAS BEEN ADDED");
+                            config.saveShop();
+                        }
+
+                    }
 
                 }
 
                 config.saveShop();
-//                Bukkit.getConsoleSender().sendMessage("----------------------------");
+                Bukkit.getConsoleSender().sendMessage("----------------------------");
                 p.sendMessage(Strings.prefix + Strings.green + "inventory saved!");
                 util.editMode.put(p, false);
 
@@ -260,9 +255,8 @@ public class ShopMenu implements Listener {
 
             // if the itemname has color codes than translate it to colored text
             String itemNameColor = Strings.translateColorCodes(lib.itemName(menu, i1));
-            String itemNameColor1 = Strings.reset + itemNameColor;
 
-            inv.addItem(i, itemNameColor1, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)), " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
+            inv.addItem(i, itemNameColor, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)), " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
         }
 
         p.openInventory(i);
