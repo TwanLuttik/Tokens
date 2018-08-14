@@ -16,6 +16,7 @@ import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.menu.ShopMenu;
+import com.twanl.tokens.menu.editMenu;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Metrics;
@@ -119,6 +120,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
         getServer().getPluginManager().registerEvents(new ShopMenu(), this);
+        getServer().getPluginManager().registerEvents(new editMenu(), this);
 //        getServer().getPluginManager().registerEvents(new BankMenu(), this);
         getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);

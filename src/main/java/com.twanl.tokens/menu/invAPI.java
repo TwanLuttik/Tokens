@@ -84,14 +84,10 @@ public class invAPI {
 
         ArrayList<String> lore = new ArrayList();
         for (String s : list) {
-//            IMeta.setLore(Collections.singletonList(s));
             lore.add(s);
         }
 
         IMeta.setLore(lore);
-
-
-//        IMeta.setLore(lore);
         I.setItemMeta(IMeta);
         inv.setItem(itemLocation, I);
     }
