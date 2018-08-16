@@ -35,6 +35,8 @@ public class ShopMenu implements Listener {
         ItemStack item = e.getCurrentItem();
         config.setup();
 
+        int a = e.getSlot();
+
 
         if (open == null) {
             return;
@@ -51,10 +53,12 @@ public class ShopMenu implements Listener {
 
         //TODO: <PRIO = LOW> instead of looking when a player click on an item with displayname, check for WhiceSlotClicked?
         //TODO: <PRIO = MED> support for Potions, enchanted Books and arrows
+        //TODO: when there is more than 2 of the same displayname than it will choose the first instead where the player clicked on
 
 
-        for (String key1 : config.getShop().getConfigurationSection("shop").getKeys(false)) {
-            String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(key1));
+
+        for (String SHOP_NAME : config.getShop().getConfigurationSection("shop").getKeys(false)) {
+            String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(SHOP_NAME));
 
 
             if (open.getName().equals(colorTitle)) {
@@ -65,17 +69,17 @@ public class ShopMenu implements Listener {
 
 
                 // for loop, for the items
-                for (String key : config.getShop().getConfigurationSection("shop." + key1 + ".slots").getKeys(false)) {
-                    int i = Integer.parseInt(key);
+                for (String i : config.getShop().getConfigurationSection("shop." + SHOP_NAME + ".slots").getKeys(false)) {
+                    int SLOT_NUMBER = Integer.parseInt(i);
 
 
-                    String colorText = Strings.translateColorCodes(lib.itemName(key1, i));
+                    String colorText = Strings.translateColorCodes(lib.itemName(SHOP_NAME, SLOT_NUMBER));
                     if (item.getItemMeta().getDisplayName().equals(colorText)) {
 
 
                         // checks if the palyer has permission
-                        if (config.getShop().isSet("shop." + key1 + ".slots." + i + ".permissions")) {
-                            if (!p.hasPermission(config.getShop().getString("shop." + key1 + ".slots." + i + ".permissions"))) {
+                        if (config.getShop().isSet("shop." + SHOP_NAME + ".slots." + SLOT_NUMBER + ".permissions")) {
+                            if (!p.hasPermission(config.getShop().getString("shop." + SHOP_NAME + ".slots." + SLOT_NUMBER + ".permissions"))) {
                                 p.sendMessage(Strings.red + "You don't have permission for that!");
                                 p.closeInventory();
                                 return;
@@ -83,14 +87,14 @@ public class ShopMenu implements Listener {
                         }
 
                         // close the shop
-                        if (lib.itemCommand(key1, i).contains("<close>")) {
+                        if (lib.itemCommand(SHOP_NAME, SLOT_NUMBER).contains("<close>")) {
                             p.closeInventory();
                             return;
                         }
 
                         // open a menu from the menu name
-                        if (lib.itemCommand(key1, i).contains("<open>")) {
-                            String[] page = lib.itemCommand(key1, i).split(" ");
+                        if (lib.itemCommand(SHOP_NAME, SLOT_NUMBER).contains("<open>")) {
+                            String[] page = lib.itemCommand(SHOP_NAME, SLOT_NUMBER).split(" ");
                             String menuFinal = page[1];
 
                             openMenu(p, menuFinal);
@@ -108,7 +112,7 @@ public class ShopMenu implements Listener {
 //                            }
 
                         // some base information
-                        int itemPrice = lib.itemPrice(key1, i);
+                        int itemPrice = lib.itemPrice(SHOP_NAME, SLOT_NUMBER);
                         int playerBalance = lib.balanceInt(p.getUniqueId());
 
 
@@ -121,7 +125,7 @@ public class ShopMenu implements Listener {
 
 
                             // so you don't need t write a command to give the player the iten with the amount (just for faster configuring)
-                            if (lib.itemCommand(key1, i).contains("<item>")) {
+                            if (lib.itemCommand(SHOP_NAME, SLOT_NUMBER).contains("<item>")) {
                                 if (p.getInventory().firstEmpty() == -1) {
                                     p.closeInventory();
                                     p.updateInventory();
@@ -129,22 +133,22 @@ public class ShopMenu implements Listener {
                                     return;
                                 }
 
-                                int itemID = lib.itemId(key1, i);
-                                int itemByte = lib.itemByte(key1, i);
-                                int itemAmount = lib.itemAmount(key1, i);
+                                int itemID = lib.itemId(SHOP_NAME, SLOT_NUMBER);
+                                int itemByte = lib.itemByte(SHOP_NAME, SLOT_NUMBER);
+                                int itemAmount = lib.itemAmount(SHOP_NAME, a);
                                 ItemStack item1 = new ItemStack(Material.getMaterial(itemID), itemAmount, (short) itemByte);
 
 //                                    p.closeInventory();
                                 p.getInventory().addItem(item1);
                                 lib.removeTokens(null, p.getUniqueId(), itemPrice);
                                 p.updateInventory(); // it will prevent from shift clicking the item to the inventory
-                                p.sendMessage(Strings.gray + "You have got " + Strings.green + itemAmount + "X " + Strings.translateColorCodes(lib.itemName(key1, i)));
+                                p.sendMessage(Strings.gray + "You have got " + Strings.green + itemAmount + "X " + Strings.translateColorCodes(lib.itemName(SHOP_NAME, SLOT_NUMBER)));
                                 return;
                             }
 
                             // for executing a custom command
-                            if (lib.itemCommand(key1, i).contains("<command>")) {
-                                String command = lib.itemCommand(key1, i).replace("<command>", "");
+                            if (lib.itemCommand(SHOP_NAME, SLOT_NUMBER).contains("<command>")) {
+                                String command = lib.itemCommand(SHOP_NAME, SLOT_NUMBER).replace("<command>", "");
                                 String command1 = command.replace("{player}", p.getName());
 
                                 p.closeInventory();
@@ -167,6 +171,7 @@ public class ShopMenu implements Listener {
 
     }
 
+    private boolean B = false;
 
     @EventHandler
     public void invMovement(InventoryCloseEvent e) {
@@ -181,10 +186,10 @@ public class ShopMenu implements Listener {
             String menu = util.editModeShop.get(p);
 
             String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(menu));
-            if (e.getInventory().getName().equals(colorTitle)) {
+            if (e.getInventory().getName().equals(colorTitle + Strings.DgrayB + " - " + Strings.redB + "EDIT MODE")) {
 
 
-//                Bukkit.getConsoleSender().sendMessage("----------------------------");
+                if (B) {Bukkit.getConsoleSender().sendMessage("----------------------------");}
                 for (int i = 0; i < e.getInventory().getSize(); i++) {
 
                     // check if the slot is empty than clear that in the file
@@ -192,16 +197,16 @@ public class ShopMenu implements Listener {
                         if (config.getShop().isSet("shop." + menu + ".slots." + i)) {
                             config.getShop().set("shop." + menu + ".slots." + i, null);
                             config.saveShop();
-//                            Bukkit.getConsoleSender().sendMessage(Strings.red + "SLOT: "+ i + " REMOVED FROM FILE");
+                            if (B){Bukkit.getConsoleSender().sendMessage(Strings.red + "SLOT: "+ i + " REMOVED FROM FILE");}
                         } else {
-//                            Bukkit.getConsoleSender().sendMessage(Strings.blue + "SLOT: " + i + " NULL");
+                            if (B) {Bukkit.getConsoleSender().sendMessage(Strings.blue + "SLOT: " + i + " NULL");}
                         }
 
 
                     } else if (e.getInventory().getItem(i) != null) {
                         // if the slot has a item in, check if the item is the same as in the config file for preventing removing edited data from the file else remove the data from the file and put new data into the file
                         if (e.getInventory().getItem(i).getType().getId() == lib.itemId(menu, i) && e.getInventory().getItem(i).getDurability() == lib.itemByte(menu, i)) {
-                            Bukkit.getConsoleSender().sendMessage("SLOT: " + i + " ITEM IS THE SAME AS IN FILE!");
+                            if (B) {Bukkit.getConsoleSender().sendMessage("SLOT: " + i + " ITEM IS THE SAME AS IN FILE!");}
                         } else {
                             int amount1 = e.getInventory().getItem(i).getAmount();
                             int itemID = e.getInventory().getItem(i).getType().getId();
@@ -217,7 +222,7 @@ public class ShopMenu implements Listener {
                             config.getShop().set("shop." + menu + ".slots." + i + ".cost", 0);
                             config.getShop().set("shop." + menu + ".slots." + i + ".command", "<item>");
 
-                            Bukkit.getConsoleSender().sendMessage(Strings.green + "SLOT: " + i + " ITEM HAS BEEN ADDED");
+                            if (B) {Bukkit.getConsoleSender().sendMessage(Strings.green + "SLOT: " + i + " ITEM HAS BEEN ADDED");}
                             config.saveShop();
                         }
 
@@ -226,7 +231,7 @@ public class ShopMenu implements Listener {
                 }
 
                 config.saveShop();
-                Bukkit.getConsoleSender().sendMessage("----------------------------");
+                if (B) {Bukkit.getConsoleSender().sendMessage("----------------------------");}
                 p.sendMessage(Strings.prefix + Strings.green + "inventory saved!");
                 util.editMode.put(p, false);
 
@@ -244,6 +249,31 @@ public class ShopMenu implements Listener {
 
         String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(menu));
         Inventory i = plugin.getServer().createInventory(null, lib.shopGetSlots(menu), colorTitle);
+
+        if (!config.getShop().isSet("shop." + menu + ".slots")) {
+            p.openInventory(i);
+            return;
+        }
+
+        for (String key : config.getShop().getConfigurationSection("shop." + menu + ".slots").getKeys(false)) {
+            int i1 = Integer.parseInt(key);
+
+            // if the itemname has color codes than translate it to colored text
+            String itemNameColor = Strings.translateColorCodes(lib.itemName(menu, i1));
+
+            inv.addItem(i, itemNameColor, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)), " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
+        }
+
+        p.openInventory(i);
+    }
+
+
+    public void openMenu_EDIT(Player p, String menu) {
+        config.setup();
+
+
+        String colorTitle = Strings.translateColorCodes(lib.shopGetTitle(menu));
+        Inventory i = plugin.getServer().createInventory(null, lib.shopGetSlots(menu), colorTitle + Strings.DgrayB + " - " + Strings.redB + "EDIT MODE");
 
         if (!config.getShop().isSet("shop." + menu + ".slots")) {
             p.openInventory(i);
