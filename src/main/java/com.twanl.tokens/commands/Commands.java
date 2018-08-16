@@ -4,11 +4,13 @@ import com.twanl.tokens.Tokens;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.menu.ShopMenu;
+import com.twanl.tokens.menu.editMenu;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.util;
+import com.twanl.tokens.utils.loadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
@@ -421,7 +423,7 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                     config.savePlayers();
                     config.reloadplayers();
-
+                    loadManager.loadHashSet();
 
                     p.sendMessage(Strings.prefix + Strings.greenI + "configuration files are reloaded");
                 }
@@ -549,8 +551,11 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                     } else if (args[1].equalsIgnoreCase("edit")) {
                         if (p.hasPermission("tokens.shop.edit")) {
+//
+
                             if (args.length == 2) {
-                                p.sendMessage(Strings.prefix + Strings.gray + "Usage: /tokens shop edit <menu>");
+                                editMenu mm = new editMenu();
+                                mm.editMenu(p);
                                 return true;
                             }
 
@@ -558,11 +563,11 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                             // check if the shop exist
                             if (!config.getShop().contains("shop." + menuName)) {
-                                p.sendMessage(Strings.prefix + Strings.redB + "'"+ menuName + "'"+ Strings.red + " doesn't exist!");
+                                p.sendMessage(Strings.prefix + Strings.redB + "'" + menuName + "'" + Strings.red + " doesn't exist!");
                                 return true;
                             }
 
-                            sm.openMenu(p, menuName);
+                            sm.openMenu_EDIT(p, menuName);
 
                             util.editMode.put(p, true);
                             util.editModeShop.put(p, menuName);
@@ -767,7 +772,6 @@ public class Commands implements CommandExecutor, TabCompleter {
                     bm.inv(p);
 
 
-
                 }
             }*/
             return true;
@@ -779,7 +783,7 @@ public class Commands implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", /*"redeem",*/ "bonus", "reload", "buy", "sell", "help", "shop", "top", "convert");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "bonus", "reload", "buy", "sell", "help", "shop", "top", "convert");
         }
 
         return null;
