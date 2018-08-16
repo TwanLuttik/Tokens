@@ -9,7 +9,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +25,9 @@ public class editMenu implements Listener {
     private invAPI inv = new invAPI();
     private Lib lib = new Lib();
 
-    String editM = Strings.Dgray + "Shop edit menu";
+    private String editM = Strings.DgrayB + "Shop edit menu";
+    private String editMode_TITLE = Strings.DgrayB + " - " + Strings.redB + "EDIT MODE";
+
 
     @EventHandler
     public void invenClick(InventoryClickEvent e) {
@@ -42,16 +43,14 @@ public class editMenu implements Listener {
 
 
 //        // check if the player is in edit mode && aand is the
-//        if (!util.editMode.containsKey(p) || util.editMode.get(p)) {
+//        if (!util.editMode.containsKey(p) || !util.editMode.get(p)) {
 //            if (p.hasPermission("tokens.shop.edit")) {
-//                p.sendMessage("no PERMS");
 //                return;
 //            }
 //        }
 
 
         if (open.getName().equals(editM)) {
-            p.sendMessage("SHOP EDIT MODE");
             e.setCancelled(true);
             if (item == null || !item.hasItemMeta()) {
                 return;
@@ -60,22 +59,21 @@ public class editMenu implements Listener {
 
             for (String shops : config.getShop().getConfigurationSection("shop").getKeys(false)) {
                 if (item.getItemMeta().getDisplayName().equals(shops)) {
-
-                    if (e.getClick() == ClickType.LEFT) {
-
-                        ShopMenu mm = new ShopMenu();
-                        mm.openMenu(p, shops);
-
-                        util.editMode.put(p, true);
-                        util.editModeShop.put(p, shops);
-                    }
-
-                    if (e.getClick() == ClickType.RIGHT) {
-
-                        p.sendMessage("SELLING 1 ITEM");
-                    }
-
-                    p.sendMessage(shops);
+                    util.editModeShop.put(p, shops);
+                    util.editMode.put(p, true);
+                    ShopMenu mm = new ShopMenu();
+                    mm.openMenu_EDIT(p, shops);
+//                    if (e.getClick() == ClickType.LEFT) {
+//
+//
+//
+////                        editorMenu(p, shops);
+//                    }
+//
+//                    if (e.getClick() == ClickType.RIGHT) {
+//
+//                        p.sendMessage("SELLING 1 ITEM");
+//                    }
 
 
                 }
@@ -85,7 +83,6 @@ public class editMenu implements Listener {
 
             if (item.getItemMeta().getDisplayName().equals(Strings.white + "Close")) {
                 p.closeInventory();
-                return;
             }
 
 
@@ -124,11 +121,33 @@ public class editMenu implements Listener {
         info.add(Strings.yellowB + "Right Click " + Strings.DgrayB + "» " + Strings.white + "edit the details of the item in the shop");
 
 
-        inv.addItem(i, Strings.whiteB + "Information", 1, 35, Material.BOOK, info);
+//        inv.addItem(i, Strings.whiteB + "Information", 1, 35, Material.BOOK, info);
         inv.addItem(i, Strings.white + "Close", 1, 31, 14, Material.STAINED_GLASS_PANE);
         p.openInventory(i);
     }
 
 
+//    public void editorMenu(Player p, String menu) {
+//        config.setup();
+//
+//        String menu_TITLE = Strings.translateColorCodes(lib.shopGetTitle(menu));
+//
+//        Inventory i = plugin.getServer().createInventory(null, lib.shopGetSlots(menu), menu_TITLE + editMode_TITLE);
+//
+//        for (String items : config.getShop().getConfigurationSection("shop." + menu + ".slots").getKeys(false)) {
+//            int i1 = Integer.parseInt(items);
+//
+//            // if the itemname has color codes than translate it to colored text
+//            String itemNameColor = Strings.translateColorCodes(lib.itemName(menu, i1));
+//
+//            inv.addItem(i, itemNameColor, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)),
+//                    " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
+//        }
+//
+//        p.openInventory(i);
+//
+//
+//
+//    }
 
 }
