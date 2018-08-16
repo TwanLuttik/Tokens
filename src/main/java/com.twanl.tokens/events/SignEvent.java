@@ -1,8 +1,8 @@
 package com.twanl.tokens.events;
 
-import com.twanl.tokens.Tokens;
 import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.utils.Strings;
+import com.twanl.tokens.utils.loadManager;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,7 +16,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
  **/
 public class SignEvent implements Listener {
 
-    private Tokens plugin = Tokens.getPlugin(Tokens.class);
+//    private Tokens plugin = Tokens.getPlugin(Tokens.class);
     private Lib lib = new Lib();
 
     @EventHandler
@@ -25,10 +25,15 @@ public class SignEvent implements Listener {
 
         if (p.hasPermission("tokens.sign.place")) {
             if (e.getLine(0).equalsIgnoreCase("[tokens]")) {
-                e.setLine(0, Strings.translateColorCodes(plugin.getConfig().getString("sign.line1")));
-                e.setLine(1, Strings.translateColorCodes(plugin.getConfig().getString("sign.line2")));
-                e.setLine(2, Strings.translateColorCodes(plugin.getConfig().getString("sign.line3")));
-                e.setLine(3, Strings.translateColorCodes(plugin.getConfig().getString("sign.line4")));
+                int line = 0;
+                for (String key : loadManager.sign()) {
+                    e.setLine(line, Strings.translateColorCodes(key));
+                    line++;
+                }
+//                e.setLine(0, Strings.translateColorCodes(plugin.getConfig().getString("sign.line1")));
+//                e.setLine(1, Strings.translateColorCodes(plugin.getConfig().getString("sign.line2")));
+//                e.setLine(2, Strings.translateColorCodes(plugin.getConfig().getString("sign.line3")));
+//                e.setLine(3, Strings.translateColorCodes(plugin.getConfig().getString("sign.line4")));
             }
         }
     }
@@ -41,7 +46,8 @@ public class SignEvent implements Listener {
         if (e.getClickedBlock().getState() instanceof Sign) {
             Sign s = (Sign) e.getClickedBlock().getState();
 
-            if (s.getLine(0).equalsIgnoreCase(Strings.translateColorCodes(plugin.getConfig().getString("sign.line1")))) {
+//            if (s.getLine(0).equalsIgnoreCase(Strings.translateColorCodes(plugin.getConfig().getString("sign.line1")))) {
+            if (s.getLine(0).equalsIgnoreCase(Strings.translateColorCodes(loadManager.sign().get(0)))) {
                 Player p = e.getPlayer();
                 String balance = String.valueOf(lib.balanceInt(p.getUniqueId()));
                 e.getPlayer().sendMessage(Strings.gray + "You have " + Strings.green + balance + " " + lib.getPrefix());

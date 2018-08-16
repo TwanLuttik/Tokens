@@ -5,6 +5,7 @@ import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
+import com.twanl.tokens.utils.loadManager;
 import net.milkbowl.vault.economy.Economy;
 import net.milkbowl.vault.economy.EconomyResponse;
 import org.bukkit.Bukkit;
@@ -50,15 +51,12 @@ public class Lib {
 
     // check if the plugin use is else file
     public boolean sqlUse() {
-        if (plugin.getConfig().get("database").equals("sql")) {
-            return true;
-        } else {
-            return false;
-        }
+//        return plugin.getConfig().get("database").equals("sql");
+        return loadManager.database().equals("sql");
     }
 
 
-    private static Tokens plugin = Tokens.getPlugin(Tokens.class);
+//    private static Tokens plugin = Tokens.getPlugin(Tokens.class);
     private Functions F = new Functions();
     private Economy economy = Tokens.economy;
     private SQLlib sql = new SQLlib();
@@ -123,7 +121,8 @@ public class Lib {
     public void giveallTokens(int tokens) {
         if (sqlUse()) {
             String tokens1 = String.valueOf(tokens);
-            String defaultMessage = plugin.getConfig().getString("bonus_message");
+//            String defaultMessage = plugin.getConfig().getString("bonus_message");
+            String defaultMessage = loadManager.bonus_message();
             String replacedMessage = defaultMessage.replace("{tokens}", tokens1).replace("{prefix}", getPrefix() + Strings.reset);
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -135,7 +134,8 @@ public class Lib {
         } else {
 
             String tokens1 = String.valueOf(tokens);
-            String defaultMessage = plugin.getConfig().getString("bonus_message");
+//            String defaultMessage = plugin.getConfig().getString("bonus_message");
+            String defaultMessage = loadManager.bonus_message();
             String replacedMessage = defaultMessage.replace("{tokens}", tokens1).replace("{prefix}", getPrefix() + Strings.reset);
 
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
@@ -153,7 +153,8 @@ public class Lib {
         if (sqlUse()) {
             Player p = Bukkit.getPlayer(playerUUID);
             // getting some information
-            int tokensValue = plugin.getConfig().getInt("tokens.buy_price");
+//            int tokensValue = plugin.getConfig().getInt("tokens.buy_price");
+            int tokensValue = loadManager.tokens_buy();
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
             int playerTokens = sql.getTokens(playerUUID);
@@ -182,7 +183,8 @@ public class Lib {
 
             Player p = Bukkit.getPlayer(playerUUID);
             // getting some information
-            int tokensValue = plugin.getConfig().getInt("tokens.buy_price");
+//            int tokensValue = plugin.getConfig().getInt("tokens.buy_price");
+            int tokensValue = loadManager.tokens_buy();
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
             int playerTokens = config.getPlayers().getInt(playerUUID + ".tokens");
@@ -214,7 +216,8 @@ public class Lib {
         if (sqlUse()) {
             Player p = Bukkit.getPlayer(playerUUID);
             // getting some information
-            int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
+//            int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
+            int tokensValue = loadManager.token_sell();
             int playerTokens = sql.getTokens(playerUUID);
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
@@ -246,7 +249,8 @@ public class Lib {
 
             Player p = Bukkit.getPlayer(playerUUID);
             // getting some information
-            int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
+//            int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
+            int tokensValue = loadManager.token_sell();
             int playerTokens = config.getPlayers().getInt(playerUUID + ".tokens");
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
@@ -284,6 +288,7 @@ public class Lib {
             int tokensBalance = sql.getTokens(uuid);
 
             Player p = Bukkit.getPlayer(uuid);
+            p.sendMessage(Strings.translateColorCodes(loadManager.prefix()));
             p.sendMessage(Strings.gray + "You have " + Strings.green + tokensBalance + " " + getPrefix());
         } else {
 
@@ -406,14 +411,17 @@ public class Lib {
 
 
     public String getPrefix() {
-        if (plugin.getConfig().getBoolean("prefix.enable")) {
-            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
+//        if (plugin.getConfig().getBoolean("prefix.enable")) {
+        if (loadManager.prefix_boolean()) {
+//            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
+            return Strings.translateColorCodes(loadManager.prefix());
         } else {
             return "Tokens";
         }
     }
 
     public boolean versionMatchForShop() {
+        Tokens plugin = Tokens.getPlugin(Tokens.class);
         String a = plugin.getServer().getClass().getPackage().getName();
         String version = a.substring(a.lastIndexOf('.') + 1);
 

@@ -15,13 +15,15 @@ import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
+import com.twanl.tokens.menu.BankMenu;
 import com.twanl.tokens.menu.ShopMenu;
 import com.twanl.tokens.menu.editMenu;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
-import com.twanl.tokens.utils.Metrics;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
+import com.twanl.tokens.utils.loadManager;
+import com.twanl.tokens.utils.Metrics;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginDescriptionFile;
@@ -40,8 +42,6 @@ import java.sql.SQLException;
 
 public class Tokens extends JavaPlugin {
 
-    //TODO: SQL Support
-    //TODO: add a cooldown when clicking on the sign
 
 
     protected PluginDescriptionFile pdfFile = getDescription();
@@ -59,10 +59,12 @@ public class Tokens extends JavaPlugin {
 
 
     public void onEnable() {
+        loadManager.loadHashSet();
         Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Has been enabled " + PluginVersionOn);
 
         // if the database methode is SQL than use the sql else use the file methode
-        if (getConfig().get("database").equals("sql")) {
+//        if (getConfig().get("database").equals("sql")) {
+        if (loadManager.database().equals("sql")) {
             mysqlSetup();
             SQLlib sql = new SQLlib();
             try {
@@ -121,7 +123,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
         getServer().getPluginManager().registerEvents(new ShopMenu(), this);
         getServer().getPluginManager().registerEvents(new editMenu(), this);
-//        getServer().getPluginManager().registerEvents(new BankMenu(), this);
+        getServer().getPluginManager().registerEvents(new BankMenu(), this);
         getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);
 
@@ -160,7 +162,8 @@ public class Tokens extends JavaPlugin {
             return;
         } else {
             // if configversion is not match, than back-up the file and create the updated file
-            double a = getConfig().getDouble("ConfigVersion");
+//            double a = getConfig().getDouble("ConfigVersion");
+            double a = loadManager.config_version();
             if (a != 1.1) {
                 File configFile = new File(getDataFolder(), "config.yml");
                 File file2 = new File(getDataFolder(), "config_old.yml");
@@ -187,7 +190,7 @@ public class Tokens extends JavaPlugin {
 
     }
 
-    public void loadPlayers() {
+    private void loadPlayers() {
         config = new ConfigManager();
         config.setup();
         config.savePlayers();
@@ -235,15 +238,21 @@ public class Tokens extends JavaPlugin {
     }
 
     public void mysqlSetup() {
-        host = getConfig().getString("mySQL.host");
-        port = getConfig().getInt("mySQL.port");
-        database = getConfig().getString("mySQL.database");
-        username = getConfig().getString("mySQL.username");
-        password = getConfig().getString("mySQL.password");
-        table = getConfig().getString("mySQL.table");
+//        host = getConfig().getString("mySQL.host");
+//        port = getConfig().getInt("mySQL.port");
+//        database = getConfig().getString("mySQL.database");
+//        username = getConfig().getString("mySQL.username");
+//        password = getConfig().getString("mySQL.password");
+//        table = getConfig().getString("mySQL.table");
+
+        host = loadManager.host();
+        port = loadManager.port();
+        database = loadManager.db();
+        username = loadManager.username();
+        password = loadManager.passwod();
+        table = loadManager.table();
 
         try {
-
             synchronized (this) {
                 if (getConnection() != null && !getConnection().isClosed()) {
                     return;
@@ -252,6 +261,7 @@ public class Tokens extends JavaPlugin {
                 Class.forName("com.mysql.jdbc.Driver");
                 setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":"
                         + this.port + "/" + this.database, this.username, this.password));
+
 
 
                 Bukkit.getConsoleSender().sendMessage(Strings.logName + "mySQL connected to database: " +Strings.green + database);

@@ -5,13 +5,12 @@ import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.Strings;
 import com.twanl.tokens.utils.UpdateChecker;
+import com.twanl.tokens.utils.loadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
-
-import java.sql.SQLException;
 
 /**
  * Created by Twan on 3/22/2018.
@@ -29,7 +28,8 @@ public class JoinEvent implements Listener {
 
 
         // Update message
-        if (plugin.getConfig().getBoolean("update_message")) {
+//        if (plugin.getConfig().getBoolean("update_message")) {
+        if (loadManager.update_message()) {
             if (p.hasPermission("tokens.update")) {
 
 
