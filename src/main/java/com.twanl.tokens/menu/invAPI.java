@@ -46,20 +46,20 @@ public class invAPI {
     }
 
 
-//    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, String lore) {
-//        ItemStack I = new ItemStack(itemType, Amount);
-//        ItemMeta IMeta = I.getItemMeta();
-//        IMeta.setDisplayName(ItemName);
-//
-//
-//
-//        ArrayList<String> lore1 = new ArrayList();
-//        lore1.add(String.valueOf(lore));
-//        IMeta.setLore(lore1);
-//        I.setItemMeta(IMeta);
-//
-//        inv.setItem(itemLocation, I);
-//    }
+    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, String lore) {
+        ItemStack I = new ItemStack(itemType, Amount);
+        ItemMeta IMeta = I.getItemMeta();
+        IMeta.setDisplayName(ItemName);
+
+
+
+        ArrayList<String> lore1 = new ArrayList();
+        lore1.add(String.valueOf(lore));
+        IMeta.setLore(lore1);
+        I.setItemMeta(IMeta);
+
+        inv.setItem(itemLocation, I);
+    }
 
     public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType, String lore1, String lore2) {
         ItemStack I = new ItemStack(itemType, Amount, (short) bty);
