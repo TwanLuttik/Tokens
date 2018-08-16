@@ -1,10 +1,10 @@
 package com.twanl.tokens.api;
 
-import com.twanl.tokens.Tokens;
 import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
+import com.twanl.tokens.utils.loadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -19,8 +19,8 @@ import java.util.UUID;
 
 public class TokensAPI {
 
-    private ConfigManager cfgM = new ConfigManager();
-    private Tokens plugin = Tokens.getPlugin(Tokens.class);
+    private ConfigManager config = new ConfigManager();
+//    private Tokens plugin = Tokens.getPlugin(Tokens.class);
     private SQLlib sql = new SQLlib();
     private Lib lib = new Lib();
 
@@ -31,8 +31,8 @@ public class TokensAPI {
             sql.removeTokens(uuid, tokens);
         } else {
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) - tokens);
-            cfgM.savePlayers();
+            config.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) - tokens);
+            config.savePlayers();
         }
     }
 
@@ -42,8 +42,8 @@ public class TokensAPI {
             sql.addTokens(uuid, tokens);
         } else {
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            cfgM.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) + tokens);
-            cfgM.savePlayers();
+            config.getPlayers().set(p.getUniqueId() + ".tokens", playerBalance(p.getUniqueId()) + tokens);
+            config.savePlayers();
         }
     }
 
@@ -53,8 +53,8 @@ public class TokensAPI {
             sql.setTokens(uuid, tokens);
         } else {
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            cfgM.getPlayers().set(p.getUniqueId() + ".tokens", tokens);
-            cfgM.savePlayers();
+            config.getPlayers().set(p.getUniqueId() + ".tokens", tokens);
+            config.savePlayers();
         }
     }
 
@@ -64,7 +64,7 @@ public class TokensAPI {
             return sql.getTokens(uuid);
         } else {
             OfflinePlayer p = Bukkit.getOfflinePlayer(uuid);
-            return cfgM.getPlayers().getInt(p.getUniqueId() + ".tokens");
+            return config.getPlayers().getInt(p.getUniqueId() + ".tokens");
         }
     }
 
@@ -77,7 +77,7 @@ public class TokensAPI {
             return true;
         } else {
             Player p = (Player) Bukkit.getOfflinePlayer(uuid);
-            if (!cfgM.getPlayers().contains(String.valueOf(p.getUniqueId()))) {
+            if (!config.getPlayers().contains(String.valueOf(p.getUniqueId()))) {
                 return false;
             } else {
                 return true;
@@ -87,8 +87,10 @@ public class TokensAPI {
 
 
     public String getPrefix() {
-        if (plugin.getConfig().getBoolean("prefix.enable")) {
-            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
+//        if (plugin.getConfig().getBoolean("prefix.enable")) {
+        if (loadManager.prefix_boolean()) {
+//            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
+            return Strings.translateColorCodes(loadManager.prefix());
         } else {
             return "Tokens";
         }
