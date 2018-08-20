@@ -53,7 +53,7 @@ public class Tokens extends JavaPlugin {
     public static Economy economy;
     private ConfigManager config;
     private Connection connection;
-    public String host, database, username, password, table;
+    public String host, database, username, password, table, ssl;
     public int port;
 
 
@@ -63,7 +63,6 @@ public class Tokens extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Has been enabled " + PluginVersionOn);
 
         // if the database methode is SQL than use the sql else use the file methode
-//        if (getConfig().get("database").equals("sql")) {
         if (loadManager.database().equals("sql")) {
             mysqlSetup();
             SQLlib sql = new SQLlib();
@@ -164,7 +163,7 @@ public class Tokens extends JavaPlugin {
             // if configversion is not match, than back-up the file and create the updated file
 //            double a = getConfig().getDouble("ConfigVersion");
             double a = loadManager.config_version();
-            if (a != 1.1) {
+            if (a != 1.2) {
                 File configFile = new File(getDataFolder(), "config.yml");
                 File file2 = new File(getDataFolder(), "config_old.yml");
 
@@ -251,6 +250,7 @@ public class Tokens extends JavaPlugin {
         username = loadManager.username();
         password = loadManager.passwod();
         table = loadManager.table();
+        ssl = loadManager.useSSL().toString();
 
         try {
             synchronized (this) {
@@ -260,7 +260,7 @@ public class Tokens extends JavaPlugin {
 
                 Class.forName("com.mysql.jdbc.Driver");
                 setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":"
-                        + this.port + "/" + this.database, this.username, this.password));
+                        + this.port + "/" + this.database + "?useSSL=" + ssl , this.username, this.password));
 
 
 
@@ -268,8 +268,8 @@ public class Tokens extends JavaPlugin {
             }
         } catch (SQLException | ClassNotFoundException e) {
             Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "mySQL cannot find database");
-//            e.printStackTrace();
-
+            Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "shutting down this plugin");
+            Bukkit.getPluginManager().disablePlugin(this);
         }
     }
 
