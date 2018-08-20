@@ -5,7 +5,7 @@
 #
 #
 # Don't edit the ConfigVersion
-ConfigVersion: 1.1
+ConfigVersion: 1.2
 database: file
 
 update_message: true
@@ -32,6 +32,7 @@ mySQL:
   password: ""
   database: "players"
   table: "player_data"
+  useSSL: false
 
 
 
