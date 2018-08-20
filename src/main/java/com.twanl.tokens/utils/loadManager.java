@@ -14,115 +14,115 @@ import java.util.HashSet;
 public class loadManager {
 
 
-    public static HashSet<Double> config_CONFIG_VERSION = new HashSet<>();
-    public static HashSet<String> config_DATABASE = new HashSet<>();
-    public static HashMap<Integer, Boolean> config_UPDATE_MESSAGE = new HashMap<>();
-    public static HashSet<String> config_BONUS = new HashSet<>();
-    public static HashSet<String> config_PREFIX = new HashSet<>();
-    public static HashMap<Integer, Boolean> config_PREFIX_BOOLEAN = new HashMap<>();
-    public static HashSet<Integer> config_TOKENS_BUY = new HashSet<>();
-    public static HashSet<Integer> config_TOKENS_SELL = new HashSet<>();
-    public static ArrayList<String> config_SIGN = new ArrayList<>();
+    public static HashSet<Double> configVersion = new HashSet<>();
+    public static HashSet<String> databaseOption = new HashSet<>();
+    public static HashMap<Integer, Boolean> updateMessage = new HashMap<>();
+    public static HashSet<String> bonus = new HashSet<>();
+    public static HashSet<String> prefix = new HashSet<>();
+    public static HashMap<Integer, Boolean> prefixBoolean = new HashMap<>();
+    public static HashSet<Integer> tokensBuy = new HashSet<>();
+    public static HashSet<Integer> tokensSell = new HashSet<>();
+    public static ArrayList<String> sign = new ArrayList<>();
 
-    public static HashSet<String> config_SQL_HOST = new HashSet<>();
-    public static HashSet<Integer> config_SQL_PORT = new HashSet<>();
-    public static HashSet<String> config_SQL_USERNAME = new HashSet<>();
-    public static HashSet<String> config_SQL_PASSWORD = new HashSet<>();
-    public static HashSet<String> config_SQL_DATABASE = new HashSet<>();
-    public static HashSet<String> config_SQL_TABLE = new HashSet<>();
-    public static HashMap<Integer, Boolean> config_SQL_USESSL = new HashMap<>();
+    public static HashSet<String> sqlHost = new HashSet<>();
+    public static HashSet<Integer> sqlPort = new HashSet<>();
+    public static HashSet<String> sqlUsername = new HashSet<>();
+    public static HashSet<String> sqlPassword = new HashSet<>();
+    public static HashSet<String> sqlDatabase = new HashSet<>();
+    public static HashSet<String> sqlTable = new HashSet<>();
+    public static HashMap<Integer, Boolean> sqlUseSsl = new HashMap<>();
 
 
     public static void loadHashSet() {
         Tokens plugin = Tokens.getPlugin(Tokens.class);
 
-        config_CONFIG_VERSION.add(plugin.getConfig().getDouble("ConfigVersion"));
-        config_DATABASE.add(plugin.getConfig().getString("database"));
-        config_UPDATE_MESSAGE.put(1, plugin.getConfig().getBoolean("update_message"));
-        config_BONUS.add(plugin.getConfig().getString("bonus_message"));
-        config_PREFIX.add(plugin.getConfig().getString("prefix.prefix"));
-        config_PREFIX_BOOLEAN.put(1, plugin.getConfig().getBoolean("prefix.enable"));
-        config_TOKENS_BUY.add(plugin.getConfig().getInt("tokens.buy_price"));
-        config_TOKENS_SELL.add(plugin.getConfig().getInt("tokens.sell_price"));
+        configVersion.add(plugin.getConfig().getDouble("ConfigVersion"));
+        databaseOption.add(plugin.getConfig().getString("database"));
+        updateMessage.put(1, plugin.getConfig().getBoolean("update_message"));
+        bonus.add(plugin.getConfig().getString("bonus_message"));
+        prefix.add(plugin.getConfig().getString("prefix.prefix"));
+        prefixBoolean.put(1, plugin.getConfig().getBoolean("prefix.enable"));
+        tokensBuy.add(plugin.getConfig().getInt("tokens.buy_price"));
+        tokensSell.add(plugin.getConfig().getInt("tokens.sell_price"));
 
         for (String key : plugin.getConfig().getConfigurationSection("sign").getKeys(false)) {
-            config_SIGN.add(plugin.getConfig().getString("sign."+key));
+            sign.add(plugin.getConfig().getString("sign."+key));
         }
 
-        config_SQL_HOST.add(plugin.getConfig().getString("mySQL.host"));
-        config_SQL_PORT.add(plugin.getConfig().getInt("mySQL.port"));
-        config_SQL_USERNAME.add(plugin.getConfig().getString("mySQL.username"));
-        config_SQL_PASSWORD.add(plugin.getConfig().getString("mySQL.password"));
-        config_SQL_DATABASE.add(plugin.getConfig().getString("mySQL.database"));
-        config_SQL_TABLE.add(plugin.getConfig().getString("mySQL.table"));
-        config_SQL_USESSL.put(1, plugin.getConfig().getBoolean("mySQL.useSSL"));
+        sqlHost.add(plugin.getConfig().getString("mySQL.host"));
+        sqlPort.add(plugin.getConfig().getInt("mySQL.port"));
+        sqlUsername.add(plugin.getConfig().getString("mySQL.username"));
+        sqlPassword.add(plugin.getConfig().getString("mySQL.password"));
+        sqlDatabase.add(plugin.getConfig().getString("mySQL.database"));
+        sqlTable.add(plugin.getConfig().getString("mySQL.table"));
+        sqlUseSsl.put(1, plugin.getConfig().getBoolean("mySQL.useSSL"));
 
         Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Loaded the config successfully!");
     }
 
 
     public static double config_version() {
-        return Double.parseDouble(config_CONFIG_VERSION.toString().replace("[", "").replace("]", ""));
+        return Double.parseDouble(configVersion.toString().replace("[", "").replace("]", ""));
     }
 
     public static String database() {
-        return config_DATABASE.toString().replace("[", "").replace("]", "");
+        return databaseOption.toString().replace("[", "").replace("]", "");
     }
 
     public static boolean update_message() {
-        return config_UPDATE_MESSAGE.get(1);
+        return updateMessage.get(1);
     }
 
     public static String bonus_message() {
-        return config_BONUS.toString().replace("[", "").replace("]", "");
+        return bonus.toString().replace("[", "").replace("]", "");
     }
 
     public static String prefix() {
-        return config_PREFIX.toString().replace("[", "").replace("]", "");
+        return prefix.toString().replace("[", "").replace("]", "");
     }
 
     public static Boolean prefix_boolean() {
-        return config_PREFIX_BOOLEAN.get(1);
+        return prefixBoolean.get(1);
     }
 
     public static int tokens_buy() {
-        return Integer.parseInt(config_TOKENS_BUY.toString().replace("[", "").replace("]", ""));
+        return Integer.parseInt(tokensBuy.toString().replace("[", "").replace("]", ""));
     }
 
     public static int token_sell() {
-        return Integer.parseInt(config_TOKENS_SELL.toString().replace("[", "").replace("]", ""));
+        return Integer.parseInt(tokensSell.toString().replace("[", "").replace("]", ""));
     }
 
     public static ArrayList<String> sign() {
-        return config_SIGN;
+        return sign;
     }
 
     public static String host() {
-        return config_SQL_HOST.toString().replace("[", "").replace("]", "");
+        return sqlHost.toString().replace("[", "").replace("]", "");
     }
 
     public static int port() {
-        return Integer.parseInt(config_SQL_PORT.toString().replace("[", "").replace("]", ""));
+        return Integer.parseInt(sqlPort.toString().replace("[", "").replace("]", ""));
     }
 
     public static String username() {
-        return config_SQL_USERNAME.toString().replace("[", "").replace("]", "");
+        return sqlUsername.toString().replace("[", "").replace("]", "");
     }
 
     public static String passwod() {
-        return config_SQL_PASSWORD.toString().replace("[", "").replace("]", "");
+        return sqlPassword.toString().replace("[", "").replace("]", "");
     }
 
     public static String table() {
-        return config_SQL_TABLE.toString().replace("[", "").replace("]", "");
+        return sqlTable.toString().replace("[", "").replace("]", "");
     }
 
     public static String db() {
-        return config_SQL_DATABASE.toString().replace("[", "").replace("]", "");
+        return sqlDatabase.toString().replace("[", "").replace("]", "");
     }
 
     public static Boolean useSSL() {
-        return config_SQL_USESSL.get(1);
+        return sqlUseSsl.get(1);
     }
 
 }
