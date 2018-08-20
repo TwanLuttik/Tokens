@@ -30,6 +30,7 @@ public class loadManager {
     public static HashSet<String> config_SQL_PASSWORD = new HashSet<>();
     public static HashSet<String> config_SQL_DATABASE = new HashSet<>();
     public static HashSet<String> config_SQL_TABLE = new HashSet<>();
+    public static HashMap<Integer, Boolean> config_SQL_USESSL = new HashMap<>();
 
 
     public static void loadHashSet() {
@@ -54,8 +55,9 @@ public class loadManager {
         config_SQL_PASSWORD.add(plugin.getConfig().getString("mySQL.password"));
         config_SQL_DATABASE.add(plugin.getConfig().getString("mySQL.database"));
         config_SQL_TABLE.add(plugin.getConfig().getString("mySQL.table"));
+        config_SQL_USESSL.put(1, plugin.getConfig().getBoolean("mySQL.useSSL"));
 
-        Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "loaded the config to the hashSet");
+        Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Loaded the config successfully!");
     }
 
 
@@ -117,6 +119,10 @@ public class loadManager {
 
     public static String db() {
         return config_SQL_DATABASE.toString().replace("[", "").replace("]", "");
+    }
+
+    public static Boolean useSSL() {
+        return config_SQL_USESSL.get(1);
     }
 
 }
