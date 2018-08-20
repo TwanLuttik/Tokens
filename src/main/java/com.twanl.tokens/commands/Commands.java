@@ -551,26 +551,9 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                     } else if (args[1].equalsIgnoreCase("edit")) {
                         if (p.hasPermission("tokens.shop.edit")) {
-//
-
-                            if (args.length == 2) {
-                                editMenu mm = new editMenu();
-                                mm.editMenu(p);
-                                return true;
-                            }
-
-                            String menuName = args[2].toLowerCase();
-
-                            // check if the shop exist
-                            if (!config.getShop().contains("shop." + menuName)) {
-                                p.sendMessage(Strings.prefix + Strings.redB + "'" + menuName + "'" + Strings.red + " doesn't exist!");
-                                return true;
-                            }
-
-                            sm.openMenu_EDIT(p, menuName);
-
-                            util.editMode.put(p, true);
-                            util.editModeShop.put(p, menuName);
+                            editMenu mm = new editMenu();
+                            mm.menuEditMenu(p);
+                            return true;
 
                         }
                     } else if (args[1].equalsIgnoreCase("add")) {
