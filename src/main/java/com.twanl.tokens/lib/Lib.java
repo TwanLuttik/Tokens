@@ -157,7 +157,6 @@ public class Lib {
             int tokensValue = loadManager.tokens_buy();
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
-            int playerTokens = sql.getTokens(playerUUID);
 
             // check if the player has enough balance to continue the transaction
             if (totalCheckOut > economy.getBalance(buyer)) {
@@ -212,6 +211,7 @@ public class Lib {
         }
     }
 
+    //TODO: need to be a void, i don't no why its a boolean
     public boolean convertToMoney(UUID playerUUID, int amount) {
         if (sqlUse()) {
             Player p = Bukkit.getPlayer(playerUUID);
