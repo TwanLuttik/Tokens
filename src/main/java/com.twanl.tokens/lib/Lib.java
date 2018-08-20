@@ -218,7 +218,7 @@ public class Lib {
             // getting some information
 //            int tokensValue = plugin.getConfig().getInt("tokens.sell_price");
             int tokensValue = loadManager.token_sell();
-            int playerTokens = sql.getTokens(playerUUID);
+            int playerTokens = balanceInt(playerUUID);
             int totalCheckOut = amount * tokensValue;
             Player buyer = p.getPlayer();
 
