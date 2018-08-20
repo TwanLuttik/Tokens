@@ -51,10 +51,12 @@ public class ShopMenu implements Listener {
         }
 
 
-        //TODO: <PRIO = LOW> instead of looking when a player click on an item with displayname, check for WhiceSlotClicked?
         //TODO: <PRIO = MED> support for Potions, enchanted Books and arrows
-        //TODO: when there is more than 2 of the same displayname than it will choose the first instead where the player clicked on
 
+        // check if there is a shop
+        if (!config.getShop().isSet("default-shop")) {
+            return;
+        }
 
 
         for (String SHOP_NAME : config.getShop().getConfigurationSection("shop").getKeys(false)) {
@@ -170,6 +172,30 @@ public class ShopMenu implements Listener {
 
 
     }
+
+//    @EventHandler
+//    public void test(InventoryClickEvent e) {
+//        Player p = (Player) e.getWhoClicked();
+//        Inventory open = e.getInventory();
+//        ItemStack item = e.getCurrentItem();
+//        config.setup();
+//
+//        int a = e.getSlot();
+//
+//
+//        if (open == null) {
+//            return;
+//        }
+//
+//
+//        if (util.editMode.get(p)) {
+//            if(e.getCurrentItem() == null) {
+//                p.sendMessage("test");
+//                return;
+//            }
+//        }
+//
+//    }
 
     private boolean B = false;
 
