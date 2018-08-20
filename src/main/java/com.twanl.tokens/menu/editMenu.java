@@ -126,28 +126,4 @@ public class editMenu implements Listener {
         p.openInventory(i);
     }
 
-
-//    public void editorMenu(Player p, String menu) {
-//        config.setup();
-//
-//        String menu_TITLE = Strings.translateColorCodes(lib.shopGetTitle(menu));
-//
-//        Inventory i = plugin.getServer().createInventory(null, lib.shopGetSlots(menu), menu_TITLE + editMode_TITLE);
-//
-//        for (String items : config.getShop().getConfigurationSection("shop." + menu + ".slots").getKeys(false)) {
-//            int i1 = Integer.parseInt(items);
-//
-//            // if the itemname has color codes than translate it to colored text
-//            String itemNameColor = Strings.translateColorCodes(lib.itemName(menu, i1));
-//
-//            inv.addItem(i, itemNameColor, lib.itemAmount(menu, i1), lib.itemSlot(menu, i1), lib.itemByte(menu, i1), Material.getMaterial(lib.itemId(menu, i1)),
-//                    " ", Strings.gray + "Price: " + Strings.green + lib.itemPrice(menu, i1) + " " + lib.getPrefix());
-//        }
-//
-//        p.openInventory(i);
-//
-//
-//
-//    }
-
 }
