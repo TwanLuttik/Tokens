@@ -65,17 +65,20 @@ public class Lib {
         if (sqlUse()) {
             sql.addTokens(target, tokens);
 
-            Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
+            if (uuid != null ) {
+                Player p = Bukkit.getPlayer(uuid);
+                p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
+            }
         } else {
 
             int playerTokens = config.getPlayers().getInt(target + ".tokens");
 
             config.getPlayers().set(target + ".tokens", playerTokens + tokens);
             config.savePlayers();
-
-            Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
+            if (uuid != null ) {
+                Player p = Bukkit.getPlayer(uuid);
+                p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
+            }
         }
     }
 
@@ -490,9 +493,14 @@ public class Lib {
         return config.getShop().getInt("shop." + menu + ".slots." + i + ".Data");
     }
 
-    public int itemPrice(String menu, int i) {
+    public int itemBuyPrice(String menu, int i) {
         config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".cost");
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".buy");
+    }
+
+    public int itemSellPrice(String menu, int i) {
+        config.setup();
+        return config.getShop().getInt("shop." + menu + ".slots." + i + ".sell");
     }
 
     public String itemCommand(String menu, int i) {
