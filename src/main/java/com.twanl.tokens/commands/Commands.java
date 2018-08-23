@@ -518,8 +518,8 @@ public class Commands implements CommandExecutor, TabCompleter {
                             + Strings.gray + "/tokens remove <amount> <player>\n"
                             + Strings.gray + "/tokens add <amount> <player>\n"
                             + Strings.gray + "/tokens set <amount> <player>\n"
-                            + Strings.gray + "/tokens shop edit <menu>\n\n"
-                            + Strings.gray + "/tokens shop add <menu> <slots> <title>\n\n"
+                            + Strings.gray + "/tokens shop edit\n"
+                            + Strings.gray + "/tokens shop add <menu> <slots> <title>\n"
                             + Strings.gray + "/tokens shop list\n"
                             + Strings.DgrayBS + "-                                    \n");
 
