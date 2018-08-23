@@ -93,4 +93,20 @@ public class invAPI {
     }
 
 
+    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType, List<String> list) {
+        ItemStack I = new ItemStack(itemType, Amount, (short) bty);
+        ItemMeta IMeta = I.getItemMeta();
+        IMeta.setDisplayName(ItemName);
+
+        ArrayList<String> lore = new ArrayList();
+        for (String s : list) {
+            lore.add(s);
+        }
+
+        IMeta.setLore(lore);
+        I.setItemMeta(IMeta);
+        inv.setItem(itemLocation, I);
+    }
+
+
 }
