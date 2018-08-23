@@ -1,5 +1,5 @@
 main: com.twanl.tokens.Tokens
-version: 2.2.6
+version: 2.3.0
 name: Tokens
 author: T.L
 api-version: 1.13
