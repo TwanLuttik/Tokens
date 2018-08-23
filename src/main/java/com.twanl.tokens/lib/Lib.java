@@ -87,8 +87,8 @@ public class Lib {
         if (sqlUse()) {
             sql.removeTokens(target, tokens);
 
-            Player p = Bukkit.getPlayer(uuid);
             if (uuid != null) {
+                Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green + F.getName(String.valueOf(target)));
             }
         } else {
@@ -97,8 +97,8 @@ public class Lib {
             config.getPlayers().set(target + ".tokens", playerTokens - tokens);
             config.savePlayers();
 
-            Player p = Bukkit.getPlayer(uuid);
             if (uuid != null) {
+                Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are removed from " + Strings.green + F.getName(String.valueOf(target)));
             }
         }
@@ -108,15 +108,19 @@ public class Lib {
         if (sqlUse()) {
             sql.setTokens(target, tokens);
 
-            Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(target)));
+            if (uuid != null) {
+                Player p = Bukkit.getPlayer(uuid);
+                p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(target)));
+            }
         } else {
 
             config.getPlayers().set(target + ".tokens", tokens);
             config.savePlayers();
 
-            Player p = Bukkit.getPlayer(uuid);
-            p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(target)));
+            if (uuid != null) {
+                Player p = Bukkit.getPlayer(uuid);
+                p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are set to " + Strings.green + F.getName(String.valueOf(target)));
+            }
         }
 
     }
