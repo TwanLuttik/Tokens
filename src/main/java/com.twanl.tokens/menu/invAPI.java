@@ -14,98 +14,78 @@ import java.util.List;
  */
 public class invAPI {
 
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType) {
+    // DEFAULT
+    public void addItem(Inventory inv, String ItemName, int Amount, int slot, Material itemType, List<String> list) {
         ItemStack I = new ItemStack(itemType, Amount);
         ItemMeta IMeta = I.getItemMeta();
         IMeta.setDisplayName(ItemName);
-        I.setItemMeta(IMeta);
 
-        inv.setItem(itemLocation, I);
+        if (list != null) {
+            ArrayList<String> lore = new ArrayList();
+            for (String s : list) {
+                lore.add(s);
+            }
+            IMeta.setLore(lore);
+        }
+
+        I.setItemMeta(IMeta);
+        inv.setItem(slot, I);
     }
 
+    // BYTE
+    public void addItem(Inventory inv, String ItemName, int Amount, int slot, int bty, Material itemType, List<String> list) {
+        ItemStack I = new ItemStack(itemType, Amount, (short) bty);
+        ItemMeta IMeta = I.getItemMeta();
+        IMeta.setDisplayName(ItemName);
 
+        if (list != null) {
+            ArrayList<String> lore = new ArrayList();
+            for (String s : list) {
+                lore.add(s);
+            }
+            IMeta.setLore(lore);
+        }
 
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, Enchantment Enchant, int i, boolean b) {
+        I.setItemMeta(IMeta);
+        inv.setItem(slot, I);
+    }
+
+    // ENCHANTS
+    public void addItem(Inventory inv, String ItemName, int Amount, int slot, Material itemType, Enchantment Enchant, int i, boolean b, List<String> list) {
         ItemStack I = new ItemStack(itemType, Amount);
         ItemMeta IMeta = I.getItemMeta();
         IMeta.setDisplayName(ItemName);
         IMeta.addEnchant(Enchant, i, b);
-        I.setItemMeta(IMeta);
 
-        inv.setItem(itemLocation, I);
+        if (list != null) {
+            ArrayList<String> lore = new ArrayList();
+            for (String s : list) {
+                lore.add(s);
+            }
+            IMeta.setLore(lore);
+        }
+
+        I.setItemMeta(IMeta);
+        inv.setItem(slot, I);
     }
 
-
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType) {
+    // BYTE + ENCHANTS
+    public void addItem(Inventory inv, String ItemName, int Amount, int slot, int bty, Material itemType, Enchantment Enchant, int i, boolean b, List<String> list) {
         ItemStack I = new ItemStack(itemType, Amount, (short) bty);
         ItemMeta IMeta = I.getItemMeta();
         IMeta.setDisplayName(ItemName);
-        I.setItemMeta(IMeta);
+        IMeta.addEnchant(Enchant, i, b);
 
-        inv.setItem(itemLocation, I);
-    }
-
-
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, String lore) {
-        ItemStack I = new ItemStack(itemType, Amount);
-        ItemMeta IMeta = I.getItemMeta();
-        IMeta.setDisplayName(ItemName);
-
-
-
-        ArrayList<String> lore1 = new ArrayList();
-        lore1.add(String.valueOf(lore));
-        IMeta.setLore(lore1);
-        I.setItemMeta(IMeta);
-
-        inv.setItem(itemLocation, I);
-    }
-
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType, String lore1, String lore2) {
-        ItemStack I = new ItemStack(itemType, Amount, (short) bty);
-        ItemMeta IMeta = I.getItemMeta();
-        IMeta.setDisplayName(ItemName);
-        ArrayList<String> lore = new ArrayList();
-        if (!lore1.isEmpty()) {
-            lore.add(String.valueOf(lore1));
-        }
-        if (!lore2.isEmpty()) {
-            lore.add(String.valueOf(lore2));
-        }
-        IMeta.setLore(lore);
-        I.setItemMeta(IMeta);
-        inv.setItem(itemLocation, I);
-    }
-
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, Material itemType, List<String> list) {
-        ItemStack I = new ItemStack(itemType, Amount);
-        ItemMeta IMeta = I.getItemMeta();
-        IMeta.setDisplayName(ItemName);
-
-        ArrayList<String> lore = new ArrayList();
-        for (String s : list) {
-            lore.add(s);
+        if (list != null) {
+            ArrayList<String> lore = new ArrayList();
+            for (String s : list) {
+                lore.add(s);
+            }
+            IMeta.setLore(lore);
         }
 
-        IMeta.setLore(lore);
         I.setItemMeta(IMeta);
-        inv.setItem(itemLocation, I);
-    }
-
-
-    public void addItem(Inventory inv, String ItemName, int Amount, int itemLocation, int bty, Material itemType, List<String> list) {
-        ItemStack I = new ItemStack(itemType, Amount, (short) bty);
-        ItemMeta IMeta = I.getItemMeta();
-        IMeta.setDisplayName(ItemName);
-
-        ArrayList<String> lore = new ArrayList();
-        for (String s : list) {
-            lore.add(s);
-        }
-
-        IMeta.setLore(lore);
-        I.setItemMeta(IMeta);
-        inv.setItem(itemLocation, I);
+        inv.setItem(slot, I);
     }
 
 
