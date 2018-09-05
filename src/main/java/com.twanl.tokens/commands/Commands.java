@@ -3,13 +3,10 @@ package com.twanl.tokens.commands;
 import com.twanl.tokens.Tokens;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
-import com.twanl.tokens.menu.ShopMenu;
-import com.twanl.tokens.menu.editMenu;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
 import com.twanl.tokens.utils.Strings;
-import com.twanl.tokens.utils.util;
 import com.twanl.tokens.utils.loadManager;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -651,6 +648,11 @@ public class Commands implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("convert")) {
                 if (p.hasPermission("tokens.admin.convert")) {
 
+                    if (args.length == 1) {
+                        p.sendMessage(Strings.prefix + Strings.gray + "Only from file -> sql supported");
+                        return true;
+                    }
+
                     String convertTO = args[1];
                     if (convertTO.equals("sql")) {
 
@@ -680,27 +682,311 @@ public class Commands implements CommandExecutor, TabCompleter {
 
                 }
 
-            } /*else if (args[0].equalsIgnoreCase("bank")) {
+            } else if (args[0].equalsIgnoreCase("bank")) {
                 if (p.hasPermission("tokens.bank")) {
 
-                    util.editMode.put(p, false);
-                    BankMenu bm = new BankMenu();
+                    if (args.length == 1) {
 
-                    bm.inv(p);
+                        if (lib.playerIsRegisteredInBank(p.getUniqueId())) {
+                            p.sendMessage(Strings.DgrayBS + "                           \n" + Strings.reset +
+                                    Strings.greenB + "     Bank" + Strings.blue + " #" + lib.userBankID(p.getUniqueId()) + "\n" +
+                                    " \n" +
+                                    Strings.gray + "Owner: " + Strings.white + lib.getBankOwner(p.getUniqueId()) + "\n" +
+                                    Strings.gray + "Bank Balance: " + Strings.white + lib.bankBalance(p.getUniqueId()) + "\n" +
+                                    Strings.gray + "Sub Users:");
+
+                            if (config.getBank().get(lib.userBankID(p.getUniqueId()) + ".users").toString().isEmpty() && config.getBank().get(lib.userBankID(p.getUniqueId()) + ".users").toString().contains("")) {
+                                p.sendMessage(Strings.green + "  You can invite members!");
+                            } else {
+                                // get all the user from the bank
+                                for (String key : config.getBank().getStringList(lib.userBankID(p.getUniqueId()) + ".users")) {
+                                    String[] pName = key.split(" ");
+                                    p.sendMessage(Strings.gray + " - " + Strings.white + pName[1]);
+                                }
+                            }
+
+                            p.sendMessage(" \n" +
+                                    Strings.DgrayBS + "                           ");
+                        } else {
+                            p.sendMessage(Strings.red + "You are not a particient of a bank. You can create your own bank with /tokens bank create");
+                        }
+
+
+                    } else if (args[1].equalsIgnoreCase("create")) {
+                        if (p.hasPermission("tokens.bank.create")) {
+
+
+                            if (lib.playerIsRegisteredInBank(p.getUniqueId())) {
+                                if (lib.isBankOwner(p.getUniqueId())) {
+                                    p.sendMessage(Strings.red + "You are already a owner from a bank!");
+                                } else {
+                                    p.sendMessage(Strings.red + "You already a member form a bank!");
+                                }
+                                return true;
+                            }
+
+                            lib.createBank(p.getUniqueId());
+                            p.sendMessage(Strings.green + "You succsessfully created a new bank!");
+
+                        }
+                    } else if (args[1].equalsIgnoreCase("leave")) {
+                        if (p.hasPermission("tokens.bank.leave")) {
+                            // check if the player is registrated in abank
+                            if (lib.playerIsRegisteredInBank(p.getUniqueId())) {
+                                // check if the player is a member
+                                if (!lib.isBankOwner(p.getUniqueId())) {
+                                    lib.bankUserRemove(p.getUniqueId());
+                                    p.sendMessage(Strings.green + "You successfully left the bank");
+                                    return true;
+                                } else {
+                                    p.sendMessage(Strings.red + "Owner's cannot leave the bank, If you want to delete the bank do /tokens bank delete!");
+                                    return true;
+                                }
+                            } else {
+                                p.sendMessage(Strings.red + "You are not registrated in a bank!");
+                                return true;
+                            }
+                        }
+
+                    } else if (args[1].equalsIgnoreCase("delete")) {
+                        if (p.hasPermission("tokens.bank.delete")) {
+                            // check if the player registrated in a bank
+                            if (lib.playerIsRegisteredInBank(p.getUniqueId())) {
+                                // check if the player is the owner
+                                if (lib.isBankOwner(p.getUniqueId())) {
+                                    lib.bankDelete(p.getUniqueId());
+                                    p.sendMessage(Strings.green + "Succsessfully deleted the bank!");
+                                    return true;
+                                } else {
+                                    p.sendMessage(Strings.red + "You are not the owner of the bank!");
+                                    return true;
+                                }
+                            } else {
+                                p.sendMessage(Strings.red + "You are not registrated in a bank!");
+                                return true;
+                            }
+                        }
+
+                    } else if (args[1].equalsIgnoreCase("user")) {
+
+                        // check if the sender is the owner of the bank
+                        if (!lib.isBankOwner(p.getUniqueId())) {
+                            p.sendMessage(Strings.red + "You are not the owner of the bank!");
+                            return true;
+                        }
+
+                        if (args.length == 2) {
+                            p.sendMessage(Strings.prefix + "Usage: /tokens bank user add/remove");
+                            return true;
+
+                        } else if (args[2].equalsIgnoreCase("invite")) {
+                            if (p.hasPermission("tokens.bank.user.invite")) {
+
+
+                                // check if the player name is filled in for preventing errors
+                                if (args.length == 3) {
+                                    p.sendMessage(Strings.red + "You need specify a player!");
+                                    return true;
+                                }
+
+                                Player pInvite = Bukkit.getPlayer(args[3]);
+
+
+                                // check if he is trying to invite himself
+                                if (pInvite == p.getPlayer()) {
+                                    p.sendMessage(Strings.red + "You cannot invite yourself!");
+                                    return true;
+                                }
+
+                                // check if the player is already a member of the bank
+                                for (String key : config.getBank().getStringList(lib.userBankID(p.getUniqueId()) + ".users")) {
+                                    String[] pName = key.split(" ");
+                                    UUID bankPlayer = UUID.fromString(pName[0]);
+                                    UUID commandPlayer = pInvite.getUniqueId();
+
+                                    if (bankPlayer.equals(commandPlayer)) {
+                                        p.sendMessage(Strings.red + "Player is already a member of your bank!");
+                                        return true;
+
+                                    }
+                                }
+
+
+                                hasInvite.put(pInvite, true);
+                                inviteSender.put(pInvite, p);
+                                p.sendMessage(Strings.green + "Invitation sent.");
+                                plugin.nms.sendClickableMessage(pInvite, p.getName() + " invited you for joining his bank, ", Strings.greenB + "JOIN", "tokens bank accept");
+                                return true;
+                            }
+
+                        } else if (args[2].equalsIgnoreCase("remove")) {
+                            if (p.hasPermission("tokens.bank.user.remove")) {
+
+                                // check if the player name is filled in for preventing errors
+                                if (args.length == 3) {
+                                    p.sendMessage(Strings.red + "You need specify a player!");
+                                    return true;
+                                }
+
+                                OfflinePlayer pInvite = Bukkit.getOfflinePlayer(args[3]);
+
+
+                                // check if he is not trying to remove himself
+                                if (pInvite == p.getPlayer()) {
+                                    p.sendMessage(Strings.red + "You cannot remove yourself from your bank!");
+                                    return true;
+                                }
+
+
+                                // Check if the player is a member of the bank
+                                for (String key : config.getBank().getStringList(lib.userBankID(p.getUniqueId()) + ".users")) {
+                                    String[] pName = key.split(" ");
+                                    UUID bankPlayer = UUID.fromString(pName[0]);
+                                    UUID commandPlayer = pInvite.getUniqueId();
+
+
+                                    if (bankPlayer.equals(commandPlayer)) {
+                                        lib.bankUserRemove(pInvite.getUniqueId());
+                                        p.sendMessage("You succsesfully removed " + Strings.green + pName[1] + Strings.white + " from the bank!");
+                                        return true;
+
+                                    }
+                                }
+                            }
+                        } else if (args[2].equalsIgnoreCase("makeowner")) {
+                            if (p.hasPermission("tokens.bank.user.makeowner")) {
+
+                                // check if the player name is filled in for preventing errors
+                                if (args.length == 3) {
+                                    p.sendMessage(Strings.red + "You need specify a player!");
+                                    return true;
+                                }
+
+                                // define the target
+                                Player pTarget = Bukkit.getPlayer(args[3]);
+
+
+                                // check if the player is a member of the bank
+                                if (!lib.playerIsRegisteredInBank(pTarget.getUniqueId())) {
+                                    p.sendMessage(Strings.red + "User is not a member of your bank!");
+                                    return true;
+                                }
+
+                                // check if he is not tryin to re-own himself
+                                if (pTarget == p.getPlayer()) {
+                                    p.sendMessage(Strings.red + "You cannot make yourself owner again!");
+                                    return true;
+                                }
+
+
+                                lib.bankOwnershipTransfer(p.getUniqueId(), pTarget.getUniqueId());
+                                p.sendMessage(Strings.green + "Succsessfully transfered the new owner to " + pTarget.getName());
+
+                            }
+
+                        }
+                    } else if (args[1].equalsIgnoreCase("accept")) {
+                        if (p.hasPermission("tokens.bank.user.accept")) {
+
+                            // check if the player has an invite
+                            if (!hasInvite.containsKey(p)) {
+                                p.sendMessage(Strings.red + "You tried to accept an already joined bank!");
+                                return true;
+                            }
+
+
+                            if (hasInvite.containsKey(p) || hasInvite.get(p)) {
+
+                                hasInvite.remove(p);
+                                p.sendMessage(Strings.green + "You accepted the invite.");
+
+                                lib.bankUserAdd(inviteSender.get(p).getUniqueId(), p.getUniqueId());
+
+                                // send the inviteSender an message that the player has accept the invite
+                                Player pInviteSender = inviteSender.get(p);
+                                pInviteSender.sendMessage(Strings.green + p.getName() + " has accepted your invite.");
+
+                                return true;
+                            }
+                        }
+
+                    } else if (args[1].equalsIgnoreCase("add")) {
+                        if (p.hasPermission("tokens.bank.add")) {
+
+
+                            // check if the player has no bank
+                            if (!lib.playerIsRegisteredInBank(p.getUniqueId())) {
+                                p.sendMessage(Strings.red + "You are not a member of a bank!");
+                                return true;
+                            }
+
+
+                            // check if its a valid number
+                            try {
+                                Integer.parseInt(args[2]);
+                            } catch (Exception e) {
+                                p.sendMessage(Strings.red + "use a valid number!");
+                                return true;
+                            }
+
+
+                            int commandINT = Integer.parseInt(args[2]);
+
+                            // check if the player has enough balance
+                            if (commandINT > lib.balanceInt(p.getUniqueId())) {
+                                p.sendMessage(Strings.red + "You don't have enough to deposit!");
+                                return true;
+                            }
+
+
+                            lib.bankAddBalance(p.getUniqueId(), commandINT);
+                            lib.removeTokens(null, p.getUniqueId(), commandINT);
+                            p.sendMessage(Strings.green + "Deposit successfully " + Strings.white + commandINT + " " + lib.getPrefix());
+                        }
+                    } else if (args[1].equalsIgnoreCase("get")) {
+                        if (p.hasPermission("tokens.bank.get")) {
+
+
+                            // check if its a valid number
+                            try {
+                                Integer.parseInt(args[2]);
+                            } catch (Exception e) {
+                                p.sendMessage(Strings.red + "use a valid number!");
+                                return true;
+                            }
+
+                            int commandINT = Integer.parseInt(args[2]);
+
+
+                            // check if the bank has enough to withdraw
+                            if (commandINT > lib.bankBalance(p.getUniqueId())) {
+                                p.sendMessage(Strings.red + "The bank doesn't have enough balance to get the requested amount!");
+                                return true;
+
+                            }
+
+                            lib.bankRemoveBalance(p.getUniqueId(), commandINT);
+                            lib.addTokens(null, p.getUniqueId(), commandINT);
+                            p.sendMessage(Strings.green + "You withdraw " + Strings.white + commandINT + " " + lib.getPrefix());
+
+                        }
+                    }
 
 
                 }
-            }*/
+            }
             return true;
         }
         return true;
     }
 
+    private HashMap<Player, Boolean> hasInvite = new HashMap<>();
+    private HashMap<Player, Player> inviteSender = new HashMap<>();
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command cmd, String String, String[] args) {
         if (args.length == 1) {
-            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "bonus", "reload", "buy", "sell", "help", "shop", "top", "convert");
+            return Arrays.asList("balance", "pay", "remove", "add", "set", "get", "bonus", "reload", "buy", "sell", "help", "bank", "top", "convert");
         }
 
         return null;
