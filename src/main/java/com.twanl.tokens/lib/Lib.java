@@ -12,6 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.UUID;
 
 public class Lib {
@@ -56,7 +59,7 @@ public class Lib {
     }
 
 
-//    private static Tokens plugin = Tokens.getPlugin(Tokens.class);
+    //    private static Tokens plugin = Tokens.getPlugin(Tokens.class);
     private Functions F = new Functions();
     private Economy economy = Tokens.economy;
     private SQLlib sql = new SQLlib();
@@ -65,7 +68,7 @@ public class Lib {
         if (sqlUse()) {
             sql.addTokens(target, tokens);
 
-            if (uuid != null ) {
+            if (uuid != null) {
                 Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
             }
@@ -75,7 +78,7 @@ public class Lib {
 
             config.getPlayers().set(target + ".tokens", playerTokens + tokens);
             config.savePlayers();
-            if (uuid != null ) {
+            if (uuid != null) {
                 Player p = Bukkit.getPlayer(uuid);
                 p.sendMessage(Strings.green + tokens + " " + getPrefix() + " " + Strings.gray + "are added to " + Strings.green + F.getName(String.valueOf(target)));
             }
@@ -418,104 +421,247 @@ public class Lib {
 
 
     public String getPrefix() {
-//        if (plugin.getConfig().getBoolean("prefix.enable")) {
         if (loadManager.prefix_boolean()) {
-//            return Strings.translateColorCodes(plugin.getConfig().getString("prefix.prefix"));
             return Strings.translateColorCodes(loadManager.prefix());
         } else {
             return "Tokens";
         }
     }
 
-    public boolean versionMatchForShop() {
-        Tokens plugin = Tokens.getPlugin(Tokens.class);
-        String a = plugin.getServer().getClass().getPackage().getName();
-        String version = a.substring(a.lastIndexOf('.') + 1);
+//    public boolean versionMatchForShop() {
+//        Tokens plugin = Tokens.getPlugin(Tokens.class);
+//        String a = plugin.getServer().getClass().getPackage().getName();
+//        String version = a.substring(a.lastIndexOf('.') + 1);
+//
+//        // Check if the server has the same craftbukkit version as this plugin
+//        if (version.equalsIgnoreCase("v1_8_R1")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_8_R2")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_8_R3")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_9_R1")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_9_R2")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_10_R1")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_11_R1")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_12_R1")) {
+//            return true;
+//        } else if (version.equalsIgnoreCase("v1_13_R1")) {
+//            return false;
+//        }
+//        return false;
+//    }
 
-        // Check if the server has the same craftbukkit version as this plugin
-        if (version.equalsIgnoreCase("v1_8_R1")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_8_R2")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_8_R3")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_9_R1")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_9_R2")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_10_R1")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_11_R1")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_12_R1")) {
-            return true;
-        } else if (version.equalsIgnoreCase("v1_13_R1")) {
+
+    public int bankBalance(UUID uuid) {
+        config.setup();
+        int playerBankID = userBankID(uuid);
+
+        return config.getBank().getInt(playerBankID + ".balance");
+    }
+
+    public void bankAddBalance(UUID uuid, int amount) {
+        config.setup();
+        int result = bankBalance(uuid) + amount;
+        int playerBankID = userBankID(uuid);
+
+        config.getBank().set(playerBankID + ".balance", result);
+        config.saveBank();
+    }
+
+    public void bankRemoveBalance(UUID uuid, int amount) {
+        config.setup();
+        int result = bankBalance(uuid) - amount;
+        int playerBankID = userBankID(uuid);
+
+        config.getBank().set(playerBankID + ".balance", result);
+        config.saveBank();
+    }
+
+    public void bankUserAdd(UUID uuid, UUID subUser) {
+        config.setup();
+        Player p = Bukkit.getPlayer(subUser);
+        int playerBankID = userBankID(uuid);
+
+        List<String> list = config.getBank().getStringList(playerBankID + ".users");
+        list.add(subUser + " " + p.getName() + " 1");
+        config.getBank().set(playerBankID + ".users", list);
+
+        config.getPlayers().set(subUser + ".bankID", playerBankID);
+
+
+        config.savePlayers();
+        config.saveBank();
+    }
+
+    public void bankUserRemove(UUID uuid) {
+        config.setup();
+        Player p = Bukkit.getPlayer(uuid);
+
+        int bankID = userBankID(uuid);
+
+        List<String> list = config.getBank().getStringList(bankID + ".users");
+
+        int i = 0;
+        for (Object a : list) {
+            String b = a.toString();
+
+            // Check if the Object contains the UUID
+            if (b.contains(uuid.toString())) {
+                list.remove(i);
+                break;
+            }
+            i++;
+        }
+        config.getBank().set(bankID + ".users", list);
+        config.saveBank();
+
+        config.getPlayers().set(uuid + ".bankID", null);
+        config.savePlayers();
+    }
+
+    public boolean playerIsRegisteredInBank(UUID uuid) {
+        config.setup();
+        int playerBankID = userBankID(uuid);
+
+        if (!config.getPlayers().isSet(uuid + ".bankID")) {
             return false;
         }
-        return false;
+
+
+        return true;
     }
 
 
-    // the amount of inventory slots
-    public int shopGetSlots(String menu) {
+    public void createBank(UUID uuid) {
         config.setup();
-        return config.getShop().getInt("shop." + menu + ".options.slot");
+        int i = nextBankID();
+        Player p = Bukkit.getPlayer(uuid);
+
+        config.getPlayers().set(uuid + ".bankID", i);
+
+        config.getBank().set(i + ".owner", uuid + " " + p.getName());
+        config.getBank().set(i + ".balance", 0);
+        config.getBank().set(i + ".users", "");
+
+
+        config.savePlayers();
+        config.saveBank();
+        bankIDS.clear();
     }
 
-    public String shopGetTitle(String menu) {
+    public void bankDelete(UUID uuid) {
         config.setup();
-        return config.getShop().getString("shop." + menu + ".options.title");
+        int bankID = userBankID(uuid);
+
+        // remove the bank path
+        config.getBank().set(String.valueOf(bankID), null);
+
+        // remove the bankID path from the player
+        config.getPlayers().set(uuid + ".bankID", null);
+
+        config.saveBank();
+        config.savePlayers();
     }
 
-    public String itemName(String menu, int i) {
+
+    private List<Integer> bankIDS = new ArrayList<>();
+
+    private int nextBankID() {
         config.setup();
-        if (!config.getShop().isSet("shop." + menu + ".slots." + i + ".name")) {
-            return "";
+
+        int i = 1;
+
+        // of the file is empty it will start at 1
+        if (config.getBank().getKeys(false).size() == 0) {
+            return 1;
+        }
+
+        // put all the bankIDS to a List
+        for (String key : config.getBank().getConfigurationSection("").getKeys(false)) {
+            bankIDS.add(Integer.valueOf(key));
+        }
+
+        // sort out the numbers from low -> high
+        Collections.sort(bankIDS);
+
+        // get the next lowest number (it will search if a bank has deleted)
+        for (Integer bankID : bankIDS) {
+            if (bankID == i) {
+                i++;
+            }
+        }
+        return i;
+    }
+
+    public int userBankID(UUID uuid) {
+        config.setup();
+        return config.getPlayers().getInt(uuid + ".bankID");
+    }
+
+    public boolean isBankOwner(UUID uuid) {
+        config.setup();
+        int bankID = userBankID(uuid);
+        String[] a = config.getBank().getString(bankID + ".owner").split(" ");
+        UUID owner = UUID.fromString(a[0]);
+
+        if (owner.equals(uuid)) {
+            return true;
         } else {
-            return config.getShop().getString("shop." + menu + ".slots." + i + ".name");
+            return false;
         }
     }
 
-
-    public int itemSlot(String menu, int i) {
+    public String getBankOwner(UUID uuid) {
         config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".slot");
+        int playerBankID = userBankID(uuid);
+
+        String[] a = config.getBank().getString(playerBankID + ".owner").split(" ");
+        return a[1];
     }
 
-    public int itemAmount(String menu, int i) {
+
+
+    public void bankOwnershipTransfer(UUID uuid, UUID newOwner) {
         config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".amount");
+        int bankID = userBankID(uuid);
+        OfflinePlayer p = Bukkit.getOfflinePlayer(newOwner);
+
+
+        //TODO: put the powner in the user list
+        bankUserAdd(uuid, uuid);
+        //TODO: replace the NEW owner in the owner PATH
+        String[] a = bankUserPath(newOwner).split(" ");
+        config.getBank().set(bankID + ".owner", a[0] + " " + a[1]);
+        config.saveBank();
+        //TODO: remove the new owner from the user list
+        bankUserRemove(newOwner);
+
+        config.getPlayers().set(newOwner + ".bankID", bankID);
+            config.savePlayers();
+
     }
 
-    public int itemId(String menu, int i) {
+    private String bankUserPath(UUID uuid) {
         config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".Id");
+        int playerBankID = userBankID(uuid);
+
+        List<String> list = config.getBank().getStringList(playerBankID + ".users");
+        for (Object a : list) {
+            if (a.toString().contains(uuid.toString())) {
+
+                Bukkit.getConsoleSender().sendMessage(a+"");
+                return (String) a;
+            }
+        }
+        return null;
     }
 
-    public int itemByte(String menu, int i) {
-        config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".Data");
-    }
 
-    public int itemBuyPrice(String menu, int i) {
-        config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".buy");
-    }
 
-    public int itemSellPrice(String menu, int i) {
-        config.setup();
-        return config.getShop().getInt("shop." + menu + ".slots." + i + ".sell");
-    }
-
-    public String itemCommand(String menu, int i) {
-        config.setup();
-        return config.getShop().getString("shop." + menu + ".slots." + i + ".command");
-    }
-
-    public int bankTotal(UUID uuid) {
-        config.setup();
-
-        return config.getBank().getInt("bank-1.tokens");
-    }
 
 }
