@@ -496,140 +496,74 @@ public class Commands implements CommandExecutor, TabCompleter {
             } else if (args[0].equalsIgnoreCase("help")) {
                 if (p.hasPermission("tokens.help")) {
 
-
-                    p.sendMessage(Strings.DgrayBS + "-                                    \n"
-                            + Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n"
-                            + " \n"
-                            + "     " + Strings.green + "Users Commands\n" + Strings.reset
-                            + Strings.gray + "/tokens balance\n"
-                            + Strings.gray + "/tokens balance <player>\n"
-                            + Strings.gray + "/tokens pay <amount> <player>\n"
-                            + Strings.gray + "/tokens get <amount>\n"
-                            + Strings.gray + "/tokens buy <amount>\n"
-                            + Strings.gray + "/tokens sell <amount>\n"
-                            + Strings.gray + "/tokens top\n"
-                            + Strings.gray + "/tokens shop\n"
-                            + Strings.gray + "/tokens help"
-                            + " \n"
-                            + "     " + Strings.green + "Admin Commands\n" + Strings.reset
-                            + Strings.gray + "/tokens reload\n"
-                            + Strings.gray + "/tokens convert sql\n"
-                            + Strings.gray + "/tokens bonus <amount>\n"
-                            + Strings.gray + "/tokens remove <amount> <player>\n"
-                            + Strings.gray + "/tokens add <amount> <player>\n"
-                            + Strings.gray + "/tokens set <amount> <player>\n"
-                            + Strings.gray + "/tokens shop edit\n"
-                            + Strings.gray + "/tokens shop add <menu> <slots> <title>\n"
-                            + Strings.gray + "/tokens shop list\n"
-                            + Strings.DgrayBS + "-                                    \n");
-
-                }
-            } else if (args[0].equalsIgnoreCase("shop")) {
-                if (p.hasPermission("tokens.shop")) {
-
-                    ShopMenu sm = new ShopMenu();
-
-                    // Check if the server version math between 1.8.x - 1.12.x
-                    if (!lib.versionMatchForShop()) {
-                        p.sendMessage(Strings.prefix + Strings.red + "Shop is only enabled with version 1.8.x - 1.12.x");
-                        return true;
-                    }
-
-                    // open the shop, just for normal users with limited permissions
                     if (args.length == 1) {
+                        p.sendMessage(Strings.DgrayBS + "                                     \n" +
+                                Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n" +
+                                " \n" +
+                                "     " + Strings.green + "Command Types");
+                        plugin.nms.sendClickableHoverableMessage(p, Strings.gray + "  Default ", Strings.yellow + " [X]", Strings.yellowB + "Click To Navigate", "t help default");
+                        plugin.nms.sendClickableHoverableMessage(p, Strings.gray + "  Admin ", Strings.yellow + " [X]", Strings.yellowB + "Click To Navigate", "t help admin");
+                        plugin.nms.sendClickableHoverableMessage(p, Strings.gray + "  Bank ", Strings.yellow + " [X]", Strings.yellowB + "Click To Navigate", "t help bank");
 
-                        // check if there is an shop is set
-                        if (!config.getShop().isSet("shop")) {
-                            p.sendMessage(Strings.prefix + Strings.red + "no shop found!");
-                            return true;
-                        }
+                        p.sendMessage(" \n" +
+                                Strings.DgrayBS + "                                     \n");
 
-                        util.editMode.put(p, false);
-                        String menuName = config.getShop().getString("default-shop");
-                        sm.openMenu(p, menuName);
+                    } else if (args[1].equalsIgnoreCase("default")) {
 
-
-                    } else if (args[1].equalsIgnoreCase("edit")) {
-                        if (p.hasPermission("tokens.shop.edit")) {
-                            editMenu mm = new editMenu();
-                            mm.menuEditMenu(p);
-                            return true;
-
-                        }
-                    } else if (args[1].equalsIgnoreCase("add")) {
-                        if (p.hasPermission("tokens.shop.add")) {
-                            if (args.length == 2) {
-                                p.sendMessage(Strings.prefix + Strings.gray + "Usage: /tokens shop add <menu> <slots> <page title>");
-                                return true;
-                            }
-
-                            // check if the shop name and the page name is filled in
-                            if (args.length == 3) {
-                                p.sendMessage(Strings.prefix + Strings.red + "You need to fill all the arguments!");
-                                return true;
-                            }
-
-
-                            // check if the slot number is a number and not a character
-                            try {
-                                int slots = Integer.parseInt(args[3]);
-                            } catch (NumberFormatException ex) {
-                                int slots;
-                                p.sendMessage(Strings.red + "Use a valid number!");
-                                return true;
-                            }
+                        p.sendMessage(" \n" +
+                                Strings.DgrayBS + "                                    \n" +
+                                Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n" +
+                                " \n" +
+                                "     " + Strings.green + "Default Commands\n" +
+                                Strings.gray + "/tokens\n" +
+                                Strings.gray + "/tokens balance\n" +
+                                Strings.gray + "/tokens balance <player>\n" +
+                                Strings.gray + "/tokens pay <amount> <player>\n" +
+                                Strings.gray + "/tokens note <amount>\n" +
+                                Strings.gray + "/tokens buy <amount>\n" +
+                                Strings.gray + "/tokens sell <amount>\n" +
+                                Strings.gray + "/tokens top\n" +
+                                Strings.gray + "/tokens help\n" +
+                                " \n");
+                        plugin.nms.sendClickableMessage(p, "", Strings.yellow + "<-", "t help");
+                        p.sendMessage(Strings.DgrayBS + "                                     \n");
 
 
-                            // check if the slots equals with the next numbers 9, 18, 27, 36, 45, 54 because an inventory does not have like 5 slots
-                            if (!args[3].contains("9") && !args[3].contains("18") && !args[3].contains("27") && !args[3].contains("36") && !args[3].contains("45") && !args[3].contains("54")) {
-                                p.sendMessage(Strings.prefix + Strings.red + "Your slot has to be 9, 18, 27, 36, 45, 54");
-                                return true;
-                            }
+                    } else if (args[1].equalsIgnoreCase("admin")) {
 
-                            // check if the title is filled in
-                            if (args.length == 4) {
-                                p.sendMessage(Strings.prefix + Strings.red + "You need to fill all the arguments!");
-                                return true;
-                            }
+                        p.sendMessage(" \n" +
+                                Strings.DgrayBS + "                                    \n" +
+                                Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n" +
+                                " \n" +
+                                "     " + Strings.green + "Admin Commands\n" +
+                                Strings.gray + "/tokens reload\n" +
+                                Strings.gray + "/tokens convert sql\n" +
+                                Strings.gray + "/tokens remove <amount> <player>\n" +
+                                Strings.gray + "/tokens add <amount> <player>\n" +
+                                Strings.gray + "/tokens set <amount> <player>\n" +
+                                " \n");
+                        plugin.nms.sendClickableMessage(p, "", Strings.yellow + "<-", "t help");
+                        p.sendMessage(Strings.DgrayBS + "                                     \n");
 
-                            // save all the information and put it into the file
-                            String menuName = args[2].toLowerCase();
-                            int slots = Integer.parseInt(args[3]);
-                            String pageTitle = args[4];
-
-                            config.getShop().set("shop." + menuName + ".options.slot", slots);
-                            config.getShop().set("shop." + menuName + ".options.title", "" + pageTitle + "");
-
-                            // checks if the default shop is set
-                            if (!config.getShop().isSet("default-shop")) {
-                                config.getShop().set("default-shop", menuName);
-                                config.saveShop();
-                            }
-
-
-                            config.saveShop();
-                            p.sendMessage(Strings.prefix + Strings.green + "shop added successfully!");
-
-
-                        }
-                    } else if (args[1].equalsIgnoreCase("list")) {
-                        if (p.hasPermission("tokens.shop.list")) {
-                            p.sendMessage(Strings.DgrayS + "------------------------------\n"
-                                    + Strings.green + "   List of all menu's and page's\n"
-                                    + " ");
-
-                            for (String key : config.getShop().getConfigurationSection("shop").getKeys(false)) {
-                                p.sendMessage(Strings.greenB + "Menu's: " + Strings.white + key);
-
-                                p.sendMessage(" ");
-
-                            }
-
-                            p.sendMessage(Strings.DgrayS + "------------------------------");
-                        }
+                    } else if (args[1].equalsIgnoreCase("bank")) {
+                        p.sendMessage(" \n" +
+                                Strings.DgrayBS + "                                    \n" +
+                                Strings.greenB + "       Tokens " + Strings.green + plugin.getDescription().getVersion() + "\n" +
+                                " \n" +
+                                "     " + Strings.green + "Bank Commands\n" +
+                                Strings.gray + "/tokens bank\n" +
+                                Strings.gray + "/tokens bank create\n" +
+                                Strings.gray + "/tokens bank delete\n" +
+                                Strings.gray + "/tokens bank leave\n" +
+                                Strings.gray + "/tokens bank user\n" +
+                                Strings.gray + "/tokens bank user invite <player>\n" +
+                                Strings.gray + "/tokens bank user remove <player>\n" +
+                                Strings.gray + "/tokens bank user makeowner <player>\n" +
+                                " \n");
+                        plugin.nms.sendClickableMessage(p, "", Strings.yellow + "<-", "t help");
+                        p.sendMessage(Strings.DgrayBS + "                                     \n");
                     }
                 }
-
 
             } else if (args[0].equalsIgnoreCase("top")) {
                 if (p.hasPermission("tokens.top")) {
