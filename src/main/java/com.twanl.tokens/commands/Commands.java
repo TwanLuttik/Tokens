@@ -55,7 +55,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                     p.sendMessage(Strings.gray + "do " + Strings.green + "/tokens help" + Strings.gray + " for more information.");
 
                 }
-            } else if (args[0].equalsIgnoreCase("get")) {
+            } else if (args[0].equalsIgnoreCase("note")) {
                 if (p.hasPermission("tokens.get")) {
 
                     // shows the command usage
