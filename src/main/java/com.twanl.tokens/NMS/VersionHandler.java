@@ -9,7 +9,7 @@ public abstract interface VersionHandler {
 
     public abstract void sendActionBar(Player paramPlayer, String paramString);
 
-    public abstract void sendClickableMessage(Player paramPlayer, String paramString1, String paramString2, String paramString3);
+    public abstract void sendClickableMessage(Player p, String textpart, String clickabletext, String runcommand);
 
     public abstract void sendHoverableMessage(Player paramPlayer, String paramString1, String paramString2, String paramString3);
 
