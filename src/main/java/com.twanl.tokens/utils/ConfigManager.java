@@ -29,6 +29,7 @@ public class ConfigManager {
 
 
     public void setup() {
+
         playersF = new File(plugin.getDataFolder(), "players.yml");
         if (!plugin.getDataFolder().exists()) {
             plugin.getDataFolder().mkdir();
@@ -88,24 +89,21 @@ public class ConfigManager {
         playersF = new File(plugin.getDataFolder(), "players.yml");
         try {
             playersC.save(playersF);
-        } catch (IOException e) {
-        }
+        } catch (IOException ignored) { }
     }
 
     public void saveShop() {
         shopF = new File(plugin.getDataFolder(), "shop.yml");
         try {
             shopC.save(shopF);
-        } catch (IOException e) {
-        }
+        } catch (IOException ignored) { }
     }
 
     public void saveBank() {
         bankF = new File(plugin.getDataFolder(), "bank.yml");
         try {
             bankC.save(bankF);
-        } catch (IOException e) {
-        }
+        } catch (IOException ignored) { }
     }
 
 
