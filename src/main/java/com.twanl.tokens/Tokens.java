@@ -5,6 +5,7 @@ import com.twanl.tokens.NMS.v1_10.v1_10_R1;
 import com.twanl.tokens.NMS.v1_11.v1_11_R1;
 import com.twanl.tokens.NMS.v1_12.v1_12_R1;
 import com.twanl.tokens.NMS.v1_13.v1_13_R1;
+import com.twanl.tokens.NMS.v1_13.v1_13_R2;
 import com.twanl.tokens.NMS.v1_8.v1_8_R1;
 import com.twanl.tokens.NMS.v1_8.v1_8_R2;
 import com.twanl.tokens.NMS.v1_8.v1_8_R3;
@@ -15,9 +16,6 @@ import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
-import com.twanl.tokens.menu.BankMenu;
-import com.twanl.tokens.menu.ShopMenu;
-import com.twanl.tokens.menu.editMenu;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
@@ -42,9 +40,7 @@ import java.sql.SQLException;
 
 public class Tokens extends JavaPlugin {
 
-
-
-    protected PluginDescriptionFile pdfFile = getDescription();
+    private PluginDescriptionFile pdfFile = getDescription();
     private final String PluginVersionOn = Strings.green + "(" + pdfFile.getVersion() + ")";
     private final String PluginVersionOff = Strings.red + "(" + pdfFile.getVersion() + ")";
     private UpdateChecker checker;
@@ -120,9 +116,6 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinEvent(), this);
         getServer().getPluginManager().registerEvents(new TokenItem(), this);
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
-        getServer().getPluginManager().registerEvents(new ShopMenu(), this);
-        getServer().getPluginManager().registerEvents(new editMenu(), this);
-        getServer().getPluginManager().registerEvents(new BankMenu(), this);
         getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);
 
@@ -193,8 +186,8 @@ public class Tokens extends JavaPlugin {
         config = new ConfigManager();
         config.setup();
         config.savePlayers();
-//        config.saveBank();
-//        config.reloadBank();
+        config.saveBank();
+        config.reloadBank();
         config.reloadplayers();
     }
 
@@ -231,18 +224,14 @@ public class Tokens extends JavaPlugin {
             nms = new v1_12_R1();
         } else if (version.equalsIgnoreCase("v1_13_R1")) {
             nms = new v1_13_R1();
+        } else if (version.equalsIgnoreCase("v1_13_R2")) {
+            nms = new v1_13_R2();
         } else {
             getServer().getConsoleSender().sendMessage(Strings.logName + Strings.red + "This plugin wil not work properly with version " + version);
         }
     }
 
     public void mysqlSetup() {
-//        host = getConfig().getString("mySQL.host");
-//        port = getConfig().getInt("mySQL.port");
-//        database = getConfig().getString("mySQL.database");
-//        username = getConfig().getString("mySQL.username");
-//        password = getConfig().getString("mySQL.password");
-//        table = getConfig().getString("mySQL.table");
 
         host = loadManager.host();
         port = loadManager.port();
