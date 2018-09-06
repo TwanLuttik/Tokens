@@ -43,7 +43,6 @@ public class Tokens extends JavaPlugin {
     private PluginDescriptionFile pdfFile = getDescription();
     private final String PluginVersionOn = Strings.green + "(" + pdfFile.getVersion() + ")";
     private final String PluginVersionOff = Strings.red + "(" + pdfFile.getVersion() + ")";
-    private UpdateChecker checker;
     public VersionHandler nms;
 
     public static Economy economy;
@@ -79,17 +78,35 @@ public class Tokens extends JavaPlugin {
             getServer().getConsoleSender().sendMessage(Strings.green + Strings.logName + Strings.red + "VAULT NOT DETECTED, Some commands won't work.");
         }
 
+        UpdateChecker checker = new UpdateChecker();
 
-        checker = new UpdateChecker(this);
-        if (checker.isConnected()) {
-            if (checker.hasUpdate()) {
+        if (checker.hasUpdate()) {
+            if (checker.isPreRelease()) {
                 getServer().getConsoleSender().sendMessage(Strings.green + "");
                 getServer().getConsoleSender().sendMessage(Strings.green + "------------------------");
-                getServer().getConsoleSender().sendMessage(Strings.red + "Tokens is outdated!");
-                getServer().getConsoleSender().sendMessage(Strings.white + "Newest version: " + checker.getLatestVersion());
+                getServer().getConsoleSender().sendMessage(Strings.red + "Tokens is outdated!" + Strings.yellow + "  [X] YOU ARE IN A PRE RELEASE VERSION [X]");
+                getServer().getConsoleSender().sendMessage(Strings.white + "Newest version: " + checker.getUpdatedVersion());
                 getServer().getConsoleSender().sendMessage(Strings.white + "Your version: " + Strings.green + getDescription().getVersion());
                 getServer().getConsoleSender().sendMessage("Please download the new version at https://www.spigotmc.org/resources/tokens.53944/");
                 getServer().getConsoleSender().sendMessage(Strings.green + "------------------------");
+                getServer().getConsoleSender().sendMessage(Strings.green + "");
+            } else {
+                getServer().getConsoleSender().sendMessage(Strings.green + "");
+                getServer().getConsoleSender().sendMessage(Strings.green + "------------------------");
+                getServer().getConsoleSender().sendMessage(Strings.red + "Tokens is outdated!");
+                getServer().getConsoleSender().sendMessage(Strings.white + "Newest version: " + checker.getUpdatedVersion());
+                getServer().getConsoleSender().sendMessage(Strings.white + "Your version: " + Strings.green + getDescription().getVersion());
+                getServer().getConsoleSender().sendMessage("Please download the new version at https://www.spigotmc.org/resources/tokens.53944/");
+                getServer().getConsoleSender().sendMessage(Strings.green + "------------------------");
+                getServer().getConsoleSender().sendMessage(Strings.green + "");
+            }
+        } else {
+            if (checker.isPreRelease()) {
+                getServer().getConsoleSender().sendMessage(Strings.green + "");
+                getServer().getConsoleSender().sendMessage(Strings.green + "---------------------------------");
+                getServer().getConsoleSender().sendMessage(Strings.yellow + "  [X] YOU ARE IN A PRE RELEASE VERSION [X]");
+                getServer().getConsoleSender().sendMessage(Strings.green + "Tokens is up to date.");
+                getServer().getConsoleSender().sendMessage(Strings.green + "---------------------------------");
                 getServer().getConsoleSender().sendMessage(Strings.green + "");
             } else {
                 getServer().getConsoleSender().sendMessage(Strings.green + "");
@@ -102,7 +119,7 @@ public class Tokens extends JavaPlugin {
 
         Load();
         loadPlayers();
-
+        checker.getUpdatedVersion();
 
     }
 

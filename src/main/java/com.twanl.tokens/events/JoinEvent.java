@@ -28,33 +28,41 @@ public class JoinEvent implements Listener {
 
 
         // Update message
-//        if (plugin.getConfig().getBoolean("update_message")) {
         if (loadManager.update_message()) {
             if (p.hasPermission("tokens.update")) {
 
 
                 plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-                    public UpdateChecker checker;
-
                     public void run() {
-                        checker = new UpdateChecker(plugin);
+                        UpdateChecker checker = new UpdateChecker();
 
-                        if (checker.isConnected()) {
-                            if (checker.hasUpdate()) {
-
+                        if (checker.hasUpdate()) {
+                            if (checker.isPreRelease()) {
+                                p.sendMessage(Strings.DgrayBS + "----------------------\n");
+                                plugin.nms.sendClickableHovarableMessageURL(p, Strings.red + "Tokens is outdated!", Strings.gold + "Click to go to the download page", "https://www.spigotmc.org/resources/tokens.53944/");
+                                p.sendMessage(" \n" +
+                                        Strings.yellowB + "[X] YOU ARE IN A PRE RELEASE VERSION [X]\n" +
+                                        Strings.white + "Your version: " + plugin.getDescription().getVersion() + "\n" +
+                                        Strings.white + "Newest version: " + Strings.green + checker.getUpdatedVersion() + "\n" +
+                                        Strings.DgrayBS + "----------------------");
+                            } else {
                                 p.sendMessage(Strings.DgrayBS + "----------------------\n");
                                 plugin.nms.sendClickableHovarableMessageURL(p, Strings.red + "Tokens is outdated!", Strings.gold + "Click to go to the download page", "https://www.spigotmc.org/resources/tokens.53944/");
                                 p.sendMessage(" \n" +
                                         Strings.white + "Your version: " + plugin.getDescription().getVersion() + "\n" +
-                                        Strings.white + "Newest version: " + Strings.green + checker.getLatestVersion() + "\n" +
+                                        Strings.white + "Newest version: " + Strings.green + checker.getUpdatedVersion() + "\n" +
                                         Strings.DgrayBS + "----------------------");
-
+                            }
+                        } else {
+                            if (checker.isPreRelease()) {
+                                p.sendMessage(Strings.DgrayBS + "----------------------\n" +
+                                        Strings.yellowB + "[X] YOU ARE IN A PRE RELEASE VERSION [X]" +
+                                        Strings.green + "Tokens is up to date.\n" +
+                                        Strings.DgrayBS + "----------------------");
                             } else {
-
                                 p.sendMessage(Strings.DgrayBS + "----------------------\n" +
                                         Strings.green + "Tokens is up to date.\n" +
                                         Strings.DgrayBS + "----------------------");
-
                             }
                         }
                     }
