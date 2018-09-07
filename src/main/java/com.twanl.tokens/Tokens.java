@@ -16,6 +16,7 @@ import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
+import com.twanl.tokens.menu.confirm;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Strings;
@@ -135,6 +136,7 @@ public class Tokens extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new SignEvent(), this);
         getServer().getPluginManager().registerEvents(new RedeemNoteEvent(), this);
         getServer().getPluginManager().registerEvents(new SQLlib(), this);
+        getServer().getPluginManager().registerEvents(new confirm(), this);
 
         // Register Command Class
         Commands commands = new Commands();
