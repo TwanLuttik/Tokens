@@ -625,7 +625,6 @@ public class Lib {
     }
 
 
-
     public void bankOwnershipTransfer(UUID uuid, UUID newOwner) {
         config.setup();
         int bankID = userBankID(uuid);
@@ -642,10 +641,11 @@ public class Lib {
         bankUserRemove(newOwner);
 
         config.getPlayers().set(newOwner + ".bankID", bankID);
-            config.savePlayers();
+        config.savePlayers();
 
     }
 
+    // return to the hole path of the user : <uuid> <playername> <rank>
     private String bankUserPath(UUID uuid) {
         config.setup();
         int playerBankID = userBankID(uuid);
@@ -654,14 +654,18 @@ public class Lib {
         for (Object a : list) {
             if (a.toString().contains(uuid.toString())) {
 
-                Bukkit.getConsoleSender().sendMessage(a+"");
+                Bukkit.getConsoleSender().sendMessage(a + "");
                 return (String) a;
             }
         }
         return null;
     }
 
-
+    // get the rank number of the player member of the bank
+    public int bankUserRank(UUID uuid) {
+        String[] a = bankUserPath(uuid).split(" ");
+        return Integer.parseInt(a[2]);
+    }
 
 
 }
