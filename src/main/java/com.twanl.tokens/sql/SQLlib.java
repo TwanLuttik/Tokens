@@ -162,6 +162,18 @@ public class SQLlib implements Listener {
     }
 
 
+    //TODO: !!
+//		on start for loop the sql and put all the data into a hashmap and after that delete the table and create the new table and put all the data from the hashmaps to the sql table(NEW)
+//
+//		1. on server startup check if sql enabled
+//				IF NOT - check if table exist
+//						IF - table exist than delete the table
+//						IF NOT - ..
+//
+//		2. for loop the sql player data and save into hasmaps or a temporarily file
+//		3. delete the currunt table and create the new talbe with the new column
+//		4. put all the data from the hasmap or file and put them into the sql table
+
 }
 
 
