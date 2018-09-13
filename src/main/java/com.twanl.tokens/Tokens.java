@@ -16,6 +16,7 @@ import com.twanl.tokens.events.JoinEvent;
 import com.twanl.tokens.events.RedeemNoteEvent;
 import com.twanl.tokens.events.SignEvent;
 import com.twanl.tokens.items.TokenItem;
+import com.twanl.tokens.lib.Lib;
 import com.twanl.tokens.menu.confirm;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
@@ -53,7 +54,6 @@ public class Tokens extends JavaPlugin {
     public int port;
 
 
-
     public void onEnable() {
         loadManager.loadHashSet();
         Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.green + "Has been enabled " + PluginVersionOn);
@@ -64,7 +64,8 @@ public class Tokens extends JavaPlugin {
             SQLlib sql = new SQLlib();
             try {
                 sql.createTable();
-            } catch (Exception ignored) {}
+            } catch (Exception ignored) {
+            }
         }
 
         getServerVersion();
@@ -121,6 +122,17 @@ public class Tokens extends JavaPlugin {
         Load();
         loadPlayers();
         checker.getUpdatedVersion();
+
+
+        //TODO: REMINDER, we will keep this methode for the next coming version and after thath we need to remove this methode
+        SQLlib a = new SQLlib();
+        Lib lib = new Lib();
+        if (lib.sqlUse()) {
+            if (!a.checkColoumnExist()) {
+                a.updateTableV1();
+            }
+        }
+
 
     }
 
@@ -214,7 +226,7 @@ public class Tokens extends JavaPlugin {
         RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
             //noinspection RedundantCast
-            economy = (Economy)economyProvider.getProvider();
+            economy = (Economy) economyProvider.getProvider();
         }
         return economy != null;
     }
@@ -268,11 +280,10 @@ public class Tokens extends JavaPlugin {
 
                 Class.forName("com.mysql.jdbc.Driver");
                 setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":"
-                        + this.port + "/" + this.database + "?useSSL=" + ssl , this.username, this.password));
+                        + this.port + "/" + this.database + "?useSSL=" + ssl, this.username, this.password));
 
 
-
-                Bukkit.getConsoleSender().sendMessage(Strings.logName + "mySQL connected to database: " +Strings.green + database);
+                Bukkit.getConsoleSender().sendMessage(Strings.logName + "mySQL connected to database: " + Strings.green + database);
             }
         } catch (SQLException | ClassNotFoundException e) {
             Bukkit.getConsoleSender().sendMessage(Strings.logName + Strings.red + "mySQL cannot find database");
