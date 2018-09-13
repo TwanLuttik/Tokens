@@ -32,7 +32,7 @@
                         <relocation>
                             <pattern>org.bstats</pattern>
                             <!-- Replace this with your package! -->
-                            <shadedPattern>com.twanl.playercount.util</shadedPattern>
+                            <shadedPattern>com.twanl.tokens.Tokens</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -60,20 +60,20 @@
             <version>RELEASE</version>
         </dependency>
 
-        <!-- bStats -->
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>1.2</version>
-        </dependency>
+        <!--&lt;!&ndash; bStats &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.bstats</groupId>-->
+            <!--<artifactId>bstats-bukkit</artifactId>-->
+            <!--<version>1.2</version>-->
+        <!--</dependency>-->
 
-        <!-- this is for the config with comments -->
-        <dependency>
-            <groupId>de.articdive</groupId>
-            <artifactId>CommentedConfiguration</artifactId>
-            <version>2.0-RELEASE</version>
-            <scope>compile</scope>
-        </dependency>
+        <!--&lt;!&ndash; this is for the config with comments &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>de.articdive</groupId>-->
+            <!--<artifactId>CommentedConfiguration</artifactId>-->
+            <!--<version>2.0-RELEASE</version>-->
+            <!--<scope>compile</scope>-->
+        <!--</dependency>-->
 
 
 

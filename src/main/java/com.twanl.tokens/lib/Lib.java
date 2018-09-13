@@ -12,10 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class Lib {
 
@@ -458,125 +455,168 @@ public class Lib {
 
 
     public int bankBalance(UUID uuid) {
-        config.setup();
-        int playerBankID = userBankID(uuid);
+        if (sqlUse()) {
+            int BankID = sql.getUserBankID(uuid);
 
-        return config.getBank().getInt(playerBankID + ".balance");
+            return sql.getBankBalance(BankID);
+        } else {
+            config.setup();
+            int playerBankID = userBankID(uuid);
+
+            return config.getBank().getInt(playerBankID + ".balance");
+        }
     }
 
     public void bankAddBalance(UUID uuid, int amount) {
-        config.setup();
-        int result = bankBalance(uuid) + amount;
-        int playerBankID = userBankID(uuid);
+        if (sqlUse()) {
+            sql.bankBalanceDeposit(userBankID(uuid), amount);
+        } else {
+            config.setup();
+            int result = bankBalance(uuid) + amount;
+            int playerBankID = userBankID(uuid);
 
-        config.getBank().set(playerBankID + ".balance", result);
-        config.saveBank();
+            config.getBank().set(playerBankID + ".balance", result);
+            config.saveBank();
+        }
     }
 
     public void bankRemoveBalance(UUID uuid, int amount) {
-        config.setup();
-        int result = bankBalance(uuid) - amount;
-        int playerBankID = userBankID(uuid);
+        if (sqlUse()) {
+            sql.bankBalanceWithdraw(userBankID(uuid), amount);
+        } else {
+            config.setup();
+            int result = bankBalance(uuid) - amount;
+            int playerBankID = userBankID(uuid);
 
-        config.getBank().set(playerBankID + ".balance", result);
-        config.saveBank();
+            config.getBank().set(playerBankID + ".balance", result);
+            config.saveBank();
+        }
     }
 
     public void bankUserAdd(UUID uuid, UUID subUser) {
-        config.setup();
-        Player p = Bukkit.getPlayer(subUser);
-        int playerBankID = userBankID(uuid);
+        if (sqlUse()) {
+            Player p = Bukkit.getPlayer(subUser);
+            String a = subUser + " " + p.getName();
+            sql.bankUserAdd(uuid, subUser);
+        } else {
+            config.setup();
+            Player p = Bukkit.getPlayer(subUser);
+            int playerBankID = userBankID(uuid);
 
-        List<String> list = config.getBank().getStringList(playerBankID + ".users");
-        list.add(subUser + " " + p.getName() + " 1");
-        config.getBank().set(playerBankID + ".users", list);
+            List<String> list = config.getBank().getStringList(playerBankID + ".users");
+            list.add(subUser + " " + p.getName() + " 1");
+            config.getBank().set(playerBankID + ".users", list);
 
-        config.getPlayers().set(subUser + ".bankID", playerBankID);
+            config.getPlayers().set(subUser + ".bankID", playerBankID);
 
 
-        config.savePlayers();
-        config.saveBank();
+            config.savePlayers();
+            config.saveBank();
+        }
+
     }
 
+
     public void bankUserRemove(UUID uuid) {
-        config.setup();
-        Player p = Bukkit.getPlayer(uuid);
+        if (sqlUse()) {
+            sql.bankUserRemove(uuid);
+        } else {
+            config.setup();
+            int bankID = userBankID(uuid);
 
-        int bankID = userBankID(uuid);
+            List<String> list = config.getBank().getStringList(bankID + ".users");
 
-        List<String> list = config.getBank().getStringList(bankID + ".users");
+            int i = 0;
+            for (Object a : list) {
+                String b = a.toString();
 
-        int i = 0;
-        for (Object a : list) {
-            String b = a.toString();
-
-            // Check if the Object contains the UUID
-            if (b.contains(uuid.toString())) {
-                list.remove(i);
-                break;
+                // Check if the Object contains the UUID
+                if (b.contains(uuid.toString())) {
+                    list.remove(i);
+                    break;
+                }
+                i++;
             }
-            i++;
-        }
-        config.getBank().set(bankID + ".users", list);
-        config.saveBank();
+            config.getBank().set(bankID + ".users", list);
+            config.saveBank();
 
-        config.getPlayers().set(uuid + ".bankID", null);
-        config.savePlayers();
+            config.getPlayers().set(uuid + ".bankID", null);
+            config.savePlayers();
+        }
     }
 
     public boolean playerIsRegisteredInBank(UUID uuid) {
-        config.setup();
-        int playerBankID = userBankID(uuid);
+        if (sqlUse()) {
+            if (sql.getUserBankID(uuid) == 0) {
+                return false;
+            }
+            return true;
+        } else {
+            config.setup();
+            int playerBankID = userBankID(uuid);
 
-        if (!config.getPlayers().isSet(uuid + ".bankID")) {
-            return false;
+            if (!config.getPlayers().isSet(uuid + ".bankID")) {
+                return false;
+            }
+            return true;
         }
-
-
-        return true;
     }
 
 
     public void createBank(UUID uuid) {
-        config.setup();
-        int i = nextBankID();
-        Player p = Bukkit.getPlayer(uuid);
+        if (sqlUse()) {
+            int i = sql.nextBankID();
+            Player p = Bukkit.getPlayer(uuid);
 
-        config.getPlayers().set(uuid + ".bankID", i);
+            sql.createBank(uuid, p.getName());
+        } else {
+            config.setup();
+            int i = nextBankID();
+            Player p = Bukkit.getPlayer(uuid);
 
-        config.getBank().set(i + ".owner", uuid + " " + p.getName());
-        config.getBank().set(i + ".balance", 0);
-        config.getBank().set(i + ".users", "");
+            config.getPlayers().set(uuid + ".bankID", i);
+
+            config.getBank().set(i + ".owner", uuid + " " + p.getName());
+            config.getBank().set(i + ".balance", 0);
+            config.getBank().set(i + ".users", "");
 
 
-        config.savePlayers();
-        config.saveBank();
-        bankIDS.clear();
+            config.savePlayers();
+            config.saveBank();
+            bankIDS.clear();
+        }
     }
 
+
     public void bankDelete(UUID uuid) {
-        config.setup();
-        int bankID = userBankID(uuid);
+        if (sqlUse()) {
+            sql.bankDelete(uuid);
+        } else {
+            config.setup();
+            int bankID = userBankID(uuid);
 
-        // remove the bank path
-        config.getBank().set(String.valueOf(bankID), null);
+            // remove the bank path
+            config.getBank().set(String.valueOf(bankID), null);
 
-        // remove the bankID path from the player
-        config.getPlayers().set(uuid + ".bankID", null);
+            // remove the bankID path from the player
+            config.getPlayers().set(uuid + ".bankID", null);
 
-        config.saveBank();
-        config.savePlayers();
+            config.saveBank();
+            config.savePlayers();
+        }
     }
 
 
     private List<Integer> bankIDS = new ArrayList<>();
 
+
+    // Get the next following BANK_ID (it will check also for the skipped number from deleted banks)
     private int nextBankID() {
         config.setup();
 
         int i = 1;
 
-        // of the file is empty it will start at 1
+        // If the file is empty it will start at 1
         if (config.getBank().getKeys(false).size() == 0) {
             return 1;
         }
@@ -599,29 +639,41 @@ public class Lib {
     }
 
     public int userBankID(UUID uuid) {
-        config.setup();
-        return config.getPlayers().getInt(uuid + ".bankID");
+        if (sqlUse()) {
+            return sql.getUserBankID(uuid);
+        } else {
+            config.setup();
+            return config.getPlayers().getInt(uuid + ".bankID");
+        }
     }
 
     public boolean isBankOwner(UUID uuid) {
-        config.setup();
-        int bankID = userBankID(uuid);
-        String[] a = config.getBank().getString(bankID + ".owner").split(" ");
-        UUID owner = UUID.fromString(a[0]);
+        if (sqlUse()) {
+            int i = sql.getUserBankID(uuid);
+            String[] a = sql.getBankOwner(i).split(" ");
+            String b = a[0];
 
-        if (owner.equals(uuid)) {
-            return true;
+            return b.equals(uuid.toString());
         } else {
-            return false;
+            config.setup();
+            int bankID = userBankID(uuid);
+            String[] a = config.getBank().getString(bankID + ".owner").split(" ");
+            UUID owner = UUID.fromString(a[0]);
+
+            return owner.equals(uuid);
         }
     }
 
     public String getBankOwner(UUID uuid) {
-        config.setup();
-        int playerBankID = userBankID(uuid);
+        if (sqlUse()) {
+            return sql.getBankOwnerName(uuid);
+        } else {
+            config.setup();
+            int playerBankID = userBankID(uuid);
 
-        String[] a = config.getBank().getString(playerBankID + ".owner").split(" ");
-        return a[1];
+            String[] a = config.getBank().getString(playerBankID + ".owner").split(" ");
+            return a[1];
+        }
     }
 
 
@@ -631,13 +683,13 @@ public class Lib {
         OfflinePlayer p = Bukkit.getOfflinePlayer(newOwner);
 
 
-        //TODO: put the powner in the user list
+        // Put the powner in the user list
         bankUserAdd(uuid, uuid);
-        //TODO: replace the NEW owner in the owner PATH
+        // Replace the NEW owner in the owner PATH
         String[] a = bankUserPath(newOwner).split(" ");
         config.getBank().set(bankID + ".owner", a[0] + " " + a[1]);
         config.saveBank();
-        //TODO: remove the new owner from the user list
+        // Remove the new owner from the user list
         bankUserRemove(newOwner);
 
         config.getPlayers().set(newOwner + ".bankID", bankID);
@@ -663,8 +715,19 @@ public class Lib {
 
     // get the rank number of the player member of the bank
     public int bankUserRank(UUID uuid) {
-        String[] a = bankUserPath(uuid).split(" ");
+        String[] a = Objects.requireNonNull(bankUserPath(uuid)).split(" ");
         return Integer.parseInt(a[2]);
+    }
+
+    public boolean bankHasUsers(UUID uuid) {
+        if (sqlUse()) {
+            return sql.bankHasUsers(uuid);
+        } else {
+            if (config.getBank().get(userBankID(uuid) + ".users").toString().isEmpty() && config.getBank().get(userBankID(uuid) + ".users").toString().contains("")) {
+                return false;
+            }
+        }
+        return false;
     }
 
 

@@ -1,0 +1,1727 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Tokens:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/confirm.java" line="57" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="cd7e3184-bd3a-48b7-8ffa-92db17c9a907" name="Default" comment="changed the methode of the update version and added a checker for a pre release version">
+      <change beforePath="$PROJECT_DIR$/Tokens.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Tokens.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/ConstructTabCompleter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/ConstructTabCompleter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/lib/Lib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/lib/Lib.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/confirm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/confirm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/sql/SQLlib.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com.twanl.tokens/sql/SQLlib.java" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/out/" />
+    <ignored path="$PROJECT_DIR$/target/" />
+    <ignored path="Command + Permissions Node + Description.xlsx" />
+    <ignored path="TODO" />
+    <ignored path="~$Command + Permissions Node + Description.xlsx" />
+    <ignored path=".idea/dataSources/83d02a5c-3a3a-4b4c-bc57-c9510e26f094.xml" />
+    <ignored path=".idea/dataSources.xml" />
+    <ignored path=".idea/uiDesigner.xml" />
+    <ignored path=".idea/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="players@localhost" type="feb32156:DbDataSourceImpl" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="players@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+      </path>
+      <path>
+        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
+        <item name="players@localhost" type="feb32156:DbDataSourceImpl" />
+        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
+        <item name="players: schema" type="c314c289:MysqlImplModel$Schema" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="FUSProjectUsageTrigger">
+    <session id="1131547586">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="102" />
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.open.time.1" value="1" />
+          <entry key="project.open.time.10" value="4" />
+          <entry key="project.open.time.11" value="4" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.13" value="1" />
+          <entry key="project.open.time.14" value="1" />
+          <entry key="project.open.time.15" value="3" />
+          <entry key="project.open.time.16" value="15" />
+          <entry key="project.open.time.17" value="9" />
+          <entry key="project.open.time.18" value="2" />
+          <entry key="project.open.time.19" value="3" />
+          <entry key="project.open.time.2" value="3" />
+          <entry key="project.open.time.20" value="1" />
+          <entry key="project.open.time.21" value="2" />
+          <entry key="project.open.time.22" value="2" />
+          <entry key="project.open.time.23" value="5" />
+          <entry key="project.open.time.24" value="2" />
+          <entry key="project.open.time.25" value="1" />
+          <entry key="project.open.time.26" value="4" />
+          <entry key="project.open.time.27" value="2" />
+          <entry key="project.open.time.28" value="10" />
+          <entry key="project.open.time.29" value="2" />
+          <entry key="project.open.time.3" value="1" />
+          <entry key="project.open.time.30" value="3" />
+          <entry key="project.open.time.31" value="3" />
+          <entry key="project.open.time.32" value="3" />
+          <entry key="project.open.time.38" value="1" />
+          <entry key="project.open.time.46" value="1" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.open.time.7" value="3" />
+          <entry key="project.open.time.8" value="12" />
+          <entry key="project.open.time.9" value="3" />
+          <entry key="project.opened" value="112" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="TODO" value="3" />
+          <entry key="class" value="97" />
+          <entry key="java" value="378" />
+          <entry key="player_data" value="1" />
+          <entry key="sql" value="7" />
+          <entry key="xml" value="2" />
+          <entry key="yml" value="39" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="97" />
+          <entry key="Database Element" value="1" />
+          <entry key="JAVA" value="378" />
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Scratch" value="7" />
+          <entry key="XML" value="2" />
+          <entry key="YAML" value="39" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="TODO" value="10" />
+          <entry key="class" value="1" />
+          <entry key="dummy" value="61" />
+          <entry key="ft" value="77" />
+          <entry key="java" value="70486" />
+          <entry key="txt" value="3055" />
+          <entry key="yml" value="65" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="CLASS" value="1" />
+          <entry key="JAVA" value="70486" />
+          <entry key="PLAIN_TEXT" value="3126" />
+          <entry key="VTL" value="77" />
+          <entry key="YAML" value="65" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.spring.boot.mvc.usages" />
+      <usages-collector id="statistics.spring.boot.run.usages" />
+      <usages-collector id="statistics.php.composer.command.options" />
+      <usages-collector id="statistics.php.rename.constructor" />
+      <usages-collector id="statistics.php.new.test" />
+      <usages-collector id="statistics.php.composer.actions" />
+      <usages-collector id="statistics.php.new.class" />
+    </session>
+    <session id="386156117">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="27" />
+          <entry key="project.open.time.10" value="5" />
+          <entry key="project.open.time.11" value="1" />
+          <entry key="project.open.time.2" value="1" />
+          <entry key="project.open.time.5" value="2" />
+          <entry key="project.open.time.6" value="5" />
+          <entry key="project.open.time.7" value="7" />
+          <entry key="project.open.time.8" value="7" />
+          <entry key="project.open.time.9" value="5" />
+          <entry key="project.opened" value="33" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="JAVA" value="34526" />
+          <entry key="PLAIN_TEXT" value="1168" />
+          <entry key="SQL" value="2" />
+          <entry key="Scratch" value="378" />
+          <entry key="XML" value="40" />
+          <entry key="YAML" value="51" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="cell" value="94" />
+          <entry key="dummy" value="7" />
+          <entry key="java" value="34528" />
+          <entry key="sql" value="284" />
+          <entry key="txt" value="1161" />
+          <entry key="xml" value="40" />
+          <entry key="yml" value="51" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.js.language.service.starts" />
+      <usages-collector id="statistics.spring.boot.mvc.usages" />
+      <usages-collector id="statistics.spring.boot.run.usages" />
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="Lib" value="1" />
+          <entry key="bank_data" value="12" />
+          <entry key="class" value="2" />
+          <entry key="java" value="90" />
+          <entry key="player_data" value="11" />
+          <entry key="sql" value="6" />
+          <entry key="test" value="1" />
+          <entry key="xml" value="1" />
+          <entry key="yml" value="11" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="CLASS" value="2" />
+          <entry key="Database Element" value="23" />
+          <entry key="JAVA" value="90" />
+          <entry key="SQL" value="1" />
+          <entry key="Scratch" value="6" />
+          <entry key="UML" value="1" />
+          <entry key="XML" value="1" />
+          <entry key="YAML" value="11" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.php.rename.constructor" />
+      <usages-collector id="statistics.php.composer.command.options" />
+      <usages-collector id="statistics.php.composer.actions" />
+      <usages-collector id="statistics.php.new.test" />
+      <usages-collector id="statistics.php.new.class" />
+      <usages-collector id="statistics.vcs.git.usages">
+        <counts>
+          <entry key="git.branch.checkout.local" value="1" />
+          <entry key="git.branch.create.new" value="1" />
+        </counts>
+      </usages-collector>
+    </session>
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Tokens" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Gradle Kotlin DSL Build Script" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>item</find>
+      <find>&quot;edit&quot;</find>
+      <find>String</find>
+      <find>ShopInventoryClickEvent</find>
+      <find>&quot;shop&quot;</find>
+      <find>ShopEdit</find>
+      <find>e.</find>
+      <find>ShopEditmain</find>
+      <find>ShopEditSlots</find>
+      <find>&quot;Information&quot;</find>
+      <find>config</find>
+      <find>player</find>
+      <find>sa</find>
+      <find>port</find>
+      <find>&quot;help&quot;</find>
+      <find>&quot;convert&quot;</find>
+      <find>&quot;get&quot;</find>
+      <find>checker</find>
+      <find>addplayer</find>
+      <find>addtokens</find>
+      <find>&quot;makeowner&quot;</find>
+      <find>isBankOwner</find>
+      <find>&quot;invite&quot;</find>
+      <find>playerIsRegisteredInBank</find>
+      <find>&quot;bank&quot;</find>
+      <find>&quot;delete&quot;</find>
+      <find>&quot;create&quot;</find>
+      <find>Bukkit.Broad</find>
+      <find>Bukkit.getconsoleSender</find>
+      <find>&quot;remove&quot;</find>
+    </findStrings>
+    <replaceStrings>
+      <replace />
+    </replaceStrings>
+    <dirStrings>
+      <dir>D:\Code\Minecraft\Tokens\src\main\java\com.twanl.tokens\utils</dir>
+      <dir>D:\Code\Minecraft\Tokens\src\main\java\com.twanl.tokens\items</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="2.4.0-twan" />
+      </map>
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/api/PrivateAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/events/PickupEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/CommentYamlConfiguration.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/ValueComparator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/NMS/v1_13/v1_13_R1.java" />
+        <option value="$PROJECT_DIR$/TODO" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/events/RedeemNoteEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/menuApi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/invApi.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/EditModeMenu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/items/TokenItem.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/GetItemDisplayName.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/ReflectionDisplayname.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/reflection/ReflectionDisplayname.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/editMENU.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/bankCommand.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/events/SignEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/Strings.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/shopedit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/ShopInventoryCloseEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/shopEdit/editMainMenu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/shopEdit/shopEditItemMovement.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/shopEdit/editSlots.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/shopEdit/editDetails.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/editMenu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/ShopMenu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/shopLoadManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/ShopInventoryClickEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/SHOP_EDIT.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/BankMenu.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/util.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/NMS/VersionHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/ConfigManager.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/NMS/v1_13/v1_13_R2.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/chatListener.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/invAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/events/JoinEvent.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/UpdateChecker.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/confirmationPOPUP.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/plugin.yml" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/api/TokensAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/ConstructTabCompleter.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/loadManager.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/menu/confirm.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/Tokens.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/Commands.java" />
+        <option value="$APPLICATION_CONFIG_DIR$/consoles/db/83d02a5c-3a3a-4b4c-bc57-c9510e26f094/console.sql" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/sql/SQLlib.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com.twanl.tokens/lib/Lib.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/config.yml" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Tokens" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Tokens" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Tokens" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+          <item name="install" type="36feed69:MavenProjectsStructure$PluginNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="Tokens" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="PhpServers">
+    <servers />
+  </component>
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-2125" />
+    <option name="y" value="94" />
+    <option name="width" value="1934" />
+    <option name="height" value="958" />
+  </component>
+  <component name="ProjectInspectionProfilesVisibleTreeState">
+    <entry key="Project Default">
+      <profile-state>
+        <expanded-state>
+          <State />
+          <State>
+            <id>Android</id>
+          </State>
+          <State>
+            <id>Class structureJava</id>
+          </State>
+          <State>
+            <id>Code StylePHP</id>
+          </State>
+          <State>
+            <id>Code maturityJava</id>
+          </State>
+          <State>
+            <id>Code style issuesJava</id>
+          </State>
+          <State>
+            <id>Concurrency annotation issuesJava</id>
+          </State>
+          <State>
+            <id>CorrectnessLintAndroid</id>
+          </State>
+          <State>
+            <id>Data flowJava</id>
+          </State>
+          <State>
+            <id>Data flowJavaScript</id>
+          </State>
+          <State>
+            <id>Error handlingGroovy</id>
+          </State>
+          <State>
+            <id>Error handlingJava</id>
+          </State>
+          <State>
+            <id>Error handlingJavaScript</id>
+          </State>
+          <State>
+            <id>General</id>
+          </State>
+          <State>
+            <id>Groovy</id>
+          </State>
+          <State>
+            <id>ImportsJava</id>
+          </State>
+          <State>
+            <id>Java</id>
+          </State>
+          <State>
+            <id>JavaScript</id>
+          </State>
+          <State>
+            <id>JavaScript validity issuesJavaScript</id>
+          </State>
+          <State>
+            <id>LintAndroid</id>
+          </State>
+          <State>
+            <id>LoggingJava</id>
+          </State>
+          <State>
+            <id>PHP</id>
+          </State>
+          <State>
+            <id>PerformanceJava</id>
+          </State>
+          <State>
+            <id>PerformanceLintAndroid</id>
+          </State>
+          <State>
+            <id>Probable bugsJava</id>
+          </State>
+          <State>
+            <id>Properties Files</id>
+          </State>
+          <State>
+            <id>SQL</id>
+          </State>
+          <State>
+            <id>SecurityLintAndroid</id>
+          </State>
+          <State>
+            <id>Spring</id>
+          </State>
+          <State>
+            <id>Spring SecuritySpring</id>
+          </State>
+          <State>
+            <id>Threading issuesGroovy</id>
+          </State>
+          <State>
+            <id>Threading issuesJava</id>
+          </State>
+        </expanded-state>
+        <selected-state>
+          <State>
+            <id>Deprecation</id>
+          </State>
+        </selected-state>
+      </profile-state>
+    </entry>
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Tokens" type="58d84e3e:PackageViewProjectNode" />
+              <item name="Tokens" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com.twanl.tokens" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com.twanl.tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="commands" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com.twanl.tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="events" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com.twanl.tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com.twanl.tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="menu" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="com.twanl.tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Tokens" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Tokens" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="oracle" />
+    <property name="SearchEverywhereHistoryKey" value="delete&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#bankDelete&#10;bankdelete&#9;null&#9;null&#10;bankuseradd&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#bankUserAdd&#10;bankuserremove&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#bankUserRemove&#10;bankremove&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#bankRemoveBalance&#10;createbank&#9;PSI&#9;JAVA://com.twanl.tokens.sql.SQLlib#createBank&#10;create&#9;PSI&#9;JAVA://com.twanl.tokens.sql.SQLlib#createBank&#10;lib&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/lib/Lib.java&#10;player&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#playerIsRegisteredInBank&#10;SQL&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/sql/SQLlib.java&#10;Lib&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/lib/Lib.java&#10;SQLlib&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/sql/SQLlib.java&#10;loadmana&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/utils/loadManager.java&#10;loadmanan&#9;null&#9;null&#10;loadmanager&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/utils/loadManager.java&#10;Commands&#9;FILE&#9;file://C:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/commands/Commands.java&#10;removeBank&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#removeBank&#10;shopTitle&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#shopGetTitle&#10;ShopEditDetails&#9;PSI&#9;JAVA://com.twanl.tokens.menu.SHOP_EDIT#ShopEditDetailsMain&#10;ShopEditSlot&#9;PSI&#9;JAVA://com.twanl.tokens.menu.SHOP_EDIT#ShopEditDetailsSlots&#10;ShopEditMain&#9;PSI&#9;JAVA://com.twanl.tokens.menu.SHOP_EDIT#ShopEditMain&#10;ShopEdit&#9;PSI&#9;JAVA://com.twanl.tokens.menu.SHOP_EDIT#ShopEditMain&#10;itemName&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#itemName&#10;edit&#9;FILE&#9;file://D:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/menu/editMenu.java&#10;util&#9;PSI&#9;JAVA://com.twanl.tokens.utils.util&#10;loadManager&#9;FILE&#9;file://D:/Code/Minecraft/Tokens/src/main/java/com.twanl.tokens/utils/loadManager.java&#10;STAINED&#9;PSI&#9;JAVA://net.minecraft.server.v1_13_R1.BlockStainedGlass&#10;Material&#9;FILE&#9;jar://D:/Code/craftbukkit-1.13.jar!/net/minecraft/server/v1_13_R1/Material.class&#10;&quot;list&quot;&#9;null&#9;null&#10;editModeShop&#9;PSI&#9;JAVA://com.twanl.tokens.utils.util#editModeShop&#10;editmenu&#9;PSI&#9;JAVA://com.twanl.tokens.menu.ShopMenu#editMenu&#10;Boat&#9;PSI&#9;JAVA://org.bukkit.entity.Boat&#10;Potions&#9;PSI&#9;JAVA://net.minecraft.server.v1_10_R1.Potions&#10;TopInve&#9;PSI&#9;JAVA://org.bukkit.inventory.InventoryView#getTopInventory&#10;Chunk&#9;PSI&#9;JAVA://net.minecraft.server.v1_11_R1.Chunk&#10;Spawn&#9;PSI&#9;JAVA://org.bukkit.event.world.SpawnChangeEvent&#10;WitherSkeleton&#9;PSI&#9;JAVA://org.bukkit.craftbukkit.v1_12_R1.entity.CraftWitherSkeleton&#10;WitherSkele&#9;PSI&#9;JAVA://org.bukkit.entity.WitherSkeleton&#10;balance&#9;PSI&#9;JAVA://com.twanl.tokens.lib.Lib#balance&#10;grow&#9;FILE&#9;jar://D:/Code/craftbukkit-1.12.2.jar!/org/bukkit/event/block/BlockGrowEvent.class&#10;ItemStack&#9;PSI&#9;JAVA://net.minecraft.server.v1_13_R1.ItemStack&#10;assertionError&#9;PSI&#9;JAVA://java.lang.AssertionError&#10;PlayerInt&#9;PSI&#9;JAVA://org.bukkit.event.player.PlayerInteractEvent&#10;PlayerToggleSneakEvent&#9;FILE&#9;jar://D:/Code/craftbukkit-1.12.2.jar!/org/bukkit/event/player/PlayerToggleSneakEvent.class&#10;sneak&#9;PSI&#9;JAVA://org.bukkit.event.player.PlayerToggleSneakEvent&#10;playermove&#9;PSI&#9;JAVA://org.bukkit.event.player.PlayerMoveEvent&#10;height&#9;PSI&#9;JAVA://net.minecraft.server.v1_13_R1.HeightMap&#10;weather&#9;FILE&#9;jar://D:/Code/craftbukkit-1.13.jar!/org/bukkit/event/weather&#10;cycle&#9;FILE&#9;jar://D:/Code/craftbukkit-1.8.3.jar!/com/google/common/util/concurrent/CycleDetectingLockFactory.class&#10;daylight&#9;PSI&#9;JAVA://net.minecraft.server.v1_10_R1.BlockDaylightDetector" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1536795201282" />
+    <property name="com.intellij.database.dataSource.DataSourceTemplate" value="MySQL" />
+    <property name="database.console.LAST_STATE" value="false" />
+    <property name="database.data.extractors.current.id" value="SQL Inserts" />
+    <property name="last.edited.regexp" value="fdsfds" />
+    <property name="last_opened_file_path" value="D:/Users/Twan/Downloads/Sample-SQL-File-50000-Rows.sql" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.43563217" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Spigot 1.13.1" type="JarApplication" factoryName="JAR Application">
+      <option name="JAR_PATH" value="D:/Users/Twan/Desktop/LOCALHOST/spigot-1.13.1.jar" />
+      <option name="WORKING_DIRECTORY" value="D:\Users\Twan\Desktop\LOCALHOST" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method v="2">
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="Tokens:jar" />
+        </option>
+      </method>
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="StructureViewFactory">
+    <option name="ACTIVE_ACTIONS" value=",SHOW_FIELDS,SHOW_PROPERTIES,VISIBILITY_SORTER,ALPHA_COMPARATOR" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\Twan\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="cd7e3184-bd3a-48b7-8ffa-92db17c9a907" name="Default" comment="" />
+      <created>1519933777536</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1519933777536</updated>
+      <workItem from="1520901170662" duration="2340000" />
+      <workItem from="1520910048496" duration="148000" />
+      <workItem from="1521046289647" duration="34646000" />
+      <workItem from="1521142014664" duration="11669000" />
+      <workItem from="1521162563845" duration="262000" />
+      <workItem from="1521200078996" duration="599000" />
+      <workItem from="1521208416948" duration="15417000" />
+      <workItem from="1521236773546" duration="2740000" />
+      <workItem from="1521263817824" duration="2984000" />
+      <workItem from="1521308082081" duration="10874000" />
+      <workItem from="1521324860323" duration="3648000" />
+      <workItem from="1521328527754" duration="247000" />
+      <workItem from="1521351942127" duration="2576000" />
+      <workItem from="1521394944302" duration="6504000" />
+      <workItem from="1521453463222" duration="26956000" />
+      <workItem from="1521532823764" duration="13041000" />
+      <workItem from="1521559911785" duration="1227000" />
+      <workItem from="1521563868605" duration="297000" />
+      <workItem from="1521579575510" duration="3233000" />
+      <workItem from="1521586504660" duration="5500000" />
+      <workItem from="1521624707708" duration="8082000" />
+      <workItem from="1521641355597" duration="27557000" />
+      <workItem from="1521687804202" duration="2750000" />
+      <workItem from="1521713816323" duration="3453000" />
+      <workItem from="1521717541928" duration="3845000" />
+      <workItem from="1521728972127" duration="18021000" />
+      <workItem from="1521777275650" duration="1171000" />
+      <workItem from="1521817341892" duration="15677000" />
+      <workItem from="1521842488157" duration="612000" />
+      <workItem from="1521925496446" duration="2050000" />
+      <workItem from="1521931293886" duration="7000" />
+      <workItem from="1521932044836" duration="27000" />
+      <workItem from="1521955863941" duration="111000" />
+      <workItem from="1522017354603" duration="1049000" />
+      <workItem from="1522055027600" duration="14620000" />
+      <workItem from="1522103646565" duration="5139000" />
+      <workItem from="1522140489874" duration="6805000" />
+      <workItem from="1522184001115" duration="292000" />
+      <workItem from="1522194056965" duration="927000" />
+      <workItem from="1522278303364" duration="6195000" />
+      <workItem from="1522358195321" duration="18101000" />
+      <workItem from="1522400646615" duration="29000" />
+      <workItem from="1522431957096" duration="9625000" />
+      <workItem from="1522521000492" duration="649000" />
+      <workItem from="1522525970367" duration="6656000" />
+      <workItem from="1522533343503" duration="8871000" />
+      <workItem from="1522582510195" duration="4892000" />
+      <workItem from="1522605420090" duration="9987000" />
+      <workItem from="1522668015625" duration="11358000" />
+      <workItem from="1522742127654" duration="1229000" />
+      <workItem from="1522759729210" duration="1888000" />
+      <workItem from="1522762765044" duration="206000" />
+      <workItem from="1522769043533" duration="623000" />
+      <workItem from="1522784303019" duration="5784000" />
+      <workItem from="1522795710886" duration="7043000" />
+      <workItem from="1522807802158" duration="859000" />
+      <workItem from="1522831418810" duration="3369000" />
+      <workItem from="1522842474842" duration="13000" />
+      <workItem from="1522866521848" duration="1530000" />
+      <workItem from="1522875975515" duration="1383000" />
+      <workItem from="1522879895810" duration="478000" />
+      <workItem from="1522907421723" duration="738000" />
+      <workItem from="1522908695179" duration="2146000" />
+      <workItem from="1523155796120" duration="1157000" />
+      <workItem from="1523188742578" duration="87000" />
+      <workItem from="1523312862103" duration="653000" />
+      <workItem from="1523350605654" duration="599000" />
+      <workItem from="1523372573113" duration="599000" />
+      <workItem from="1523385759920" duration="1309000" />
+      <workItem from="1523395312425" duration="865000" />
+      <workItem from="1524429482519" duration="1189000" />
+      <workItem from="1524481314251" duration="598000" />
+      <workItem from="1524505524467" duration="599000" />
+      <workItem from="1524518578166" duration="1547000" />
+      <workItem from="1524564502748" duration="656000" />
+      <workItem from="1525343582369" duration="1263000" />
+      <workItem from="1525375093678" duration="439000" />
+      <workItem from="1525961757848" duration="1370000" />
+      <workItem from="1526415244925" duration="599000" />
+      <workItem from="1527583558581" duration="1374000" />
+      <workItem from="1527585357696" duration="1375000" />
+      <workItem from="1528573473424" duration="5852000" />
+      <workItem from="1528746102624" duration="606000" />
+      <workItem from="1528923028929" duration="1229000" />
+      <workItem from="1528946360073" duration="222000" />
+      <workItem from="1529013562571" duration="1926000" />
+      <workItem from="1529021042427" duration="916000" />
+      <workItem from="1529051916430" duration="11000" />
+      <workItem from="1529082106296" duration="1116000" />
+      <workItem from="1529085396070" duration="3859000" />
+      <workItem from="1529092547214" duration="3173000" />
+      <workItem from="1529097709252" duration="585000" />
+      <workItem from="1529098330067" duration="5720000" />
+      <workItem from="1529105161814" duration="1829000" />
+      <workItem from="1529165178657" duration="2893000" />
+      <workItem from="1529175428844" duration="15000" />
+      <workItem from="1529175983743" duration="513000" />
+      <workItem from="1529177528886" duration="518000" />
+      <workItem from="1529179199983" duration="113000" />
+      <workItem from="1529179431618" duration="187000" />
+      <workItem from="1529180290176" duration="244000" />
+      <workItem from="1529180638746" duration="3379000" />
+      <workItem from="1529252001366" duration="3619000" />
+      <workItem from="1529310463584" duration="2576000" />
+      <workItem from="1529323510815" duration="1412000" />
+      <workItem from="1529333155881" duration="1876000" />
+      <workItem from="1529352003461" duration="55000" />
+      <workItem from="1529433432545" duration="1460000" />
+      <workItem from="1529494690286" duration="4924000" />
+      <workItem from="1529587209404" duration="12532000" />
+      <workItem from="1529656007597" duration="1880000" />
+      <workItem from="1529708154672" duration="2830000" />
+      <workItem from="1529774034999" duration="1196000" />
+      <workItem from="1529788458148" duration="1858000" />
+      <workItem from="1529873351789" duration="2459000" />
+      <workItem from="1529918992825" duration="5872000" />
+      <workItem from="1529960310168" duration="2542000" />
+      <workItem from="1530021996909" duration="597000" />
+      <workItem from="1530039855444" duration="750000" />
+      <workItem from="1530220723401" duration="947000" />
+      <workItem from="1530221705728" duration="2205000" />
+      <workItem from="1530238310250" duration="2668000" />
+      <workItem from="1530247682821" duration="20635000" />
+      <workItem from="1530303784625" duration="1037000" />
+      <workItem from="1530305981283" duration="266000" />
+      <workItem from="1530306352619" duration="608000" />
+      <workItem from="1530307239646" duration="6000" />
+      <workItem from="1530307640614" duration="7000" />
+      <workItem from="1530308093355" duration="7000" />
+      <workItem from="1530309193803" duration="3600000" />
+      <workItem from="1530390358301" duration="10445000" />
+      <workItem from="1531115867430" duration="2177000" />
+      <workItem from="1531168148254" duration="604000" />
+      <workItem from="1531397306040" duration="466000" />
+      <workItem from="1531398102775" duration="7700000" />
+      <workItem from="1531405892074" duration="138000" />
+      <workItem from="1531406051102" duration="944000" />
+      <workItem from="1531411107372" duration="7000000" />
+      <workItem from="1531429146663" duration="31270000" />
+      <workItem from="1531590396343" duration="664000" />
+      <workItem from="1531592614087" duration="600000" />
+      <workItem from="1531596791605" duration="1279000" />
+      <workItem from="1531646371613" duration="598000" />
+      <workItem from="1531651208905" duration="595000" />
+      <workItem from="1531755452374" duration="889000" />
+      <workItem from="1531771866241" duration="1204000" />
+      <workItem from="1531815466569" duration="1837000" />
+      <workItem from="1531836066106" duration="1749000" />
+      <workItem from="1531861311404" duration="2853000" />
+      <workItem from="1531867434628" duration="1999000" />
+      <workItem from="1531908199971" duration="2454000" />
+      <workItem from="1531935751312" duration="773000" />
+      <workItem from="1531948439880" duration="4463000" />
+      <workItem from="1531962943538" duration="8263000" />
+      <workItem from="1532000307484" duration="1738000" />
+      <workItem from="1532015645621" duration="1083000" />
+      <workItem from="1532029401668" duration="1272000" />
+      <workItem from="1532039324823" duration="599000" />
+      <workItem from="1532081028584" duration="1473000" />
+      <workItem from="1532163082931" duration="599000" />
+      <workItem from="1532165397324" duration="1859000" />
+      <workItem from="1532268485643" duration="1653000" />
+      <workItem from="1532273692038" duration="2486000" />
+      <workItem from="1532295027930" duration="636000" />
+      <workItem from="1532309376214" duration="1028000" />
+      <workItem from="1532376954072" duration="630000" />
+      <workItem from="1532415707260" duration="45000" />
+      <workItem from="1532422726374" duration="1833000" />
+      <workItem from="1532426880460" duration="729000" />
+      <workItem from="1532434480486" duration="6903000" />
+      <workItem from="1532465165360" duration="2336000" />
+      <workItem from="1532507521084" duration="602000" />
+      <workItem from="1532550303486" duration="332000" />
+      <workItem from="1532596446724" duration="654000" />
+      <workItem from="1532660620130" duration="4954000" />
+      <workItem from="1532689930509" duration="5867000" />
+      <workItem from="1532695814851" duration="1758000" />
+      <workItem from="1532698384836" duration="8173000" />
+      <workItem from="1532715664224" duration="9868000" />
+      <workItem from="1532730255867" duration="349000" />
+      <workItem from="1532730751972" duration="5940000" />
+      <workItem from="1532773814744" duration="4710000" />
+      <workItem from="1532803326662" duration="33903000" />
+      <workItem from="1532908328671" duration="4531000" />
+      <workItem from="1532913428870" duration="22833000" />
+      <workItem from="1533027493710" duration="28084000" />
+      <workItem from="1533136794895" duration="2034000" />
+      <workItem from="1533215509705" duration="6576000" />
+      <workItem from="1533285937887" duration="18104000" />
+      <workItem from="1533359067112" duration="1213000" />
+      <workItem from="1533403647290" duration="9507000" />
+      <workItem from="1533488178068" duration="18824000" />
+      <workItem from="1533546361023" duration="1224000" />
+      <workItem from="1533560663981" duration="1658000" />
+      <workItem from="1533588154444" duration="2468000" />
+      <workItem from="1533632465060" duration="10350000" />
+      <workItem from="1533654758325" duration="4401000" />
+      <workItem from="1533678360771" duration="7789000" />
+      <workItem from="1533722606346" duration="5960000" />
+      <workItem from="1533735319218" duration="9083000" />
+      <workItem from="1533805145138" duration="931000" />
+      <workItem from="1533814604686" duration="9874000" />
+      <workItem from="1533901556459" duration="13588000" />
+      <workItem from="1533932700585" duration="6993000" />
+      <workItem from="1533943201985" duration="1836000" />
+      <workItem from="1533965016147" duration="85000" />
+      <workItem from="1534003622346" duration="1887000" />
+      <workItem from="1534008803212" duration="199000" />
+      <workItem from="1534009046283" duration="195000" />
+      <workItem from="1534009268864" duration="37000" />
+      <workItem from="1534009332551" duration="2214000" />
+      <workItem from="1534018361720" duration="2828000" />
+      <workItem from="1534024548913" duration="805000" />
+      <workItem from="1534025386164" duration="1398000" />
+      <workItem from="1534091931431" duration="598000" />
+      <workItem from="1534114945096" duration="1188000" />
+      <workItem from="1534152056363" duration="9973000" />
+      <workItem from="1534182701177" duration="599000" />
+      <workItem from="1534189076571" duration="11088000" />
+      <workItem from="1534240155184" duration="11797000" />
+      <workItem from="1534261600376" duration="7165000" />
+      <workItem from="1534275974327" duration="3081000" />
+      <workItem from="1534284761728" duration="946000" />
+      <workItem from="1534291706034" duration="35000" />
+      <workItem from="1534291765222" duration="2825000" />
+      <workItem from="1534300051840" duration="2745000" />
+      <workItem from="1534313570817" duration="5115000" />
+      <workItem from="1534341728817" duration="26000" />
+      <workItem from="1534341783606" duration="1353000" />
+      <workItem from="1534344908488" duration="556000" />
+      <workItem from="1534345580546" duration="1190000" />
+      <workItem from="1534347152542" duration="1471000" />
+      <workItem from="1534364293468" duration="4811000" />
+      <workItem from="1534381824500" duration="74000" />
+      <workItem from="1534381983984" duration="113000" />
+      <workItem from="1534382122004" duration="279000" />
+      <workItem from="1534382428390" duration="31000" />
+      <workItem from="1534382485129" duration="102000" />
+      <workItem from="1534382613526" duration="12000" />
+      <workItem from="1534382680432" duration="245000" />
+      <workItem from="1534384169461" duration="14000" />
+      <workItem from="1534384594790" duration="114000" />
+      <workItem from="1534384752722" duration="841000" />
+      <workItem from="1534386978131" duration="1230000" />
+      <workItem from="1534388233862" duration="478000" />
+      <workItem from="1534420039569" duration="1629000" />
+      <workItem from="1534422017549" duration="1542000" />
+      <workItem from="1534423613946" duration="628000" />
+      <workItem from="1534424279767" duration="7419000" />
+      <workItem from="1534431730528" duration="181000" />
+      <workItem from="1534431939075" duration="65000" />
+      <workItem from="1534432032372" duration="185000" />
+      <workItem from="1534432245277" duration="714000" />
+      <workItem from="1534440900779" duration="283000" />
+      <workItem from="1534441213865" duration="5952000" />
+      <workItem from="1534453616519" duration="13000" />
+      <workItem from="1534467068016" duration="1348000" />
+      <workItem from="1534470877793" duration="1684000" />
+      <workItem from="1534516117901" duration="11000" />
+      <workItem from="1534694880730" duration="646000" />
+      <workItem from="1534698155625" duration="4133000" />
+      <workItem from="1534759914059" duration="1784000" />
+      <workItem from="1534787813492" duration="15710000" />
+      <workItem from="1534811341397" duration="29000" />
+      <workItem from="1534861674860" duration="3676000" />
+      <workItem from="1534879177993" duration="1079000" />
+      <workItem from="1534880712611" duration="6675000" />
+      <workItem from="1534893847106" duration="2822000" />
+      <workItem from="1534929984737" duration="704000" />
+      <workItem from="1534940056783" duration="974000" />
+      <workItem from="1534965032949" duration="1319000" />
+      <workItem from="1534977189830" duration="1238000" />
+      <workItem from="1535015811825" duration="137000" />
+      <workItem from="1535042081237" duration="14156000" />
+      <workItem from="1535087241491" duration="264000" />
+      <workItem from="1535087537809" duration="448000" />
+      <workItem from="1535126916192" duration="1998000" />
+      <workItem from="1535132431909" duration="9304000" />
+      <workItem from="1535214562266" duration="10064000" />
+      <workItem from="1535291820449" duration="2240000" />
+      <workItem from="1535304574895" duration="592000" />
+      <workItem from="1535315619743" duration="6972000" />
+      <workItem from="1535329242411" duration="331000" />
+      <workItem from="1535329616566" duration="33000" />
+      <workItem from="1535329690614" duration="82000" />
+      <workItem from="1535329813477" duration="3827000" />
+      <workItem from="1535338568312" duration="1085000" />
+      <workItem from="1535370135968" duration="16014000" />
+      <workItem from="1535410961799" duration="10000" />
+      <workItem from="1535445681020" duration="1016000" />
+      <workItem from="1535446728171" duration="328000" />
+      <workItem from="1535447159464" duration="30000" />
+      <workItem from="1535989370331" duration="1026000" />
+      <workItem from="1535991120580" duration="70000" />
+      <workItem from="1536002618980" duration="2250000" />
+      <workItem from="1536005394683" duration="60000" />
+      <workItem from="1536005470454" duration="43547000" />
+      <workItem from="1536098003466" duration="27577000" />
+      <workItem from="1536159485651" duration="611000" />
+      <workItem from="1536161005344" duration="599000" />
+      <workItem from="1536166078607" duration="7846000" />
+      <workItem from="1536190894120" duration="9571000" />
+      <workItem from="1536240178082" duration="815000" />
+      <workItem from="1536268236638" duration="1582000" />
+      <workItem from="1536294311843" duration="575000" />
+      <workItem from="1536309922505" duration="171000" />
+      <workItem from="1536310262486" duration="3774000" />
+      <workItem from="1536323028097" duration="8797000" />
+      <workItem from="1536341690304" duration="1892000" />
+      <workItem from="1536344442688" duration="2798000" />
+      <workItem from="1536419027510" duration="599000" />
+      <workItem from="1536441609161" duration="1928000" />
+      <workItem from="1536494931954" duration="6357000" />
+      <workItem from="1536521014766" duration="1538000" />
+      <workItem from="1536568564539" duration="1163000" />
+      <workItem from="1536590771454" duration="6710000" />
+      <workItem from="1536608759917" duration="20591000" />
+      <workItem from="1536660551934" duration="12941000" />
+      <workItem from="1536686650791" duration="5672000" />
+      <workItem from="1536719348292" duration="1360000" />
+      <workItem from="1536750940248" duration="4490000" />
+      <workItem from="1536767285781" duration="17643000" />
+      <workItem from="1536795266982" duration="322000" />
+      <workItem from="1536795609553" duration="1108000" />
+      <workItem from="1536824625997" duration="2350000" />
+    </task>
+    <task id="LOCAL-00172" summary="intial">
+      <created>1534192884276</created>
+      <option name="number" value="00172" />
+      <option name="presentableId" value="LOCAL-00172" />
+      <option name="project" value="LOCAL" />
+      <updated>1534192884276</updated>
+    </task>
+    <task id="LOCAL-00173" summary="fixed several issue">
+      <created>1534264467361</created>
+      <option name="number" value="00173" />
+      <option name="presentableId" value="LOCAL-00173" />
+      <option name="project" value="LOCAL" />
+      <updated>1534264467362</updated>
+    </task>
+    <task id="LOCAL-00174" summary="removed unused code">
+      <created>1534264487603</created>
+      <option name="number" value="00174" />
+      <option name="presentableId" value="LOCAL-00174" />
+      <option name="project" value="LOCAL" />
+      <updated>1534264487603</updated>
+    </task>
+    <task id="LOCAL-00175" summary="updated the api">
+      <created>1534443954166</created>
+      <option name="number" value="00175" />
+      <option name="presentableId" value="LOCAL-00175" />
+      <option name="project" value="LOCAL" />
+      <updated>1534443954167</updated>
+    </task>
+    <task id="LOCAL-00176" summary="for faster loading the config data">
+      <created>1534444100689</created>
+      <option name="number" value="00176" />
+      <option name="presentableId" value="LOCAL-00176" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444100689</updated>
+    </task>
+    <task id="LOCAL-00177" summary="changed the way for editing the shop">
+      <created>1534444158583</created>
+      <option name="number" value="00177" />
+      <option name="presentableId" value="LOCAL-00177" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444158583</updated>
+    </task>
+    <task id="LOCAL-00178" summary="added a loadManager for less reading from the file and more from the HashSet, HashMap, Array">
+      <created>1534444192691</created>
+      <option name="number" value="00178" />
+      <option name="presentableId" value="LOCAL-00178" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444192691</updated>
+    </task>
+    <task id="LOCAL-00179" summary="updated the invAPI">
+      <created>1534444670772</created>
+      <option name="number" value="00179" />
+      <option name="presentableId" value="LOCAL-00179" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444670772</updated>
+    </task>
+    <task id="LOCAL-00180" summary="changed the variable of some strings and integers">
+      <created>1534444864631</created>
+      <option name="number" value="00180" />
+      <option name="presentableId" value="LOCAL-00180" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444864631</updated>
+    </task>
+    <task id="LOCAL-00181" summary="intial">
+      <created>1534444883179</created>
+      <option name="number" value="00181" />
+      <option name="presentableId" value="LOCAL-00181" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444883179</updated>
+    </task>
+    <task id="LOCAL-00182" summary="intial">
+      <created>1534444909090</created>
+      <option name="number" value="00182" />
+      <option name="presentableId" value="LOCAL-00182" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444909090</updated>
+    </task>
+    <task id="LOCAL-00183" summary="intial">
+      <created>1534444941897</created>
+      <option name="number" value="00183" />
+      <option name="presentableId" value="LOCAL-00183" />
+      <option name="project" value="LOCAL" />
+      <updated>1534444941897</updated>
+    </task>
+    <task id="LOCAL-00184" summary="reworked the edit command">
+      <created>1534803530879</created>
+      <option name="number" value="00184" />
+      <option name="presentableId" value="LOCAL-00184" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803530879</updated>
+    </task>
+    <task id="LOCAL-00185" summary="added a useSSL function for sql and the plugin will dissable when the sql is not connected">
+      <created>1534803598571</created>
+      <option name="number" value="00185" />
+      <option name="presentableId" value="LOCAL-00185" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803598571</updated>
+    </task>
+    <task id="LOCAL-00186" summary="removed unused code and added a checker when there is no shop (preventing for errors)">
+      <created>1534803634779</created>
+      <option name="number" value="00186" />
+      <option name="presentableId" value="LOCAL-00186" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803634779</updated>
+    </task>
+    <task id="LOCAL-00187" summary="added useSSL">
+      <created>1534803655043</created>
+      <option name="number" value="00187" />
+      <option name="presentableId" value="LOCAL-00187" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803655043</updated>
+    </task>
+    <task id="LOCAL-00188" summary="removed unused code">
+      <created>1534803696196</created>
+      <option name="number" value="00188" />
+      <option name="presentableId" value="LOCAL-00188" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803696197</updated>
+    </task>
+    <task id="LOCAL-00189" summary="added a left click &amp; middle mouse click event">
+      <created>1534803723941</created>
+      <option name="number" value="00189" />
+      <option name="presentableId" value="LOCAL-00189" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803723941</updated>
+    </task>
+    <task id="LOCAL-00190" summary="removed unused code">
+      <created>1534803802564</created>
+      <option name="number" value="00190" />
+      <option name="presentableId" value="LOCAL-00190" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803802564</updated>
+    </task>
+    <task id="LOCAL-00191" summary="changed because when not using sql it will spitting out errors">
+      <created>1534803833544</created>
+      <option name="number" value="00191" />
+      <option name="presentableId" value="LOCAL-00191" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803833544</updated>
+    </task>
+    <task id="LOCAL-00192" summary="config update">
+      <created>1534803847952</created>
+      <option name="number" value="00192" />
+      <option name="presentableId" value="LOCAL-00192" />
+      <option name="project" value="LOCAL" />
+      <updated>1534803847952</updated>
+    </task>
+    <task id="LOCAL-00193" summary="renamed for faster looking up the code">
+      <created>1534804638046</created>
+      <option name="number" value="00193" />
+      <option name="presentableId" value="LOCAL-00193" />
+      <option name="project" value="LOCAL" />
+      <updated>1534804638046</updated>
+    </task>
+    <task id="LOCAL-00194" summary="updated the &quot;/tokens help&quot; command">
+      <created>1535051963836</created>
+      <option name="number" value="00194" />
+      <option name="presentableId" value="LOCAL-00194" />
+      <option name="project" value="LOCAL" />
+      <updated>1535051963837</updated>
+    </task>
+    <task id="LOCAL-00195" summary="check if the uuid is not null">
+      <created>1535051993399</created>
+      <option name="number" value="00195" />
+      <option name="presentableId" value="LOCAL-00195" />
+      <option name="project" value="LOCAL" />
+      <updated>1535051993399</updated>
+    </task>
+    <task id="LOCAL-00196" summary="added a new methode">
+      <created>1535052007846</created>
+      <option name="number" value="00196" />
+      <option name="presentableId" value="LOCAL-00196" />
+      <option name="project" value="LOCAL" />
+      <updated>1535052007846</updated>
+    </task>
+    <task id="LOCAL-00197" summary="added a sell methode and it won't for loop anymore it checking what slot the player clicked on">
+      <created>1535052050382</created>
+      <option name="number" value="00197" />
+      <option name="presentableId" value="LOCAL-00197" />
+      <option name="project" value="LOCAL" />
+      <updated>1535052050382</updated>
+    </task>
+    <task id="LOCAL-00198" summary="intial">
+      <created>1535052060160</created>
+      <option name="number" value="00198" />
+      <option name="presentableId" value="LOCAL-00198" />
+      <option name="project" value="LOCAL" />
+      <updated>1535052060161</updated>
+    </task>
+    <task id="LOCAL-00199" summary="check if the uuid is not null">
+      <created>1535054047735</created>
+      <option name="number" value="00199" />
+      <option name="presentableId" value="LOCAL-00199" />
+      <option name="project" value="LOCAL" />
+      <updated>1535054047736</updated>
+    </task>
+    <task id="LOCAL-00200" summary="changed the api for easier use and less code">
+      <created>1535059937433</created>
+      <option name="number" value="00200" />
+      <option name="presentableId" value="LOCAL-00200" />
+      <option name="project" value="LOCAL" />
+      <updated>1535059937433</updated>
+    </task>
+    <task id="LOCAL-00201" summary="added 1.13.1 support">
+      <created>1536155058187</created>
+      <option name="number" value="00201" />
+      <option name="presentableId" value="LOCAL-00201" />
+      <option name="project" value="LOCAL" />
+      <updated>1536155058188</updated>
+    </task>
+    <task id="LOCAL-00202" summary="added ignored">
+      <created>1536174312984</created>
+      <option name="number" value="00202" />
+      <option name="presentableId" value="LOCAL-00202" />
+      <option name="project" value="LOCAL" />
+      <updated>1536174312984</updated>
+    </task>
+    <task id="LOCAL-00203" summary="changed the param">
+      <created>1536174411954</created>
+      <option name="number" value="00203" />
+      <option name="presentableId" value="LOCAL-00203" />
+      <option name="project" value="LOCAL" />
+      <updated>1536174411954</updated>
+    </task>
+    <task id="LOCAL-00204" summary="changed command &quot;get&quot; -&gt; &quot;note&quot;">
+      <created>1536174572372</created>
+      <option name="number" value="00204" />
+      <option name="presentableId" value="LOCAL-00204" />
+      <option name="project" value="LOCAL" />
+      <updated>1536174572372</updated>
+    </task>
+    <task id="LOCAL-00205" summary="updated the help command to a interactive chat menu">
+      <created>1536174602667</created>
+      <option name="number" value="00205" />
+      <option name="presentableId" value="LOCAL-00205" />
+      <option name="project" value="LOCAL" />
+      <updated>1536174602667</updated>
+    </task>
+    <task id="LOCAL-00206" summary="added all the bank commands">
+      <created>1536174783069</created>
+      <option name="number" value="00206" />
+      <option name="presentableId" value="LOCAL-00206" />
+      <option name="project" value="LOCAL" />
+      <updated>1536174783070</updated>
+    </task>
+    <task id="LOCAL-00207" summary="added all the bank methode's">
+      <created>1536174861819</created>
+      <option name="number" value="00207" />
+      <option name="presentableId" value="LOCAL-00207" />
+      <option name="project" value="LOCAL" />
+      <updated>1536174861819</updated>
+    </task>
+    <task id="LOCAL-00208" summary="we are not gonna use the build in shop, it will have a too high change for getting errors so we gonna create a add on shop plugin probably">
+      <created>1536175516351</created>
+      <option name="number" value="00208" />
+      <option name="presentableId" value="LOCAL-00208" />
+      <option name="project" value="LOCAL" />
+      <updated>1536175516351</updated>
+    </task>
+    <task id="LOCAL-00209" summary="the bank system implemented in the chat and not the GUI">
+      <created>1536175629272</created>
+      <option name="number" value="00209" />
+      <option name="presentableId" value="LOCAL-00209" />
+      <option name="project" value="LOCAL" />
+      <updated>1536175629272</updated>
+    </task>
+    <task id="LOCAL-00210" summary="intial">
+      <created>1536175802349</created>
+      <option name="number" value="00210" />
+      <option name="presentableId" value="LOCAL-00210" />
+      <option name="project" value="LOCAL" />
+      <updated>1536175802349</updated>
+    </task>
+    <task id="LOCAL-00211" summary="added 1.13.1 support">
+      <created>1536175829081</created>
+      <option name="number" value="00211" />
+      <option name="presentableId" value="LOCAL-00211" />
+      <option name="project" value="LOCAL" />
+      <updated>1536175829081</updated>
+    </task>
+    <task id="LOCAL-00212" summary="changed the methode of the update version and added a checker for a pre release version">
+      <created>1536232030774</created>
+      <option name="number" value="00212" />
+      <option name="presentableId" value="LOCAL-00212" />
+      <option name="project" value="LOCAL" />
+      <updated>1536232030774</updated>
+    </task>
+    <task id="LOCAL-00213" summary="changed the methode of the update version and added a checker for a pre release version">
+      <created>1536323476533</created>
+      <option name="number" value="00213" />
+      <option name="presentableId" value="LOCAL-00213" />
+      <option name="project" value="LOCAL" />
+      <updated>1536323476533</updated>
+    </task>
+    <task id="LOCAL-00214" summary="added some methode's for the public api">
+      <created>1536329863298</created>
+      <option name="number" value="00214" />
+      <option name="presentableId" value="LOCAL-00214" />
+      <option name="project" value="LOCAL" />
+      <updated>1536329863298</updated>
+    </task>
+    <task id="LOCAL-00215" summary="added the base of the confirmation poup">
+      <created>1536330305398</created>
+      <option name="number" value="00215" />
+      <option name="presentableId" value="LOCAL-00215" />
+      <option name="project" value="LOCAL" />
+      <updated>1536330305398</updated>
+    </task>
+    <task id="LOCAL-00216" summary="added methode &gt; get the rank number of the user">
+      <created>1536330355559</created>
+      <option name="number" value="00216" />
+      <option name="presentableId" value="LOCAL-00216" />
+      <option name="project" value="LOCAL" />
+      <updated>1536330355560</updated>
+    </task>
+    <task id="LOCAL-00217" summary="2.4.0-pre2">
+      <created>1536330387903</created>
+      <option name="number" value="00217" />
+      <option name="presentableId" value="LOCAL-00217" />
+      <option name="project" value="LOCAL" />
+      <updated>1536330387903</updated>
+    </task>
+    <task id="LOCAL-00218" summary="added a class to the register list">
+      <created>1536330432697</created>
+      <option name="number" value="00218" />
+      <option name="presentableId" value="LOCAL-00218" />
+      <option name="project" value="LOCAL" />
+      <updated>1536330432697</updated>
+    </task>
+    <task id="LOCAL-00219" summary="removed unused files">
+      <created>1536795392098</created>
+      <option name="number" value="00219" />
+      <option name="presentableId" value="LOCAL-00219" />
+      <option name="project" value="LOCAL" />
+      <updated>1536795392098</updated>
+    </task>
+    <task id="LOCAL-00220" summary="intial">
+      <created>1536795875646</created>
+      <option name="number" value="00220" />
+      <option name="presentableId" value="LOCAL-00220" />
+      <option name="project" value="LOCAL" />
+      <updated>1536795875647</updated>
+    </task>
+    <option name="localTasksCounter" value="221" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1284650000" />
+  </component>
+  <component name="TodoView" selected-index="3">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-2125" y="94" width="1934" height="958" extended-state="0" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.63106793" visible="true" weight="0.20757738" />
+      <window_info id="Structure" order="1" sideWeight="0.36893204" side_tool="true" visible="true" weight="0.20757738" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" sideWeight="0.36583462" side_tool="true" weight="0.15103339" />
+      <window_info id="Image Layers" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.1622465" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32917318" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3447738" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32917318" />
+      <window_info anchor="bottom" id="Event Log" internal_type="SLIDING" order="7" side_tool="true" type="SLIDING" weight="0.32917318" />
+      <window_info anchor="bottom" id="Version Control" order="8" weight="0.2979719" />
+      <window_info active="true" anchor="bottom" id="Terminal" internal_type="SLIDING" order="9" type="SLIDING" visible="true" weight="0.57281554" />
+      <window_info active="true" anchor="bottom" auto_hide="true" x="-50" y="631" width="2516" height="413" id="Messages" internal_type="SLIDING" order="10" visible="true" weight="0.22854914" />
+      <window_info anchor="bottom" id="Database Changes" order="11" weight="0.32917318" />
+      <window_info anchor="bottom" id="Database Console" order="12" weight="0.13962558" />
+      <window_info anchor="bottom" id="Tasks" order="13" weight="0.32969603" />
+      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Palette" order="3" />
+      <window_info anchor="right" id="Maven Projects" order="4" weight="0.0945946" />
+      <window_info anchor="right" id="Capture Analysis" order="5" />
+      <window_info anchor="right" id="Theme Preview" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" x="0" y="0" width="594" height="1216" id="Documentation" order="8" side_tool="true" weight="0.3296875" />
+      <window_info anchor="right" id="Database" order="9" visible="true" weight="0.11632871" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="RECENTLY_FILTERED_USER_GROUPS">
+                <collection />
+              </option>
+              <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+                <collection />
+              </option>
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="config update" />
+    <MESSAGE value="removed unused code" />
+    <MESSAGE value="renamed for faster looking up the code" />
+    <MESSAGE value="updated the &quot;/tokens help&quot; command" />
+    <MESSAGE value="added a new methode" />
+    <MESSAGE value="added a sell methode and it won't for loop anymore it checking what slot the player clicked on" />
+    <MESSAGE value="check if the uuid is not null" />
+    <MESSAGE value="changed the api for easier use and less code" />
+    <MESSAGE value="added ignored" />
+    <MESSAGE value="changed the param" />
+    <MESSAGE value="changed command &quot;get&quot; -&gt; &quot;note&quot;" />
+    <MESSAGE value="updated the help command to a interactive chat menu" />
+    <MESSAGE value="added all the bank commands" />
+    <MESSAGE value="added all the bank methode's" />
+    <MESSAGE value="we are not gonna use the build in shop, it will have a too high change for getting errors so we gonna create a add on shop plugin probably" />
+    <MESSAGE value="the bank system implemented in the chat and not the GUI" />
+    <MESSAGE value="added 1.13.1 support" />
+    <MESSAGE value="changed the methode of the update version and added a checker for a pre release version" />
+    <MESSAGE value="added some methode's for the public api" />
+    <MESSAGE value="added the base of the confirmation poup" />
+    <MESSAGE value="added methode &gt; get the rank number of the user" />
+    <MESSAGE value="2.4.0-pre2" />
+    <MESSAGE value="added a class to the register list" />
+    <MESSAGE value="removed unused files" />
+    <MESSAGE value="intial" />
+    <option name="LAST_COMMIT_MESSAGE" value="intial" />
+    <option name="UPDATE_GROUP_BY_PACKAGES" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../../craftbukkit-1.12.2.jar!/org/bukkit/Material.class</url>
+          <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <watches-manager>
+      <configuration name="JarApplication">
+        <watch expression="((CraftMetaItem)item.meta).lore" custom="org.bukkit.craftbukkit.v1_13_R1.inventory.CraftMetaItem" />
+        <watch expression="item.meta" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/utils/loadManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="13" column="13" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/Tokens.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2167">
+          <caret line="126" column="10" selection-start-line="126" selection-start-column="10" selection-end-line="126" selection-end-column="10" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#12305#12306#0" expanded="true" />
+            <element signature="e#12338#12339#0" expanded="true" />
+            <element signature="e#12394#12395#0" expanded="true" />
+            <element signature="e#12438#12439#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/../../craftbukkit-1.13.1.jar!/org/bukkit/Bukkit.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="171" column="58" selection-start-line="171" selection-start-column="58" selection-end-line="171" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_CONFIG_DIR$/consoles/db/83d02a5c-3a3a-4b4c-bc57-c9510e26f094/console.sql">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="12" column="52" selection-start-line="12" selection-start-column="52" selection-end-line="12" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/StringIndexOutOfBoundsException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="38" column="6" selection-start-line="38" selection-start-column="6" selection-end-line="38" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/AbstractStringBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="821" column="33" selection-start-line="821" selection-start-column="33" selection-end-line="821" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_181/src.zip!/java/lang/StringBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="438">
+          <caret line="252" column="22" lean-forward="true" selection-start-line="252" selection-start-column="22" selection-end-line="252" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/sql/SQLlib.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1196">
+          <caret line="456" column="125" selection-start-line="456" selection-start-column="125" selection-end-line="456" selection-end-column="125" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/lib/Lib.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1196">
+          <caret line="638" column="5" selection-start-line="638" selection-start-column="5" selection-end-line="638" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/plugin.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/config.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="760">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/events/JoinEvent.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1196">
+          <caret line="77" column="31" selection-start-line="77" selection-start-column="31" selection-end-line="77" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com.twanl.tokens/commands/Commands.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1196">
+          <caret line="906" column="36" selection-start-line="906" selection-start-column="36" selection-end-line="906" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://83d02a5c-3a3a-4b4c-bc57-c9510e26f094/schema/players/table/player_data">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://83d02a5c-3a3a-4b4c-bc57-c9510e26f094/schema/players/table/bank_data">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>Tokens:jar</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.43563217" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.43563217" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>jquery-3.2.1.slim</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.43563217" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>Tokens</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.43563217" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>craftbukkit-1.13.1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.43563217" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ScopeChooserConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.41034484" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

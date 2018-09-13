@@ -9,7 +9,19 @@ import java.util.List;
 public class ConstructTabCompleter implements TabCompleter {
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] arguments) {
+    public List<String> onTabComplete(CommandSender sender, Command cmd, String commandLabel, String[] args) {
+
+        if (cmd.getName().equals("bank")) {
+            if (cmd.getName().equals("user")) {
+
+                if (!args[0].equals("")) {
+
+                }
+
+
+            }
+
+        }
 
 
 

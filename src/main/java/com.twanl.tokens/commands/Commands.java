@@ -3,6 +3,7 @@ package com.twanl.tokens.commands;
 import com.twanl.tokens.Tokens;
 import com.twanl.tokens.items.TokenItem;
 import com.twanl.tokens.lib.Lib;
+import com.twanl.tokens.menu.confirm;
 import com.twanl.tokens.sql.SQLlib;
 import com.twanl.tokens.utils.ConfigManager;
 import com.twanl.tokens.utils.Functions;
@@ -695,7 +696,7 @@ public class Commands implements CommandExecutor, TabCompleter {
                                     Strings.gray + "Bank Balance: " + Strings.white + lib.bankBalance(p.getUniqueId()) + "\n" +
                                     Strings.gray + "Sub Users:");
 
-                            if (config.getBank().get(lib.userBankID(p.getUniqueId()) + ".users").toString().isEmpty() && config.getBank().get(lib.userBankID(p.getUniqueId()) + ".users").toString().contains("")) {
+                            if (!lib.bankHasUsers(p.getUniqueId())) {
                                 p.sendMessage(Strings.green + "  You can invite members!");
                             } else {
                                 // get all the user from the bank
@@ -798,19 +799,11 @@ public class Commands implements CommandExecutor, TabCompleter {
                                     return true;
                                 }
 
-                                // check if the player is already a member of the bank
-                                for (String key : config.getBank().getStringList(lib.userBankID(p.getUniqueId()) + ".users")) {
-                                    String[] pName = key.split(" ");
-                                    UUID bankPlayer = UUID.fromString(pName[0]);
-                                    UUID commandPlayer = pInvite.getUniqueId();
-
-                                    if (bankPlayer.equals(commandPlayer)) {
-                                        p.sendMessage(Strings.red + "Player is already a member of your bank!");
-                                        return true;
-
-                                    }
+                                // Check if the player is already registrated to a bank
+                                if (lib.playerIsRegisteredInBank(pInvite.getUniqueId())) {
+                                    p.sendMessage(Strings.red + "Player already registrated to a bank!");
+                                    return true;
                                 }
-
 
                                 hasInvite.put(pInvite, true);
                                 inviteSender.put(pInvite, p);
@@ -828,33 +821,37 @@ public class Commands implements CommandExecutor, TabCompleter {
                                     return true;
                                 }
 
-                                OfflinePlayer pInvite = Bukkit.getOfflinePlayer(args[3]);
+                                OfflinePlayer pTarget = Bukkit.getOfflinePlayer(args[3]);
 
 
                                 // check if he is not trying to remove himself
-                                if (pInvite == p.getPlayer()) {
+                                if (pTarget == p.getPlayer()) {
                                     p.sendMessage(Strings.red + "You cannot remove yourself from your bank!");
                                     return true;
                                 }
 
-
-                                // Check if the player is a member of the bank
-                                for (String key : config.getBank().getStringList(lib.userBankID(p.getUniqueId()) + ".users")) {
-                                    String[] pName = key.split(" ");
-                                    UUID bankPlayer = UUID.fromString(pName[0]);
-                                    UUID commandPlayer = pInvite.getUniqueId();
-
-
-                                    if (bankPlayer.equals(commandPlayer)) {
-                                        lib.bankUserRemove(pInvite.getUniqueId());
-                                        p.sendMessage("You succsesfully removed " + Strings.green + pName[1] + Strings.white + " from the bank!");
-                                        return true;
-
-                                    }
+                                // Check if the player is a member of your bank
+                                if (lib.userBankID(p.getUniqueId()) != lib.userBankID(pTarget.getUniqueId())) {
+                                    p.sendMessage(Strings.red + pTarget.getName() + " is not a member of you bank!");
+                                    return true;
                                 }
+
+
+                                lib.bankUserRemove(pTarget.getUniqueId());
+                                p.sendMessage("You succsesfully removed " + Strings.green + pTarget.getName() + Strings.white + " from the bank!");
+
+
                             }
                         } else if (args[2].equalsIgnoreCase("makeowner")) {
                             if (p.hasPermission("tokens.bank.user.makeowner")) {
+
+                                confirm a = new confirm();
+                                a.popupMenu(p);
+
+                                if (!a.a.get(p)) {
+                                    p.sendMessage("is false!!");
+                                    return true;
+                                }
 
                                 // check if the player name is filled in for preventing errors
                                 if (args.length == 3) {
@@ -877,6 +874,13 @@ public class Commands implements CommandExecutor, TabCompleter {
                                     p.sendMessage(Strings.red + "You cannot make yourself owner again!");
                                     return true;
                                 }
+
+
+//                                plugin.getServer().getScheduler().scheduleSyncDelayedTask((Plugin) this, () ->
+//                                        p.sendMessage("test")
+//
+//                                        , 60L);// 60 L == 3 sec, 20 ticks == 1 sec
+
 
 
                                 lib.bankOwnershipTransfer(p.getUniqueId(), pTarget.getUniqueId());

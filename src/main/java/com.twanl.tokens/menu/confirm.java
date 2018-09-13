@@ -15,8 +15,8 @@ import java.util.HashMap;
 public class confirm implements Listener {
 
     private Tokens plugin = Tokens.getPlugin(Tokens.class);
-    public HashMap<Player, Boolean> a = new HashMap<>();
     private invAPI inv = new invAPI();
+    public HashMap<Player, Boolean> a = new HashMap<>();
 
 
     @EventHandler
@@ -65,8 +65,6 @@ public class confirm implements Listener {
     }
 
     public boolean confirmResult(Player p) {
-//        if (a.get(p) == null) { return false; }
-        p.sendMessage(String.valueOf(a.get(p)));
         return a.get(p);
     }
 

@@ -1,0 +1,29 @@
+<component name="libraryTable">
+  <library name="craftbukkit-1.13.1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.10.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.8.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.9.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.13.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.13.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.9.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.11.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.10.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.8.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.8.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.9.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.12.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../craftbukkit-1.13.jar!/" />
+    </SOURCES>
+  </library>
+</component>
