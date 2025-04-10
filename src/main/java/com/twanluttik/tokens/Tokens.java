@@ -8,6 +8,7 @@ import java.sql.SQLException;
 public final class Tokens extends JavaPlugin {
     private static Tokens instance;
     private ConfigManager configManager;
+
     Commands commands = new Commands();
 
     @Override
@@ -35,6 +36,26 @@ public final class Tokens extends JavaPlugin {
             if (configManager.isUpdateCheckerEnabled()) {
                 UpdateChecker.checkForUpdates();
             }
+
+            // Initialize library integrations
+
+            LibraryIntegration.initialize();
+            if (LibraryIntegration.isPluginAvailable("DecentHolograms")) {
+                // Initialize HologramManager
+                HologramManager.getInstance();
+                HologramManager.getInstance().updateHologram();
+
+                // Schedule hologram updates every 5 minutes
+                getServer().getScheduler().runTaskTimer(this, () -> {
+                    try {
+                        HologramManager.getInstance().updateHologram();
+                    } catch (Exception e) {
+                        getLogger().warning("Failed to update hologram: " + e.getMessage());
+                    }
+                }, 6000L, 6000L);
+            }
+
+
         } catch (SQLException e) {
             System.err.println("Failed to connect to the database: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);

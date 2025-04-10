@@ -10,13 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b0e690c-356b-498f-b0b9-6d938d617aec" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/HologramManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/LibraryIntegration.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/BankDatabase.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/BankDatabase.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Commands.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Tokens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Tokens.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/UpdateChecker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/events/JoinEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/events/JoinEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -85,6 +87,7 @@
     "Gradle.Tokens [jar].executor": "Run",
     "Gradle.Tokens [test].executor": "Run",
     "Gradle.Tokens [wrapper].executor": "Run",
+    "Gradle.old [dependencies].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "dev",
@@ -94,7 +97,7 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.editor"
+    "settings.editor.selected.configurable": "template.copyright.formatting"
   }
 }]]></component>
   <component name="RecentsManager">
@@ -138,28 +141,6 @@
         <option name="taskNames">
           <list>
             <option value="build" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <method v="2" />
-    </configuration>
-    <configuration name="Tokens [check]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="check" />
           </list>
         </option>
         <option name="vmOptions" />
@@ -214,13 +195,35 @@
       <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
+    <configuration name="old [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tokens [build]" />
         <item itemvalue="Gradle.Tokens [clean]" />
+        <item itemvalue="Gradle.old [dependencies]" />
         <item itemvalue="Gradle.Tokens [jar]" />
         <item itemvalue="Gradle.Tokens [assemble]" />
-        <item itemvalue="Gradle.Tokens [build]" />
       </list>
     </recent_temporary>
   </component>

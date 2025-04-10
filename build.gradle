@@ -15,12 +15,17 @@ repositories {
         name = "sonatype"
         url = "https://oss.sonatype.org/content/groups/public/"
     }
+    maven {
+        name = "jitpack"
+        url = "https://jitpack.io"
+    }
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
     implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'com.google.code.gson:gson:2.10.1'
+    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.16'
 }
 
 def targetJavaVersion = 21

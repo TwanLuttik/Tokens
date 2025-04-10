@@ -360,12 +360,21 @@ public class Commands implements CommandExecutor {
           }
           break;
 
+        case "hologram":
+          if (!player.hasPermission("tokens.admin")) {
+            player.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
+            return true;
+          }
+          HologramManager.getInstance().createHologram(player.getLocation());
+          player.sendMessage(ChatColor.GREEN + "Created top 10 players hologram at your location!");
+          break;
+
         default:
           sendHelp(player);
           break;
       }
     } catch (SQLException e) {
-      player.sendMessage(ChatColor.RED + "An error occurred while processing your request!");
+      player.sendMessage(ChatColor.RED + "An error occurred while processing your command!");
       e.printStackTrace();
     }
 
@@ -375,13 +384,14 @@ public class Commands implements CommandExecutor {
   private void sendHelp(Player player) {
     player.sendMessage(ChatColor.GOLD + "=== Tokens Commands ===");
     player.sendMessage(ChatColor.YELLOW + "/tokens balance [player] - Check your or another player's balance");
-    if (player.hasPermission("tokens.admin")) {
-      player.sendMessage(ChatColor.YELLOW + "/tokens give <player> <amount> - Give tokens to a player");
-      player.sendMessage(ChatColor.YELLOW + "/tokens take <player> <amount> - Take tokens from a player");
-      player.sendMessage(ChatColor.YELLOW + "/tokens set <player> <amount> - Set a player's token balance");
-    }
+    player.sendMessage(ChatColor.YELLOW + "/tokens give <player> <amount> - Give tokens to a player");
+    player.sendMessage(ChatColor.YELLOW + "/tokens take <player> <amount> - Take tokens from a player");
+    player.sendMessage(ChatColor.YELLOW + "/tokens set <player> <amount> - Set a player's token balance");
     player.sendMessage(ChatColor.YELLOW + "/tokens bank - Bank related commands");
     player.sendMessage(ChatColor.YELLOW + "/tokens check - Check related commands");
+    if (player.hasPermission("tokens.admin")) {
+      player.sendMessage(ChatColor.YELLOW + "/tokens hologram - Place the top 10 players hologram");
+    }
   }
 
   private void sendBankHelp(Player player) {

@@ -21,10 +21,10 @@ public class JoinEvent implements Listener {
     Bukkit.getConsoleSender().sendMessage(p.getName() + "has joined");
 
     if (actions.playerExists(p.getUniqueId())) {
-      p.sendMessage("You need to register for a bank account");
+
     } else {
       actions.createPlayer(p.getUniqueId());
-      p.sendMessage("Welcome! Your bank account has been created.");
+
     }
   }
 
