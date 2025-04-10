@@ -1,0 +1,14 @@
+name: Tokens
+version: '1.0-SNAPSHOT'
+main: com.twanluttik.tokens.Tokens
+api-version: '1.21'
+
+commands:
+  tokens:
+    usage: /<command>
+    description: main command
+
+permissions:
+  tokens.admin:
+    description: Allows access to admin token commands
+    default: op

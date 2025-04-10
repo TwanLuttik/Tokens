@@ -1,40 +1,38 @@
-#
-#
-#                     <--- Tokens --->
-#                   Created by Twan Luttik
-#
-#
-# Don't edit the ConfigVersion
-ConfigVersion: 1.2
-database: file
+# Tokens Plugin Configuration
 
-update_message: true
-bonus_message: '&a&l» &r&freceived &a{tokens} {prefix} &ffrom your boss'
+# Database Settings
+database:
+  host: "0.0.0.0"
+  port: 5432
+  database: "mydatabase"
+  username: "myuser"
+  password: "mypassword"
+  ssl: false
 
-prefix:
-  prefix: '&cB&6e&ea&au&bt&9y&5 &cT&6o&ek&ae&bn'
-  enable: false
+# General Settings
+settings:
+  # Initial token balance for new players
+  initial-tokens: 0
+  # Whether to automatically create a bank account for new players
+  auto-create-bank: false
+  # Maximum number of banks a player can own
+  max-banks-per-player: 3
+  # Maximum number of members per bank
+  max-members-per-bank: 10
+  # Whether to enable the update checker
+  check-for-updates: true
 
-tokens:
-  buy_price: 100
-  sell_price: 100
-
-sign:
-  line1: '&a   Tokens '
-  line2: '&8&m-------------'
-  line3: '  &fRight Click'
-  line4: '&8&m-------------'
-
-mySQL:
-  host: "localhost"
-  port: 3306
-  username: "root"
-  password: ""
-  database: "players"
-  table: "player_data"
-  useSSL: false
-
-
-
-
-
+# Messages
+messages:
+  prefix: "&6[Tokens] &r"
+  no-permission: "&cYou don't have permission to use this command!"
+  player-not-found: "&cPlayer not found!"
+  invalid-amount: "&cInvalid amount!"
+  bank-created: "&aCreated bank '%bank_name%' successfully!"
+  bank-deleted: "&aDeleted bank '%bank_name%'"
+  deposit-success: "&aDeposited %amount% tokens to bank '%bank_name%'"
+  withdraw-success: "&aWithdrew %amount% tokens from bank '%bank_name%'"
+  invite-success: "&aInvited %player% to bank '%bank_name%'"
+  remove-success: "&aRemoved %player% from bank '%bank_name%'"
+  balance: "&aYour balance: %balance% tokens"
+  bank-balance: "&aBank '%bank_name%' balance: %balance% tokens" 
