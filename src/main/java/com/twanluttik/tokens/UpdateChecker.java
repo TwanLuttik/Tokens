@@ -21,6 +21,11 @@ public class UpdateChecker {
     private static final Gson gson = new Gson();
     
     public static void checkForUpdates() {
+        // Check if update checker is enabled in config
+        if (!ConfigManager.getInstance(Tokens.getInstance()).isUpdateCheckerEnabled()) {
+            return;
+        }
+
         Bukkit.getScheduler().runTaskAsynchronously(Tokens.getInstance(), () -> {
             try {
                 URL url = new URL(SPIGOT_API_URL);

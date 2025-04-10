@@ -3,7 +3,7 @@ plugins {
 }
 
 group = 'com.twanluttik'
-version = '1.0-SNAPSHOT'
+version = '3.0.0-PRE-v1'
 
 repositories {
     mavenCentral()

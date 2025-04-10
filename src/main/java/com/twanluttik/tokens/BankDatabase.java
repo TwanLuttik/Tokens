@@ -164,4 +164,26 @@ public class BankDatabase {
             statement.execute();
         }
     }
+
+    public static boolean isMember(String uuid, int bankId) throws SQLException {
+        Connection connection = Database.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT 1 FROM bank_members WHERE bank_id = ? AND member_uuid = ?")) {
+            statement.setInt(1, bankId);
+            statement.setString(2, uuid);
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
+        }
+    }
+
+    public static boolean isOwner(String uuid, int bankId) throws SQLException {
+        Connection connection = Database.getConnection();
+        try (PreparedStatement statement = connection.prepareStatement(
+                "SELECT 1 FROM banks WHERE id = ? AND owner_uuid = ?")) {
+            statement.setInt(1, bankId);
+            statement.setString(2, uuid);
+            ResultSet rs = statement.executeQuery();
+            return rs.next();
+        }
+    }
 } 

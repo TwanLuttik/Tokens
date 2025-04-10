@@ -25,6 +25,7 @@ public final class Tokens extends JavaPlugin {
             Database.getConnection();
             Database.initializeTables();
             BankDatabase.initializeTables();
+            CheckManager.initializeTables();
             System.out.println("Successfully connected to the database");
             
             Objects.requireNonNull(this.getCommand("tokens")).setExecutor(commands);

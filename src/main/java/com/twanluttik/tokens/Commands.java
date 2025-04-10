@@ -6,6 +6,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -305,6 +306,60 @@ public class Commands implements CommandExecutor {
           }
           break;
 
+        case "check":
+          if (args.length < 2) {
+            sendCheckHelp(player);
+            return true;
+          }
+          switch (args[1].toLowerCase()) {
+            case "create":
+              if (args.length < 3) {
+                player.sendMessage(ChatColor.RED + "Usage: /tokens check create <amount>");
+                return true;
+              }
+              try {
+                int amount = Integer.parseInt(args[2]);
+                if (amount <= 0) {
+                  player.sendMessage(ChatColor.RED + "Amount must be positive!");
+                  return true;
+                }
+                if (Database.getTokens(player.getUniqueId().toString()) < amount) {
+                  player.sendMessage(ChatColor.RED + "You don't have enough tokens!");
+                  return true;
+                }
+                // Remove tokens from player
+                Database.removeTokens(player.getUniqueId().toString(), amount);
+                // Create check
+                ItemStack check = CheckManager.createCheck(player, amount);
+                // Give check to player
+                player.getInventory().addItem(check);
+                player.sendMessage(ChatColor.GREEN + "Created a check for " + amount + " tokens");
+              } catch (NumberFormatException e) {
+                player.sendMessage(ChatColor.RED + "Invalid amount!");
+              }
+              break;
+
+            case "redeem":
+              ItemStack itemInHand = player.getInventory().getItemInMainHand();
+              if (CheckManager.isValidCheck(itemInHand)) {
+                if (CheckManager.redeemCheck(player, itemInHand)) {
+                  // Remove the check from player's hand
+                  itemInHand.setAmount(itemInHand.getAmount() - 1);
+                  player.sendMessage(ChatColor.GREEN + "Successfully redeemed the check!");
+                } else {
+                  player.sendMessage(ChatColor.RED + "This check has already been redeemed!");
+                }
+              } else {
+                player.sendMessage(ChatColor.RED + "You must hold a valid check in your hand!");
+              }
+              break;
+
+            default:
+              sendCheckHelp(player);
+              break;
+          }
+          break;
+
         default:
           sendHelp(player);
           break;
@@ -318,33 +373,39 @@ public class Commands implements CommandExecutor {
   }
 
   private void sendHelp(Player player) {
-    player.sendMessage(ChatColor.GOLD + "=== Token Commands ===");
-    player.sendMessage(ChatColor.YELLOW + "/tokens balance [player]" + ChatColor.GRAY + " - Check token balance");
+    player.sendMessage(ChatColor.GOLD + "=== Tokens Commands ===");
+    player.sendMessage(ChatColor.YELLOW + "/tokens balance [player] - Check your or another player's balance");
     if (player.hasPermission("tokens.admin")) {
-      player.sendMessage(ChatColor.YELLOW + "/tokens give <player> <amount>" + ChatColor.GRAY + " - Give tokens to a player");
-      player.sendMessage(ChatColor.YELLOW + "/tokens take <player> <amount>" + ChatColor.GRAY + " - Take tokens from a player");
-      player.sendMessage(ChatColor.YELLOW + "/tokens set <player> <amount>" + ChatColor.GRAY + " - Set a player's token balance");
+      player.sendMessage(ChatColor.YELLOW + "/tokens give <player> <amount> - Give tokens to a player");
+      player.sendMessage(ChatColor.YELLOW + "/tokens take <player> <amount> - Take tokens from a player");
+      player.sendMessage(ChatColor.YELLOW + "/tokens set <player> <amount> - Set a player's token balance");
     }
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank" + ChatColor.GRAY + " - Bank commands");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank - Bank related commands");
+    player.sendMessage(ChatColor.YELLOW + "/tokens check - Check related commands");
   }
 
   private void sendBankHelp(Player player) {
     player.sendMessage(ChatColor.GOLD + "=== Bank Commands ===");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank create <name>" + ChatColor.GRAY + " - Create a new bank");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank list" + ChatColor.GRAY + " - List your banks");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank deposit <bank_id> <amount>" + ChatColor.GRAY + " - Deposit tokens");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank withdraw <bank_id> <amount>" + ChatColor.GRAY + " - Withdraw tokens");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank invite <bank_id> <player>" + ChatColor.GRAY + " - Invite a player");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank remove <bank_id> <player>" + ChatColor.GRAY + " - Remove a player");
-    player.sendMessage(ChatColor.YELLOW + "/tokens bank delete <bank_id>" + ChatColor.GRAY + " - Delete a bank");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank create <name> - Create a new bank");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank list - List your banks");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank deposit <bank_id> <amount> - Deposit tokens to a bank");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank withdraw <bank_id> <amount> - Withdraw tokens from a bank");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank invite <bank_id> <player> - Invite a player to your bank");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank remove <bank_id> <player> - Remove a player from your bank");
+    player.sendMessage(ChatColor.YELLOW + "/tokens bank delete <bank_id> - Delete a bank");
+  }
+
+  private void sendCheckHelp(Player player) {
+    player.sendMessage(ChatColor.GOLD + "=== Check Commands ===");
+    player.sendMessage(ChatColor.YELLOW + "/tokens check create <amount> - Create a check for the specified amount");
+    player.sendMessage(ChatColor.YELLOW + "/tokens check redeem - Redeem the check you're holding");
   }
 
   private boolean isBankMember(String uuid, int bankId) throws SQLException {
-    return BankDatabase.getBankOwner(bankId).equals(uuid) || 
-           BankDatabase.getBankMembers(bankId).contains(uuid);
+    return BankDatabase.isMember(uuid, bankId);
   }
 
   private boolean isBankOwner(String uuid, int bankId) throws SQLException {
-    return BankDatabase.getBankOwner(bankId).equals(uuid);
+    return BankDatabase.isOwner(uuid, bankId);
   }
 }

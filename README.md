@@ -6,6 +6,7 @@ A Minecraft plugin that implements a token-based economy system with bank functi
 
 - Token economy system
 - Bank system with multiple members
+- Check system for token transfers
 - Admin commands for token management
 - SQL database integration (PostgreSQL)
 - Automatic player registration
@@ -35,6 +36,7 @@ settings:
   max-banks-per-player: 3  # Maximum number of banks a player can own
   max-members-per-bank: 10 # Maximum number of members per bank
   check-for-updates: true  # Enable/disable update checker
+  update-checker-enabled: true  # Enable/disable update checker notifications
 ```
 
 ### Messages
@@ -62,6 +64,11 @@ messages:
 - `/tokens bank invite <bank_id> <player>` - Invite a player to your bank
 - `/tokens bank remove <bank_id> <player>` - Remove a player from your bank
 - `/tokens bank delete <bank_id>` - Delete a bank (bank owner only)
+
+### Check Commands
+
+- `/tokens check create <amount>` - Create a check for the specified amount of tokens
+- `/tokens check redeem` - Redeem the check you're holding in your hand
 
 ## Permissions
 
@@ -116,6 +123,11 @@ int playerTokens = api.getPlayerTokens(playerUuid);
 api.addPlayerTokens(playerUuid, amount);
 api.removePlayerTokens(playerUuid, amount);
 api.setPlayerTokens(playerUuid, amount);
+
+// Create and redeem checks
+ItemStack check = api.createCheck(player, amount);
+boolean isValid = api.isValidCheck(itemStack);
+boolean redeemed = api.redeemCheck(player, itemStack);
 ```
 
 ## Version
