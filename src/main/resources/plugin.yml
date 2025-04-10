@@ -1,11 +1,9 @@
-main: com.twanl.tokens.Tokens
-version: 2.4.0-pre2
 name: Tokens
-author: T.L
-api-version: 1.13
+version: '2.0.0-SHAPSHOT-1'
+main: com.twanluttik.tokens.Tokens
+api-version: '1.21'
 
 commands:
   tokens:
     usage: /<command>
     description: main command
-    aliases: [t]
