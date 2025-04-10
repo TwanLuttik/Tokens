@@ -10,15 +10,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b0e690c-356b-498f-b0b9-6d938d617aec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/HologramManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/LibraryIntegration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Database.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Tokens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Tokens.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/events/JoinEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/events/JoinEvent.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,33 +68,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build Tokens.executor": "Run",
-    "Gradle.C:/Users/Hello/Documents/minecraft plugins/Tokens [wrapper].executor": "Run",
-    "Gradle.Tokens [assemble].executor": "Run",
-    "Gradle.Tokens [buildDependents].executor": "Run",
-    "Gradle.Tokens [build].executor": "Run",
-    "Gradle.Tokens [check].executor": "Run",
-    "Gradle.Tokens [clean].executor": "Run",
-    "Gradle.Tokens [compileJava].executor": "Run",
-    "Gradle.Tokens [init].executor": "Run",
-    "Gradle.Tokens [jar].executor": "Run",
-    "Gradle.Tokens [test].executor": "Run",
-    "Gradle.Tokens [wrapper].executor": "Run",
-    "Gradle.old [dependencies].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "dev",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Hello/Documents/minecraft plugins/old",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "template.copyright.formatting"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build Tokens.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.C:/Users/Hello/Documents/minecraft plugins/Tokens [wrapper].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [assemble].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [buildDependents].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [check].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [compileJava].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [init].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [jar].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [test].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Tokens [wrapper].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.old [dependencies].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hello/Documents/minecraft plugins/old&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;template.copyright.formatting&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Hello\Documents\minecraft plugins\Tokens" />
@@ -220,10 +215,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Gradle.Tokens [build]" />
+        <item itemvalue="Gradle.Tokens [build]" />
         <item itemvalue="Gradle.Tokens [clean]" />
         <item itemvalue="Gradle.old [dependencies]" />
         <item itemvalue="Gradle.Tokens [jar]" />
-        <item itemvalue="Gradle.Tokens [assemble]" />
       </list>
     </recent_temporary>
   </component>

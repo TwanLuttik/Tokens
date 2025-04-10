@@ -4,6 +4,7 @@ import com.twanluttik.tokens.events.JoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 import java.sql.SQLException;
+import org.bstats.bukkit.Metrics;
 
 public final class Tokens extends JavaPlugin {
     private static Tokens instance;
@@ -15,6 +16,9 @@ public final class Tokens extends JavaPlugin {
     public void onEnable() {
         instance = this;
         try {
+            // Initialize bStats
+            new Metrics(this, 2336); // Replace 20830 with your actual plugin ID from bStats
+            
             // Initialize configuration
             configManager = ConfigManager.getInstance(this);
             
@@ -38,7 +42,6 @@ public final class Tokens extends JavaPlugin {
             }
 
             // Initialize library integrations
-
             LibraryIntegration.initialize();
             if (LibraryIntegration.isPluginAvailable("DecentHolograms")) {
                 // Initialize HologramManager
@@ -54,7 +57,6 @@ public final class Tokens extends JavaPlugin {
                     }
                 }, 6000L, 6000L);
             }
-
 
         } catch (SQLException e) {
             System.err.println("Failed to connect to the database: " + e.getMessage());
