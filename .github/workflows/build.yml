@@ -26,8 +26,16 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       
-    - name: Upload build artifacts
+    - name: Upload standard JAR (without dependencies)
       uses: actions/upload-artifact@v4
       with:
         name: Tokens-Plugin
-        path: build/libs/*.jar
+        path: build/libs/Tokens-*.jar
+        if-no-files-found: error
+        
+    - name: Upload fat JAR (with dependencies)
+      uses: actions/upload-artifact@v4
+      with:
+        name: Tokens-Plugin-with-Dependencies
+        path: build/libs/Tokens-*-all.jar
+        if-no-files-found: error

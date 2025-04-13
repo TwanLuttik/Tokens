@@ -27,9 +27,9 @@ repositories {
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT")
+    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.16'
     implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'com.google.code.gson:gson:2.10.1'
-    compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.16'
     implementation 'org.bstats:bstats-bukkit:3.0.2'
 }
 
@@ -60,10 +60,23 @@ processResources {
     }
 }
 
+// Standard JAR without dependencies
 jar {
+    archiveBaseName.set("${project.name}")
+    archiveClassifier.set('')
+}
+
+// Fat JAR with all dependencies (for development/testing)
+task fatJar(type: Jar) {
+    archiveBaseName.set("${project.name}")
+    archiveClassifier.set('all')
+    
+    from sourceSets.main.output
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
+// Make both JARs when building
+build.dependsOn fatJar
