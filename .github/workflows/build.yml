@@ -24,18 +24,11 @@ jobs:
       run: chmod +x gradlew
       
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew shadowJar
       
-    - name: Upload standard JAR (without dependencies)
+    - name: Upload plugin JAR
       uses: actions/upload-artifact@v4
       with:
         name: Tokens-Plugin
         path: build/libs/Tokens-*.jar
-        if-no-files-found: error
-        
-    - name: Upload fat JAR (with dependencies)
-      uses: actions/upload-artifact@v4
-      with:
-        name: Tokens-Plugin-with-Dependencies
-        path: build/libs/Tokens-*-all.jar
         if-no-files-found: error
