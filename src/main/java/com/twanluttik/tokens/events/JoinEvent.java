@@ -18,7 +18,7 @@ public class JoinEvent implements Listener {
   public void onPlayerJoin(PlayerJoinEvent e) throws SQLException {
     Player p = e.getPlayer();
 
-    Bukkit.getConsoleSender().sendMessage(p.getName() + "has joined");
+//    Bukkit.getConsoleSender().sendMessage(p.getName() + "has joined");
 
     if (actions.playerExists(p.getUniqueId())) {
 

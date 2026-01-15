@@ -1,7 +1,8 @@
 name: Tokens
 version: '2.0.0-SHAPSHOT-1'
 main: com.twanluttik.tokens.Tokens
-api-version: '1.21'
+api-version: 1.21
+softdepend: ["PlaceholderAPI", "DHAPI"]
 
 commands:
   tokens:

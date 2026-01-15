@@ -1,10 +1,12 @@
 package com.twanluttik.tokens;
 
 import com.twanluttik.tokens.events.JoinEvent;
+import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 import java.sql.SQLException;
-import org.bstats.bukkit.Metrics;
+
 
 public final class Tokens extends JavaPlugin {
     private static Tokens instance;
@@ -15,12 +17,14 @@ public final class Tokens extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+
         try {
             // Initialize bStats
-            new Metrics(this, 2336); // Replace 20830 with your actual plugin ID from bStats
+//            int pluginId = 28805;
+//            Metrics metrics = new Metrics(this, pluginId); // Replace 20830 with your actual plugin ID from bStats
             
             // Initialize configuration
-            configManager = ConfigManager.getInstance(this);
+            configManager = ConfigManager.initialize(this);
             
             // Initialize database
             Database.initialize(configManager);
@@ -58,6 +62,11 @@ public final class Tokens extends JavaPlugin {
                 }, 6000L, 6000L);
             }
 
+            if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+                new Placeholder(this).register();
+                getLogger().info("PlaceholderAPI integration enabled");
+            }
+
         } catch (SQLException e) {
             System.err.println("Failed to connect to the database: " + e.getMessage());
             getServer().getPluginManager().disablePlugin(this);
@@ -79,4 +88,5 @@ public final class Tokens extends JavaPlugin {
     public ConfigManager getConfigManager() {
         return configManager;
     }
+
 }

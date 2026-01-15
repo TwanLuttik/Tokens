@@ -19,10 +19,11 @@ public class UpdateChecker {
     private static final String CURRENT_VERSION = "2.0.0-SHAPSHOT-1";
     private static final Set<UUID> notifiedPlayers = new HashSet<>();
     private static final Gson gson = new Gson();
-    
+
     public static void checkForUpdates() {
         // Check if update checker is enabled in config
-        if (!ConfigManager.getInstance(Tokens.getInstance()).isUpdateCheckerEnabled()) {
+        ConfigManager configManager = Tokens.getInstance().getConfigManager();
+        if (configManager == null || !configManager.isUpdateCheckerEnabled()) {
             return;
         }
 

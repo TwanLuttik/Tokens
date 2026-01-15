@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class Commands implements CommandExecutor {
-
   @Override
   public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
     if (!(sender instanceof Player player)) {
@@ -27,6 +26,13 @@ public class Commands implements CommandExecutor {
 
     try {
       switch (args[0].toLowerCase()) {
+        case "info":
+          if (!player.hasPermission("tokens.admin")) {
+            player.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
+            return true;
+          }
+          sendInfoMessages(player);
+          return true;
         case "balance":
           if (args.length > 1 && player.hasPermission("tokens.admin")) {
             // Admin checking another player's balance
@@ -122,7 +128,8 @@ public class Commands implements CommandExecutor {
             }
             Database.setTokens(targetSet.getUniqueId().toString(), amount);
             player.sendMessage(ChatColor.GREEN + "Set " + targetSet.getName() + "'s balance to " + amount + " tokens");
-            targetSet.sendMessage(ChatColor.GREEN + "Your balance was set to " + amount + " tokens by " + player.getName());
+            targetSet
+                .sendMessage(ChatColor.GREEN + "Your balance was set to " + amount + " tokens by " + player.getName());
           } catch (NumberFormatException e) {
             player.sendMessage(ChatColor.RED + "Invalid amount!");
           }
@@ -161,8 +168,8 @@ public class Commands implements CommandExecutor {
                 int balance = BankDatabase.getBankBalance(id);
                 String owner = BankDatabase.getBankOwner(id);
                 boolean isOwner = owner.equals(player.getUniqueId().toString());
-                player.sendMessage(ChatColor.YELLOW + name + " (ID: " + id + ")" + 
-                    (isOwner ? ChatColor.GREEN + " [Owner]" : "") + 
+                player.sendMessage(ChatColor.YELLOW + name + " (ID: " + id + ")" +
+                    (isOwner ? ChatColor.GREEN + " [Owner]" : "") +
                     ChatColor.WHITE + " - Balance: " + balance + " tokens");
               }
               break;
@@ -189,7 +196,7 @@ public class Commands implements CommandExecutor {
                 }
                 Database.removeTokens(player.getUniqueId().toString(), depositAmount);
                 BankDatabase.addToBank(depositBankId, depositAmount);
-                player.sendMessage(ChatColor.GREEN + "Deposited " + depositAmount + " tokens to bank '" + 
+                player.sendMessage(ChatColor.GREEN + "Deposited " + depositAmount + " tokens to bank '" +
                     BankDatabase.getBankName(depositBankId) + "'");
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID or amount!");
@@ -218,7 +225,7 @@ public class Commands implements CommandExecutor {
                 }
                 BankDatabase.removeFromBank(withdrawBankId, withdrawAmount);
                 Database.addTokens(player.getUniqueId().toString(), withdrawAmount);
-                player.sendMessage(ChatColor.GREEN + "Withdrew " + withdrawAmount + " tokens from bank '" + 
+                player.sendMessage(ChatColor.GREEN + "Withdrew " + withdrawAmount + " tokens from bank '" +
                     BankDatabase.getBankName(withdrawBankId) + "'");
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID or amount!");
@@ -242,9 +249,9 @@ public class Commands implements CommandExecutor {
                   return true;
                 }
                 BankDatabase.addMember(inviteBankId, inviteTarget.getUniqueId().toString());
-                player.sendMessage(ChatColor.GREEN + "Invited " + inviteTarget.getName() + " to bank '" + 
+                player.sendMessage(ChatColor.GREEN + "Invited " + inviteTarget.getName() + " to bank '" +
                     BankDatabase.getBankName(inviteBankId) + "'");
-                inviteTarget.sendMessage(ChatColor.GREEN + "You have been invited to bank '" + 
+                inviteTarget.sendMessage(ChatColor.GREEN + "You have been invited to bank '" +
                     BankDatabase.getBankName(inviteBankId) + "' by " + player.getName());
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID!");
@@ -272,9 +279,9 @@ public class Commands implements CommandExecutor {
                   return true;
                 }
                 BankDatabase.removeMember(removeBankId, removeTarget.getUniqueId().toString());
-                player.sendMessage(ChatColor.GREEN + "Removed " + removeTarget.getName() + " from bank '" + 
+                player.sendMessage(ChatColor.GREEN + "Removed " + removeTarget.getName() + " from bank '" +
                     BankDatabase.getBankName(removeBankId) + "'");
-                removeTarget.sendMessage(ChatColor.RED + "You have been removed from bank '" + 
+                removeTarget.sendMessage(ChatColor.RED + "You have been removed from bank '" +
                     BankDatabase.getBankName(removeBankId) + "' by " + player.getName());
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID!");
@@ -417,5 +424,28 @@ public class Commands implements CommandExecutor {
 
   private boolean isBankOwner(String uuid, int bankId) throws SQLException {
     return BankDatabase.isOwner(uuid, bankId);
+  }
+
+  private void sendInfoMessages(Player player) {
+    ConfigManager config = Tokens.getInstance().getConfigManager();
+    String pluginVersion = Tokens.getInstance().getDescription().getVersion();
+    String serverVersion = Bukkit.getVersion();
+    String serverType = Bukkit.getName();
+
+    player.sendMessage(ChatColor.GOLD + "=== Tokens Plugin Info ===");
+    player.sendMessage(ChatColor.YELLOW + "Plugin version: " + ChatColor.WHITE + pluginVersion);
+    player.sendMessage(ChatColor.YELLOW + "Update notifier: " + ChatColor.WHITE
+        + (config.isUpdateCheckerEnabled() ? "Enabled" : "Disabled"));
+    player.sendMessage(ChatColor.YELLOW + "Server version: " + ChatColor.WHITE + serverVersion);
+    player.sendMessage(ChatColor.YELLOW + "Server type: " + ChatColor.WHITE + serverType);
+    player.sendMessage(
+        ChatColor.YELLOW + "Database: " + ChatColor.WHITE + config.getDatabaseHost() + ":" + config.getDatabasePort());
+    player.sendMessage(ChatColor.YELLOW + "Database type: " + ChatColor.WHITE + "PostgreSQL");
+    player.sendMessage(ChatColor.YELLOW + "Start amount: " + ChatColor.WHITE + config.getInitialTokens() + " tokens");
+    player.sendMessage(ChatColor.YELLOW + "Bank info: " + ChatColor.WHITE + "Enabled");
+    player.sendMessage(ChatColor.YELLOW + "Auto create bank: " + ChatColor.WHITE
+        + (config.isAutoCreateBank() ? "Enabled" : "Disabled"));
+    player.sendMessage(ChatColor.YELLOW + "Max bank players: " + ChatColor.WHITE + config.getMaxBanksPerPlayer());
+    player.sendMessage(ChatColor.YELLOW + "Max members per bank: " + ChatColor.WHITE + config.getMaxMembersPerBank());
   }
 }

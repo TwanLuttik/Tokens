@@ -10,139 +10,139 @@ import java.util.logging.Level;
 
 public class ConfigManager {
     private static ConfigManager instance;
-    private final Plugin plugin;
-    private FileConfiguration config;
-    private File configFile;
+    private Plugin plugin;
+    private FileParser fileParser;
 
-    private ConfigManager(Plugin plugin) {
+    private FileConfiguration pluginConfig;
+    public FileConfiguration configConfig;
+
+    public ConfigManager(Plugin plugin) {
         this.plugin = plugin;
-        loadConfig();
-    }
-
-    public static ConfigManager getInstance(Plugin plugin) {
-        if (instance == null) {
-            instance = new ConfigManager(plugin);
-        }
-        return instance;
+        this.fileParser = new FileParser(plugin);
     }
 
     public void loadConfig() {
-        if (!plugin.getDataFolder().exists()) {
-            plugin.getDataFolder().mkdir();
-        }
-
-        configFile = new File(plugin.getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("config.yml", false);
-        }
-
-        config = YamlConfiguration.loadConfiguration(configFile);
+        configConfig = fileParser.loadFile("config.yml");
     }
 
-    public void saveConfig() {
-        try {
-            config.save(configFile);
-        } catch (IOException e) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, e);
+    public static ConfigManager initialize(Plugin plugin) {
+        if (instance == null) {
+            instance = new ConfigManager(plugin);
         }
+        instance.loadConfig();
+        return instance;
     }
 
-    public void reloadConfig() {
-        config = YamlConfiguration.loadConfiguration(configFile);
+
+
+//    public void saveConfig() {
+//        try {
+//            config.save(configFile);
+//        } catch (IOException e) {
+//            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, e);
+//        }
+//    }
+
+//    public void reloadConfig() {
+//        config = YamlConfiguration.loadConfiguration(configFile);
+//    }
+
+    public String getVersion() {
+        return pluginConfig.getString("version");
     }
 
     // Database settings
     public String getDatabaseHost() {
-        return config.getString("database.host", "0.0.0.0");
+        return configConfig.getString("database.host", "0.0.0.0");
     }
 
     public int getDatabasePort() {
-        return config.getInt("database.port", 5432);
+        return configConfig.getInt("database.port", 5432);
     }
 
     public String getDatabaseName() {
-        return config.getString("database.database", "mydatabase");
+        return configConfig.getString("database.database", "mydatabase");
     }
 
     public String getDatabaseUsername() {
-        return config.getString("database.username", "myuser");
+        return configConfig.getString("database.username", "myuser");
     }
 
     public String getDatabasePassword() {
-        return config.getString("database.password", "mypassword");
+        return configConfig.getString("database.password", "mypassword");
     }
 
     public boolean isDatabaseSSL() {
-        return config.getBoolean("database.ssl", false);
+        return configConfig.getBoolean("database.ssl", false);
     }
 
     // General settings
     public int getInitialTokens() {
-        return config.getInt("settings.initial-tokens", 0);
+        return configConfig.getInt("settings.initial-tokens", 0);
     }
 
     public boolean isAutoCreateBank() {
-        return config.getBoolean("settings.auto-create-bank", false);
+        return configConfig.getBoolean("settings.auto-create-bank", false);
     }
 
     public int getMaxBanksPerPlayer() {
-        return config.getInt("settings.max-banks-per-player", 3);
+        return configConfig.getInt("settings.max-banks-per-player", 3);
     }
 
     public int getMaxMembersPerBank() {
-        return config.getInt("settings.max-members-per-bank", 10);
+        return configConfig.getInt("settings.max-members-per-bank", 10);
     }
 
     public boolean isUpdateCheckerEnabled() {
-        return config.getBoolean("settings.check-for-updates", true);
+        return configConfig.getBoolean("settings.check-for-updates", true);
     }
 
     // Messages
     public String getPrefix() {
-        return config.getString("messages.prefix", "&6[Tokens] &r");
+        return configConfig.getString("messages.prefix", "&6[Tokens] &r");
     }
 
     public String getNoPermissionMessage() {
-        return config.getString("messages.no-permission", "&cYou don't have permission to use this command!");
+        return configConfig.getString("messages.no-permission", "&cYou don't have permission to use this command!");
     }
 
     public String getPlayerNotFoundMessage() {
-        return config.getString("messages.player-not-found", "&cPlayer not found!");
+        return configConfig.getString("messages.player-not-found", "&cPlayer not found!");
     }
 
     public String getInvalidAmountMessage() {
-        return config.getString("messages.invalid-amount", "&cInvalid amount!");
+        return configConfig.getString("messages.invalid-amount", "&cInvalid amount!");
     }
 
     public String getBankCreatedMessage() {
-        return config.getString("messages.bank-created", "&aCreated bank '%bank_name%' successfully!");
+        return configConfig.getString("messages.bank-created", "&aCreated bank '%bank_name%' successfully!");
     }
 
     public String getBankDeletedMessage() {
-        return config.getString("messages.bank-deleted", "&aDeleted bank '%bank_name%'");
+        return configConfig.getString("messages.bank-deleted", "&aDeleted bank '%bank_name%'");
     }
 
     public String getDepositSuccessMessage() {
-        return config.getString("messages.deposit-success", "&aDeposited %amount% tokens to bank '%bank_name%'");
+        return configConfig.getString("messages.deposit-success", "&aDeposited %amount% tokens to bank '%bank_name%'");
     }
 
     public String getWithdrawSuccessMessage() {
-        return config.getString("messages.withdraw-success", "&aWithdrew %amount% tokens from bank '%bank_name%'");
+        return configConfig.getString("messages.withdraw-success", "&aWithdrew %amount% tokens from bank '%bank_name%'");
     }
 
     public String getInviteSuccessMessage() {
-        return config.getString("messages.invite-success", "&aInvited %player% to bank '%bank_name%'");
+        return configConfig.getString("messages.invite-success", "&aInvited %player% to bank '%bank_name%'");
     }
 
     public String getRemoveSuccessMessage() {
-        return config.getString("messages.remove-success", "&aRemoved %player% from bank '%bank_name%'");
+        return configConfig.getString("messages.remove-success", "&aRemoved %player% from bank '%bank_name%'");
     }
 
     public String getBalanceMessage() {
-        return config.getString("messages.balance", "&aYour balance: %balance% tokens");
+        return configConfig.getString("messages.balance", "&aYour balance: %balance% tokens");
     }
 
     public String getBankBalanceMessage() {
-        return config.getString("messages.bank-balance", "&aBank '%bank_name%' balance: %balance% tokens");
+        return configConfig.getString("messages.bank-balance", "&aBank '%bank_name%' balance: %balance% tokens");
     }
 } 

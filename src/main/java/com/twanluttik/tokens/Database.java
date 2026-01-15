@@ -13,7 +13,7 @@ import java.util.UUID;
 public class Database {
     private static Connection connection;
     private static ConfigManager configManager;
-
+    
     static {
         try {
             Class.forName("org.postgresql.Driver");

@@ -37,6 +37,7 @@ public class CheckManager {
         // Create the check item
         ItemStack check = new ItemStack(Material.PAPER);
         ItemMeta meta = check.getItemMeta();
+        meta.setEnchantmentGlintOverride(true);
         meta.setDisplayName(ChatColor.GOLD + "Token Check");
         meta.setLore(java.util.Arrays.asList(
                 ChatColor.GRAY + "Amount: " + ChatColor.GREEN + amount,
