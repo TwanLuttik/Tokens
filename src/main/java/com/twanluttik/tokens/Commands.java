@@ -11,6 +11,8 @@ import org.bukkit.inventory.ItemStack;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.twanluttik.tokens.TokensAPI;
+
 public class Commands implements CommandExecutor {
   @Override
   public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -27,6 +29,7 @@ public class Commands implements CommandExecutor {
     try {
       switch (args[0].toLowerCase()) {
         case "info":
+
           if (!player.hasPermission("tokens.admin")) {
             player.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
             return true;
@@ -148,11 +151,17 @@ public class Commands implements CommandExecutor {
                 return true;
               }
               String bankName = args[2];
-              int bankId = BankDatabase.createBank(bankName, player.getUniqueId().toString());
+              TokensAPI apiCreate = TokensAPI.getAPI();
+              int bankId;
+              if (apiCreate != null) {
+                bankId = apiCreate.createBank(bankName, player.getUniqueId());
+              } else {
+                bankId = BankDatabase.createBank(bankName, player.getUniqueId().toString());
+              }
               if (bankId != -1) {
                 player.sendMessage(ChatColor.GREEN + "Created bank '" + bankName + "' successfully!");
               } else {
-                player.sendMessage(ChatColor.RED + "Failed to create bank!");
+                player.sendMessage(ChatColor.RED + "Failed to create bank (limit reached or error)!");
               }
               break;
 
@@ -186,18 +195,33 @@ public class Commands implements CommandExecutor {
                   player.sendMessage(ChatColor.RED + "Amount must be positive!");
                   return true;
                 }
-                if (!isBankMember(player.getUniqueId().toString(), depositBankId)) {
-                  player.sendMessage(ChatColor.RED + "You are not a member of this bank!");
-                  return true;
+                TokensAPI api = TokensAPI.getAPI();
+                if (api != null) {
+                  if (!api.hasBankAccess(player.getUniqueId(), depositBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not a member of this bank!");
+                    return true;
+                  }
+                  if (!api.depositToBank(player.getUniqueId(), depositBankId, depositAmount)) {
+                    player.sendMessage(ChatColor.RED + "You don't have enough tokens!");
+                    return true;
+                  }
+                  player.sendMessage(ChatColor.GREEN + "Deposited " + depositAmount + " tokens to bank '" +
+                      api.getBankName(depositBankId) + "'");
+                } else {
+                  // Fallback
+                  if (!isBankMember(player.getUniqueId().toString(), depositBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not a member of this bank!");
+                    return true;
+                  }
+                  if (Database.getTokens(player.getUniqueId().toString()) < depositAmount) {
+                    player.sendMessage(ChatColor.RED + "You don't have enough tokens!");
+                    return true;
+                  }
+                  Database.removeTokens(player.getUniqueId().toString(), depositAmount);
+                  BankDatabase.addToBank(depositBankId, depositAmount);
+                  player.sendMessage(ChatColor.GREEN + "Deposited " + depositAmount + " tokens to bank '" +
+                      BankDatabase.getBankName(depositBankId) + "'");
                 }
-                if (Database.getTokens(player.getUniqueId().toString()) < depositAmount) {
-                  player.sendMessage(ChatColor.RED + "You don't have enough tokens!");
-                  return true;
-                }
-                Database.removeTokens(player.getUniqueId().toString(), depositAmount);
-                BankDatabase.addToBank(depositBankId, depositAmount);
-                player.sendMessage(ChatColor.GREEN + "Deposited " + depositAmount + " tokens to bank '" +
-                    BankDatabase.getBankName(depositBankId) + "'");
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID or amount!");
               }
@@ -215,18 +239,32 @@ public class Commands implements CommandExecutor {
                   player.sendMessage(ChatColor.RED + "Amount must be positive!");
                   return true;
                 }
-                if (!isBankMember(player.getUniqueId().toString(), withdrawBankId)) {
-                  player.sendMessage(ChatColor.RED + "You are not a member of this bank!");
-                  return true;
+                TokensAPI api = TokensAPI.getAPI();
+                if (api != null) {
+                  if (!api.hasBankAccess(player.getUniqueId(), withdrawBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not a member of this bank!");
+                    return true;
+                  }
+                  if (!api.withdrawFromBank(player.getUniqueId(), withdrawBankId, withdrawAmount)) {
+                    player.sendMessage(ChatColor.RED + "Bank doesn't have enough tokens!");
+                    return true;
+                  }
+                  player.sendMessage(ChatColor.GREEN + "Withdrew " + withdrawAmount + " tokens from bank '" +
+                      api.getBankName(withdrawBankId) + "'");
+                } else {
+                  if (!isBankMember(player.getUniqueId().toString(), withdrawBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not a member of this bank!");
+                    return true;
+                  }
+                  if (BankDatabase.getBankBalance(withdrawBankId) < withdrawAmount) {
+                    player.sendMessage(ChatColor.RED + "Bank doesn't have enough tokens!");
+                    return true;
+                  }
+                  BankDatabase.removeFromBank(withdrawBankId, withdrawAmount);
+                  Database.addTokens(player.getUniqueId().toString(), withdrawAmount);
+                  player.sendMessage(ChatColor.GREEN + "Withdrew " + withdrawAmount + " tokens from bank '" +
+                      BankDatabase.getBankName(withdrawBankId) + "'");
                 }
-                if (BankDatabase.getBankBalance(withdrawBankId) < withdrawAmount) {
-                  player.sendMessage(ChatColor.RED + "Bank doesn't have enough tokens!");
-                  return true;
-                }
-                BankDatabase.removeFromBank(withdrawBankId, withdrawAmount);
-                Database.addTokens(player.getUniqueId().toString(), withdrawAmount);
-                player.sendMessage(ChatColor.GREEN + "Withdrew " + withdrawAmount + " tokens from bank '" +
-                    BankDatabase.getBankName(withdrawBankId) + "'");
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID or amount!");
               }
@@ -244,15 +282,28 @@ public class Commands implements CommandExecutor {
                   player.sendMessage(ChatColor.RED + "Player not found!");
                   return true;
                 }
-                if (!isBankOwner(player.getUniqueId().toString(), inviteBankId)) {
-                  player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
-                  return true;
+                TokensAPI apiInv = TokensAPI.getAPI();
+                if (apiInv != null) {
+                  if (!apiInv.isBankOwner(player.getUniqueId(), inviteBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
+                    return true;
+                  }
+                  apiInv.addBankMember(inviteBankId, inviteTarget.getUniqueId());
+                  player.sendMessage(ChatColor.GREEN + "Invited " + inviteTarget.getName() + " to bank '" +
+                      apiInv.getBankName(inviteBankId) + "'");
+                  inviteTarget.sendMessage(ChatColor.GREEN + "You have been invited to bank '" +
+                      apiInv.getBankName(inviteBankId) + "' by " + player.getName());
+                } else {
+                  if (!isBankOwner(player.getUniqueId().toString(), inviteBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
+                    return true;
+                  }
+                  BankDatabase.addMember(inviteBankId, inviteTarget.getUniqueId().toString());
+                  player.sendMessage(ChatColor.GREEN + "Invited " + inviteTarget.getName() + " to bank '" +
+                      BankDatabase.getBankName(inviteBankId) + "'");
+                  inviteTarget.sendMessage(ChatColor.GREEN + "You have been invited to bank '" +
+                      BankDatabase.getBankName(inviteBankId) + "' by " + player.getName());
                 }
-                BankDatabase.addMember(inviteBankId, inviteTarget.getUniqueId().toString());
-                player.sendMessage(ChatColor.GREEN + "Invited " + inviteTarget.getName() + " to bank '" +
-                    BankDatabase.getBankName(inviteBankId) + "'");
-                inviteTarget.sendMessage(ChatColor.GREEN + "You have been invited to bank '" +
-                    BankDatabase.getBankName(inviteBankId) + "' by " + player.getName());
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID!");
               }
@@ -270,19 +321,36 @@ public class Commands implements CommandExecutor {
                   player.sendMessage(ChatColor.RED + "Player not found!");
                   return true;
                 }
-                if (!isBankOwner(player.getUniqueId().toString(), removeBankId)) {
-                  player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
-                  return true;
+                TokensAPI apiRem = TokensAPI.getAPI();
+                if (apiRem != null) {
+                  if (!apiRem.isBankOwner(player.getUniqueId(), removeBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
+                    return true;
+                  }
+                  if (removeTarget.getUniqueId().equals(apiRem.getBankOwner(removeBankId))) {
+                    player.sendMessage(ChatColor.RED + "You cannot remove the bank owner!");
+                    return true;
+                  }
+                  apiRem.removeBankMember(removeBankId, removeTarget.getUniqueId());
+                  player.sendMessage(ChatColor.GREEN + "Removed " + removeTarget.getName() + " from bank '" +
+                      apiRem.getBankName(removeBankId) + "'");
+                  removeTarget.sendMessage(ChatColor.RED + "You have been removed from bank '" +
+                      apiRem.getBankName(removeBankId) + "' by " + player.getName());
+                } else {
+                  if (!isBankOwner(player.getUniqueId().toString(), removeBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
+                    return true;
+                  }
+                  if (removeTarget.getUniqueId().toString().equals(BankDatabase.getBankOwner(removeBankId))) {
+                    player.sendMessage(ChatColor.RED + "You cannot remove the bank owner!");
+                    return true;
+                  }
+                  BankDatabase.removeMember(removeBankId, removeTarget.getUniqueId().toString());
+                  player.sendMessage(ChatColor.GREEN + "Removed " + removeTarget.getName() + " from bank '" +
+                      BankDatabase.getBankName(removeBankId) + "'");
+                  removeTarget.sendMessage(ChatColor.RED + "You have been removed from bank '" +
+                      BankDatabase.getBankName(removeBankId) + "' by " + player.getName());
                 }
-                if (removeTarget.getUniqueId().toString().equals(BankDatabase.getBankOwner(removeBankId))) {
-                  player.sendMessage(ChatColor.RED + "You cannot remove the bank owner!");
-                  return true;
-                }
-                BankDatabase.removeMember(removeBankId, removeTarget.getUniqueId().toString());
-                player.sendMessage(ChatColor.GREEN + "Removed " + removeTarget.getName() + " from bank '" +
-                    BankDatabase.getBankName(removeBankId) + "'");
-                removeTarget.sendMessage(ChatColor.RED + "You have been removed from bank '" +
-                    BankDatabase.getBankName(removeBankId) + "' by " + player.getName());
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID!");
               }
@@ -295,13 +363,24 @@ public class Commands implements CommandExecutor {
               }
               try {
                 int deleteBankId = Integer.parseInt(args[2]);
-                if (!isBankOwner(player.getUniqueId().toString(), deleteBankId)) {
-                  player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
-                  return true;
+                TokensAPI apiDel = TokensAPI.getAPI();
+                if (apiDel != null) {
+                  if (!apiDel.isBankOwner(player.getUniqueId(), deleteBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
+                    return true;
+                  }
+                  String bankNameToDelete = apiDel.getBankName(deleteBankId);
+                  apiDel.deleteBank(deleteBankId);
+                  player.sendMessage(ChatColor.GREEN + "Deleted bank '" + bankNameToDelete + "'");
+                } else {
+                  if (!isBankOwner(player.getUniqueId().toString(), deleteBankId)) {
+                    player.sendMessage(ChatColor.RED + "You are not the owner of this bank!");
+                    return true;
+                  }
+                  String bankNameToDelete = BankDatabase.getBankName(deleteBankId);
+                  BankDatabase.deleteBank(deleteBankId);
+                  player.sendMessage(ChatColor.GREEN + "Deleted bank '" + bankNameToDelete + "'");
                 }
-                String bankNameToDelete = BankDatabase.getBankName(deleteBankId);
-                BankDatabase.deleteBank(deleteBankId);
-                player.sendMessage(ChatColor.GREEN + "Deleted bank '" + bankNameToDelete + "'");
               } catch (NumberFormatException e) {
                 player.sendMessage(ChatColor.RED + "Invalid bank ID!");
               }
@@ -348,13 +427,34 @@ public class Commands implements CommandExecutor {
 
             case "redeem":
               ItemStack itemInHand = player.getInventory().getItemInMainHand();
-              if (CheckManager.isValidCheck(itemInHand)) {
-                if (CheckManager.redeemCheck(player, itemInHand)) {
-                  // Remove the check from player's hand
-                  itemInHand.setAmount(itemInHand.getAmount() - 1);
+              TokensAPI api = TokensAPI.getAPI();
+              if (api != null && api.isValidCheck(itemInHand)) {
+                if (api.redeemCheck(player, itemInHand)) {
+                  // Properly remove or decrement the check
+                  if (itemInHand.getAmount() <= 1) {
+                    player.getInventory().setItemInMainHand(null);
+                  } else {
+                    itemInHand.setAmount(itemInHand.getAmount() - 1);
+                  }
                   player.sendMessage(ChatColor.GREEN + "Successfully redeemed the check!");
                 } else {
                   player.sendMessage(ChatColor.RED + "This check has already been redeemed!");
+                }
+              } else if (CheckManager.isValidCheck(itemInHand)) {
+                // Fallback to direct manager if API not available (shouldn't happen)
+                try {
+                  if (CheckManager.redeemCheck(player, itemInHand)) {
+                    if (itemInHand.getAmount() <= 1) {
+                      player.getInventory().setItemInMainHand(null);
+                    } else {
+                      itemInHand.setAmount(itemInHand.getAmount() - 1);
+                    }
+                    player.sendMessage(ChatColor.GREEN + "Successfully redeemed the check!");
+                  } else {
+                    player.sendMessage(ChatColor.RED + "This check has already been redeemed!");
+                  }
+                } catch (SQLException ex) {
+                  player.sendMessage(ChatColor.RED + "An error occurred while redeeming the check.");
                 }
               } else {
                 player.sendMessage(ChatColor.RED + "You must hold a valid check in your hand!");
@@ -372,8 +472,20 @@ public class Commands implements CommandExecutor {
             player.sendMessage(ChatColor.RED + "You don't have permission to use this command!");
             return true;
           }
+          if (!LibraryIntegration.isDecentHologramsAvailable()) {
+            player.sendMessage(ChatColor.RED + "This feature requires DecentHolograms to be installed on the server!");
+            return true;
+          }
           HologramManager.getInstance().createHologram(player.getLocation());
           player.sendMessage(ChatColor.GREEN + "Created top 10 players hologram at your location!");
+          break;
+
+        case "gui":
+          if (Tokens.getInstance().getGuiManager() != null) {
+            Tokens.getInstance().getGuiManager().openMainGui(player);
+          } else {
+            player.sendMessage(ChatColor.RED + "The GUI is not ready yet. Please try again in a moment.");
+          }
           break;
 
         default:
@@ -382,7 +494,7 @@ public class Commands implements CommandExecutor {
       }
     } catch (SQLException e) {
       player.sendMessage(ChatColor.RED + "An error occurred while processing your command!");
-      e.printStackTrace();
+      Tokens.getInstance().getLogger().severe("Command error: " + e.getMessage());
     }
 
     return true;
@@ -391,12 +503,13 @@ public class Commands implements CommandExecutor {
   private void sendHelp(Player player) {
     player.sendMessage(ChatColor.GOLD + "=== Tokens Commands ===");
     player.sendMessage(ChatColor.YELLOW + "/tokens balance [player] - Check your or another player's balance");
+    player.sendMessage(ChatColor.YELLOW + "/tokens gui - Open the tokens GUI menu");
     player.sendMessage(ChatColor.YELLOW + "/tokens give <player> <amount> - Give tokens to a player");
     player.sendMessage(ChatColor.YELLOW + "/tokens take <player> <amount> - Take tokens from a player");
     player.sendMessage(ChatColor.YELLOW + "/tokens set <player> <amount> - Set a player's token balance");
     player.sendMessage(ChatColor.YELLOW + "/tokens bank - Bank related commands");
     player.sendMessage(ChatColor.YELLOW + "/tokens check - Check related commands");
-    if (player.hasPermission("tokens.admin")) {
+    if (player.hasPermission("tokens.admin") && LibraryIntegration.isDecentHologramsAvailable()) {
       player.sendMessage(ChatColor.YELLOW + "/tokens hologram - Place the top 10 players hologram");
     }
   }
@@ -419,7 +532,9 @@ public class Commands implements CommandExecutor {
   }
 
   private boolean isBankMember(String uuid, int bankId) throws SQLException {
-    return BankDatabase.isMember(uuid, bankId);
+    // Use hasAccess so bank owners are always treated as having member access
+    // (createBank now also inserts owners into bank_members, but this covers legacy banks too)
+    return BankDatabase.hasAccess(uuid, bankId);
   }
 
   private boolean isBankOwner(String uuid, int bankId) throws SQLException {

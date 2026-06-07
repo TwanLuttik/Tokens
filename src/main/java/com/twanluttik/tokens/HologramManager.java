@@ -62,40 +62,43 @@ public class HologramManager {
         );
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Bukkit.getLogger().warning("[Tokens] Failed to create hologram: " + e.getMessage());
     }
 
     isSet = true;
   }
 
   public void updateHologram() {
-    if (!isSet)
+    if (!isSet || hologram == null)
       return;
-
-
 
     try {
       // Get top 10 players from database
       List<UUID> topPlayers = Database.getTopPlayers(10);
 
-      // Add player lines
-      for (int i = 1; i < topPlayers.size(); i++) {
+      // Update player lines (lines 0 and 1 are header + separator)
+      for (int i = 0; i < topPlayers.size(); i++) {
         UUID playerId = topPlayers.get(i);
         OfflinePlayer player = Bukkit.getOfflinePlayer(playerId);
         String playerName = player.getName() != null ? player.getName() : "Unknown";
         int tokens = Database.getPlayerTokens(playerId);
 
-        DHAPI.setHologramLine(hologram,
-         i + 1,
-         String.format("&e#%d &7%s &8- &6%,d tokens",
+        int lineIndex = i + 2; // skip header (0) and separator (1)
+        String lineText = String.format("&e#%d &7%s &8- &6%,d tokens",
           i + 1,
           playerName,
           tokens
-         )
         );
+
+        // If we have fewer players than before, append; otherwise update
+        if (lineIndex < hologram.getPages().get(0).getLines().size()) {
+          DHAPI.setHologramLine(hologram, lineIndex, lineText);
+        } else {
+          DHAPI.addHologramLine(hologram, lineText);
+        }
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      Bukkit.getLogger().warning("[Tokens] Failed to update hologram: " + e.getMessage());
     }
   }
 

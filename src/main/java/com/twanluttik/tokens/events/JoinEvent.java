@@ -1,31 +1,40 @@
 package com.twanluttik.tokens.events;
 
-import com.twanluttik.tokens.core.Actions;
-import org.bukkit.Bukkit;
+import com.twanluttik.tokens.Database;
+import com.twanluttik.tokens.Tokens;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class JoinEvent implements Listener {
 
-  Actions actions = new Actions();
-
-
   @EventHandler
-  public void onPlayerJoin(PlayerJoinEvent e) throws SQLException {
+  public void onPlayerJoin(PlayerJoinEvent e) {
     Player p = e.getPlayer();
+    int initial = 0;
 
-//    Bukkit.getConsoleSender().sendMessage(p.getName() + "has joined");
+    try {
+      if (Tokens.getInstance() != null && Tokens.getInstance().getConfigManager() != null) {
+        initial = Tokens.getInstance().getConfigManager().getInitialTokens();
+      }
 
-    if (actions.playerExists(p.getUniqueId())) {
-
-    } else {
-      actions.createPlayer(p.getUniqueId());
-
+      // Insert player with initial tokens only if they don't exist yet
+      Connection conn = Database.getConnection();
+      try (PreparedStatement ps = conn.prepareStatement(
+              "INSERT INTO players (uuid, tokens) VALUES (?, ?) ON CONFLICT (uuid) DO NOTHING")) {
+        ps.setString(1, p.getUniqueId().toString());
+        ps.setInt(2, initial);
+        ps.executeUpdate();
+      }
+    } catch (SQLException ex) {
+      if (Tokens.getInstance() != null) {
+        Tokens.getInstance().getLogger().warning("Failed to initialize player on join: " + ex.getMessage());
+      }
     }
   }
-
 }

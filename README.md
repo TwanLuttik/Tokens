@@ -13,6 +13,15 @@ A Minecraft plugin that implements a token-based economy system with bank functi
 - Update checker
 - Configurable settings and messages
 
+## Supported Minecraft Versions
+
+- 1.19.4
+- 1.20.x
+- 1.21.x
+- 26.x builds (certain Paper/Purpur/etc. forks that use this versioning)
+
+The plugin uses only the public Bukkit/Spigot API (no NMS), so it should work across the supported range when compiled against the 1.19.4 API.
+
 ## Configuration
 
 The plugin uses a `config.yml` file for configuration. Here are the available settings:
@@ -86,7 +95,8 @@ private static final String PASSWORD = "mypassword";
 
 ## Dependencies
 
-- Spigot API 1.21.4
+- Spigot/Paper 1.19.4 or newer (compile target 1.19.4)
+- Java 17+
 - PostgreSQL JDBC Driver 42.7.2
 - Gson 2.10.1
 
@@ -98,37 +108,108 @@ private static final String PASSWORD = "mypassword";
 4. Edit the config.yml file with your database settings
 5. Restart your server
 
-## API Usage
+## PlaceholderAPI / PowerBoard Placeholders
 
-The plugin provides a public API (`TokensAPI.java`) that other plugins can use to interact with the token system. Here are some key methods:
+The plugin registers the following placeholders (usable in PowerBoard, FeatherBoard, other scoreboards, and any PlaceholderAPI-compatible plugin):
+
+### Player Placeholders
+| Placeholder                                      | Description                          | Example Output    |
+|--------------------------------------------------|--------------------------------------|-------------------|
+| `%tokens_balance%` / `%tokens_player_balance%`   | Player's raw token balance           | `1234567`         |
+| `%tokens_balance_formatted%` / `%tokens_player_balance_formatted%` | Shortened balance with suffix (k/m/b/t) | `1.2m`     |
+| `%tokens_banks_count%`                           | Number of banks the player has access to | `3`            |
+| `%tokens_rank%`                                  | Player's rank on the leaderboard (1 = richest) | `5`     |
+| `%tokens_rank_formatted%`                        | Formatted rank                       | `#5`              |
+
+### Bank Placeholders
+Replace `<id>` with the bank ID (visible in `/tokens bank list` or the GUI).
+
+| Placeholder                              | Description                     |
+|------------------------------------------|---------------------------------|
+| `%tokens_bank_<id>_name%`                | Name of the bank                |
+| `%tokens_bank_<id>_balance%`             | Raw balance of the bank         |
+| `%tokens_bank_<id>_balance_formatted%`   | Formatted bank balance          |
+| `%tokens_bank_<id>_owner%`               | Name of the bank owner          |
+| `%tokens_bank_<id>_member_count%`        | Number of members in the bank   |
+| `%tokens_bank_<id>_members%`             | Alias for member count          |
+
+### Top Leaderboard Placeholders
+Excellent for PowerBoard top lists.
+
+| Placeholder                                   | Description                          |
+|-----------------------------------------------|--------------------------------------|
+| `%tokens_top_name%` / `%tokens_top_name_<n>%` | Name of the player at rank N (1-10+) |
+| `%tokens_top_balance%` / `%tokens_top_balance_<n>%` | Raw balance at rank N         |
+| `%tokens_top_balance_formatted%` / `%tokens_top_balance_formatted_<n>%` | Formatted balance at rank N |
+
+Example usage on a PowerBoard scoreboard:
+```
+&6Your Balance: &e%tokens_balance_formatted%
+&6Your Rank: &e%tokens_rank_formatted%
+&6&lTop Players
+&f#1 &a%tokens_top_name_1% &7- &e%tokens_top_balance_formatted_1%
+&f#2 &a%tokens_top_name_2% &7- &e%tokens_top_balance_formatted_2%
+```
+
+## API for Developers
+
+The plugin provides a rich public API so other plugins can integrate with the token economy, banks, and checks.
+
+**Full documentation:** see [API.md](API.md)
+
+### Quick Start
 
 ```java
-// Get the API instance
-TokensAPI api = TokensAPI.getInstance();
+import com.twanluttik.tokens.TokensAPI;
 
-// Create a new bank
-int bankId = api.createBank("BankName", playerUuid);
+TokensAPI api = TokensAPI.getAPI();
+if (api == null) {
+    // Tokens is not installed or not loaded yet
+    return;
+}
 
-// Get bank balance
-int balance = api.getBankBalance(bankId);
+int balance = api.getPlayerTokens(player.getUniqueId());
+api.addPlayerTokens(player.getUniqueId(), 250);
 
-// Add/remove tokens from bank
-api.addToBank(bankId, amount);
-api.removeFromBank(bankId, amount);
-
-// Get player tokens
-int playerTokens = api.getPlayerTokens(playerUuid);
-
-// Add/remove/set player tokens
-api.addPlayerTokens(playerUuid, amount);
-api.removePlayerTokens(playerUuid, amount);
-api.setPlayerTokens(playerUuid, amount);
-
-// Create and redeem checks
-ItemStack check = api.createCheck(player, amount);
-boolean isValid = api.isValidCheck(itemStack);
-boolean redeemed = api.redeemCheck(player, itemStack);
+int bankId = api.createBank("MyFactionBank", player.getUniqueId());
+api.depositToBank(player.getUniqueId(), bankId, 1000);
 ```
+
+### Key Capabilities
+
+- Player token management (get/add/remove/set + async variants)
+- Full bank management + membership + permission helpers
+- Physical token **checks** (create/redeem)
+- Leaderboard access (`getTopPlayers`, `getPlayerRank`)
+- **Events** for almost every mutation (`TokenBalanceChangeEvent`, `BankBalanceChangeEvent`, `CheckRedeemedEvent`, etc.)
+- Configuration limits (`getMaxBanksPerPlayer()`, etc.)
+- Proper Bukkit service registration (`TokensAPI.getAPI()`)
+
+### Events Example
+
+```java
+@EventHandler
+public void onTokenChange(TokenBalanceChangeEvent e) {
+    if (e.getNewBalance() > 100000) {
+        // ...
+    }
+}
+```
+
+### Depending on Tokens (Gradle)
+
+```gradle
+dependencies {
+    compileOnly 'com.twanluttik:Tokens:3.0.0-PRE-v1' // adjust version
+}
+```
+
+In your `plugin.yml`:
+```yaml
+softdepend: [Tokens]
+```
+
+See [API.md](API.md) for the complete reference, async usage, best practices, and all available events.
 
 ## Version
 

@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT"
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.16'
     compileOnly 'me.clip:placeholderapi:2.11.7'
     implementation 'org.postgresql:postgresql:42.7.2'
@@ -34,7 +34,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.1.0")
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -46,6 +46,8 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.debug = true
+    options.debugOptions.debugLevel = 'source,lines,vars'
 
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)

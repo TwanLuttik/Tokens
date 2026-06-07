@@ -10,20 +10,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9b0e690c-356b-498f-b0b9-6d938d617aec" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/FileParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Placeholder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/PlaceholderExpension.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/CheckManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/CheckManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" afterPath="$PROJECT_DIR$/gradlew" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Commands.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Commands.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/ConfigManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/ConfigManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Database.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Database.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Placeholder.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Tokens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/Tokens.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/UpdateChecker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/UpdateChecker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/events/JoinEvent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/events/JoinEvent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,23 +42,6 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="Tokens" type="f1a62948:ProjectNode" />
               </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Tokens" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Tokens" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Tokens" type="f1a62948:ProjectNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
-              </path>
             </expand>
             <select />
           </tree_state>
@@ -82,6 +59,10 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 3
 }</component>
@@ -95,6 +76,7 @@
     &quot;Gradle.Build Tokens.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Build and Deploy.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.C:/Users/Hello/Documents/minecraft plugins/Tokens [wrapper].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Download Sources.executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [assemble].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [buildDependents].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [build].executor&quot;: &quot;Run&quot;,
@@ -102,22 +84,24 @@
     &quot;Gradle.Tokens [clean].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [compileJava].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [init].executor&quot;: &quot;Run&quot;,
-    &quot;Gradle.Tokens [jar].executor&quot;: &quot;Debug&quot;,
+    &quot;Gradle.Tokens [jar].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [test].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.Tokens [wrapper].executor&quot;: &quot;Run&quot;,
     &quot;Gradle.old [dependencies].executor&quot;: &quot;Run&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Remote JVM Debug.Minecraft Server Debug.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;external.system.task.project.file.to.start&quot;: &quot;/Users/twanluttik/Projects/minecraft/Tokens/gradle&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;dev2&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/twanl/Desktop/Tokens&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Artifacts&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Hello/Documents/minecraft plugins/old&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.javacompiler&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;template.copyright.formatting&quot;
   }
 }</component>
   <component name="RecentsManager">
@@ -126,7 +110,32 @@
       <recent name="C:\Users\Hello\Documents\minecraft plugins\Tokens\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Remote JVM Debug.Minecraft Server Debug">
+  <component name="RunManager" selected="Gradle.Build and Deploy">
+    <configuration name="Build and Deploy" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="copyToServer" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
     <configuration name="Tokens [assemble]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -157,7 +166,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -182,7 +191,7 @@
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
+        <option name="scriptParameters" value="" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -202,37 +211,12 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="Tokens [init]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="init" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
-      <GradleProfilingDisabled>false</GradleProfilingDisabled>
-      <GradleCoverageDisabled>false</GradleCoverageDisabled>
-      <method v="2" />
-    </configuration>
     <configuration name="Tokens [jar]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="" />
+        <option name="scriptParameters" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -252,8 +236,33 @@
       <GradleCoverageDisabled>false</GradleCoverageDisabled>
       <method v="2" />
     </configuration>
-    <configuration name="Minecraft Server Debug" type="Remote">
-      <module name="Tokens" />
+    <configuration name="old [dependencies]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="dependencies" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="Minecraft Server Debug" type="Remote" show_console_on_std_out="true">
+      <module name="Tokens.main" />
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
       <option name="SHMEM_ADDRESS" />
@@ -268,19 +277,19 @@
     </configuration>
     <list>
       <item itemvalue="Gradle.Build and Deploy" />
+      <item itemvalue="Gradle.old [dependencies]" />
       <item itemvalue="Gradle.Tokens [assemble]" />
       <item itemvalue="Gradle.Tokens [build]" />
       <item itemvalue="Gradle.Tokens [clean]" />
-      <item itemvalue="Gradle.Tokens [init]" />
       <item itemvalue="Gradle.Tokens [jar]" />
       <item itemvalue="Remote JVM Debug.Minecraft Server Debug" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.Tokens [build]" />
         <item itemvalue="Gradle.Tokens [clean]" />
-        <item itemvalue="Gradle.Tokens [assemble]" />
-        <item itemvalue="Gradle.Tokens [init]" />
+        <item itemvalue="Gradle.Tokens [build]" />
+        <item itemvalue="Gradle.Tokens [build]" />
+        <item itemvalue="Gradle.old [dependencies]" />
         <item itemvalue="Gradle.Tokens [jar]" />
       </list>
     </recent_temporary>
@@ -304,6 +313,39 @@
     <servers />
   </component>
   <component name="UnknownFeatures">
+    <option featureType="dependencySupport" implementationName="executable:docker" />
     <option featureType="dependencySupport" implementationName="java:org.spigotmc:spigot-api" />
+    <option featureType="dependencySupport" implementationName="executable:kubectl" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/PlaceholderExpension.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="16" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/main/java/com/twanluttik/tokens/PlaceholderExpension.java</url>
+          <line>67</line>
+          <properties class="com.twanluttik.tokens.PlaceholderExpension" method="onPlaceholderRequest">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="21" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

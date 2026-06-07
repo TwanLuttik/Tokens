@@ -1,10 +1,15 @@
 name: Tokens
-version: '2.0.0-SHAPSHOT-1'
+version: '${version}'
 main: com.twanluttik.tokens.Tokens
-api-version: 1.21
-softdepend: ["PlaceholderAPI", "DHAPI"]
+api-version: 1.19
+softdepend: ["PlaceholderAPI", "DecentHolograms"]
 
 commands:
   tokens:
     usage: /<command>
-    description: main command
+    description: Main tokens command
+
+permissions:
+  tokens.admin:
+    description: Grants access to admin token commands (give, take, set, hologram, bank management)
+    default: op
