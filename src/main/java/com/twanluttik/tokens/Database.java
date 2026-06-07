@@ -1,5 +1,7 @@
 package com.twanluttik.tokens;
 
+import org.bukkit.Bukkit;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -13,7 +15,7 @@ import java.util.UUID;
 public class Database {
     private static Connection connection;
     private static ConfigManager configManager;
-
+    
     static {
         try {
             Class.forName("org.postgresql.Driver");
@@ -48,7 +50,11 @@ public class Database {
             try {
                 connection.close();
             } catch (SQLException e) {
-                e.printStackTrace();
+                if (Tokens.getInstance() != null) {
+                    Tokens.getInstance().getLogger().warning("Failed to close database connection: " + e.getMessage());
+                } else {
+                    Bukkit.getLogger().warning("[Tokens] Failed to close database connection: " + e.getMessage());
+                }
             }
         }
     }
@@ -131,5 +137,31 @@ public class Database {
 
     public static int getPlayerTokens(UUID uuid) throws SQLException {
         return getTokens(uuid.toString());
+    }
+
+    /**
+     * Returns the player's rank in the token leaderboard (1 = richest).
+     * Players with the same balance will have the same rank.
+     */
+    public static int getPlayerRank(String uuid) throws SQLException {
+        Connection connection = getConnection();
+        // Number of players with strictly more tokens + 1
+        try (PreparedStatement ps = connection.prepareStatement(
+                "SELECT 1 + COUNT(*) FROM players p " +
+                "WHERE p.tokens > (SELECT tokens FROM players WHERE uuid = ?)")) {
+            ps.setString(1, uuid);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+        }
+        return 1; // fallback if player has the highest or only balance
+    }
+
+    /**
+     * Returns the player's rank (convenience overload).
+     */
+    public static int getPlayerRank(UUID uuid) throws SQLException {
+        return getPlayerRank(uuid.toString());
     }
 }

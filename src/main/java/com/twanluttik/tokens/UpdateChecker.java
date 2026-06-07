@@ -16,13 +16,13 @@ import java.util.UUID;
 
 public class UpdateChecker {
     private static final String SPIGOT_API_URL = "https://api.spigotmc.org/legacy/update.php?resource=53944";
-    private static final String CURRENT_VERSION = "2.0.0-SHAPSHOT-1";
     private static final Set<UUID> notifiedPlayers = new HashSet<>();
     private static final Gson gson = new Gson();
-    
+
     public static void checkForUpdates() {
         // Check if update checker is enabled in config
-        if (!ConfigManager.getInstance(Tokens.getInstance()).isUpdateCheckerEnabled()) {
+        ConfigManager configManager = Tokens.getInstance().getConfigManager();
+        if (configManager == null || !configManager.isUpdateCheckerEnabled()) {
             return;
         }
 
@@ -36,21 +36,25 @@ public class UpdateChecker {
                 InputStreamReader reader = new InputStreamReader(inputStream);
                 
                 String latestVersion = gson.fromJson(reader, String.class);
+                if (latestVersion == null) return;
+
+                String currentVersion = Tokens.getInstance().getDescription().getVersion();
                 
-                if (!latestVersion.equals(CURRENT_VERSION)) {
-                    notifyOps();
+                if (!latestVersion.equalsIgnoreCase(currentVersion)) {
+                    notifyOps(latestVersion, currentVersion);
                 }
             } catch (IOException e) {
-                Bukkit.getLogger().warning("Failed to check for updates: " + e.getMessage());
+                Bukkit.getLogger().warning("[Tokens] Failed to check for updates: " + e.getMessage());
             }
         });
     }
     
-    private static void notifyOps() {
+    private static void notifyOps(String latestVersion, String currentVersion) {
         for (Player player : Bukkit.getOnlinePlayers()) {
             if (player.isOp() && !notifiedPlayers.contains(player.getUniqueId())) {
                 player.sendMessage(ChatColor.YELLOW + "A new version of Tokens is available!");
-                player.sendMessage(ChatColor.YELLOW + "Current version: " + CURRENT_VERSION);
+                player.sendMessage(ChatColor.YELLOW + "Current version: " + currentVersion);
+                player.sendMessage(ChatColor.YELLOW + "Latest version: " + latestVersion);
                 player.sendMessage(ChatColor.YELLOW + "Download it from: https://www.spigotmc.org/resources/tokens-economy-1-8-x-1-13-x-bank-system-sql-api.53944/");
                 notifiedPlayers.add(player.getUniqueId());
             }

@@ -1,54 +1,35 @@
 package com.twanluttik.tokens;
 
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
 
 public class ConfigManager {
     private static ConfigManager instance;
     private final Plugin plugin;
-    private FileConfiguration config;
-    private File configFile;
+    private final FileParser fileParser;
 
-    private ConfigManager(Plugin plugin) {
+    public FileConfiguration config;
+
+    public ConfigManager(Plugin plugin) {
         this.plugin = plugin;
-        loadConfig();
-    }
-
-    public static ConfigManager getInstance(Plugin plugin) {
-        if (instance == null) {
-            instance = new ConfigManager(plugin);
-        }
-        return instance;
+        this.fileParser = new FileParser(plugin);
     }
 
     public void loadConfig() {
-        if (!plugin.getDataFolder().exists()) {
-            plugin.getDataFolder().mkdir();
-        }
-
-        configFile = new File(plugin.getDataFolder(), "config.yml");
-        if (!configFile.exists()) {
-            plugin.saveResource("config.yml", false);
-        }
-
-        config = YamlConfiguration.loadConfiguration(configFile);
+        config = fileParser.loadFile("config.yml");
     }
 
-    public void saveConfig() {
-        try {
-            config.save(configFile);
-        } catch (IOException e) {
-            plugin.getLogger().log(Level.SEVERE, "Could not save config to " + configFile, e);
+    public static ConfigManager initialize(Plugin plugin) {
+        if (instance == null) {
+            instance = new ConfigManager(plugin);
         }
+        instance.loadConfig();
+        return instance;
     }
 
-    public void reloadConfig() {
-        config = YamlConfiguration.loadConfiguration(configFile);
+    // Version is provided by the plugin description, not config
+    public String getVersion() {
+        return plugin.getDescription().getVersion();
     }
 
     // Database settings

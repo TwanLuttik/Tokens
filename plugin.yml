@@ -1,7 +1,7 @@
 name: Tokens
 version: '1.0-SNAPSHOT'
 main: com.twanluttik.tokens.Tokens
-api-version: '1.21'
+api-version: '1.19'
 
 softdepend:
   - DecentHolograms

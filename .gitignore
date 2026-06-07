@@ -4,6 +4,7 @@ build
 out
 target/
 bin/
+.DS_Store
 
 # Keep gradle wrapper files
 !gradle/wrapper/
@@ -11,3 +12,4 @@ bin/
 !gradle/wrapper/gradle-wrapper.properties
 !gradlew
 !gradlew.bat
+server

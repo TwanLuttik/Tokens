@@ -1,7 +1,9 @@
 package com.twanluttik.tokens;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.ChatColor;
@@ -37,6 +39,8 @@ public class CheckManager {
         // Create the check item
         ItemStack check = new ItemStack(Material.PAPER);
         ItemMeta meta = check.getItemMeta();
+        meta.addEnchant(Enchantment.DURABILITY, 1, true);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         meta.setDisplayName(ChatColor.GOLD + "Token Check");
         meta.setLore(java.util.Arrays.asList(
                 ChatColor.GRAY + "Amount: " + ChatColor.GREEN + amount,

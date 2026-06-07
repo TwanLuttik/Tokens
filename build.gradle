@@ -21,20 +21,20 @@ repositories {
         url = "https://jitpack.io"
     }
     maven {
-        name = "bstats"
-        url = "https://repo.codemc.org/repository/maven-public"
+        url = 'https://repo.extendedclip.com/releases/'
     }
 }
 
 dependencies {
-    compileOnly "org.spigotmc:spigot-api:1.21.4-R0.1-SNAPSHOT"
+    compileOnly "org.spigotmc:spigot-api:1.19.4-R0.1-SNAPSHOT"
     compileOnly 'com.github.decentsoftware-eu:decentholograms:2.8.16'
+    compileOnly 'me.clip:placeholderapi:2.11.7'
     implementation 'org.postgresql:postgresql:42.7.2'
     implementation 'com.google.code.gson:gson:2.10.1'
-    implementation 'org.bstats:bstats-bukkit:3.0.2'
+    implementation("org.bstats:bstats-bukkit:3.1.0")
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 17
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -46,6 +46,8 @@ java {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
+    options.debug = true
+    options.debugOptions.debugLevel = 'source,lines,vars'
 
     if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
         options.release.set(targetJavaVersion)
@@ -61,25 +63,51 @@ processResources {
     }
 }
 
-shadowJar {
-    archiveClassifier.set('')
-    
-    // Relocate bStats to avoid conflicts with other plugins
-    relocate 'org.bstats', 'com.twanluttik.tokens.bstats'
-    
-    // Only include necessary dependencies
-    dependencies {
-        include(dependency('org.postgresql:postgresql'))
-        include(dependency('com.google.code.gson:gson'))
-        include(dependency('org.bstats:bstats-bukkit'))
+
+
+
+// Configure regular jar to include dependencies
+jar {
+    archiveFileName = 'Tokens.jar'
+    manifest {
+        attributes 'Implementation-Title': 'Tokens',
+                   'Implementation-Version': version
     }
-    
-    minimize()
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    exclude 'META-INF/MANIFEST.MF'
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
 }
 
-// Make shadowJar the default build task
-build.dependsOn shadowJar
-assemble.dependsOn shadowJar
+// Make jar the default build task
+build.dependsOn jar
+assemble.dependsOn jar
 
-// Set the default jar task to be the shadowJar
-jar.enabled = false
+// Task to copy JAR to server plugins directory
+task copyToServer {
+    dependsOn jar
+    doLast {
+        def serverPluginsDir = project.findProperty('MC_SERVER_PLUGINS_DIR') ?: System.getenv('MC_SERVER_PLUGINS_DIR') ?: './server/plugins'
+        def pluginJar = jar.archiveFile.get().asFile
+        def destJar = new File(serverPluginsDir, pluginJar.name)
+        
+        if (pluginJar.exists()) {
+            // Delete old JAR if it exists
+            if (destJar.exists()) {
+                destJar.delete()
+                println "✓ Deleted old plugin: ${destJar.path}"
+            }
+            
+            copy {
+                from pluginJar
+                into serverPluginsDir
+            }
+            println "✓ Plugin copied to: $serverPluginsDir"
+        } else {
+            println "✗ Plugin JAR not found: ${pluginJar.path}"
+        }
+    }
+}

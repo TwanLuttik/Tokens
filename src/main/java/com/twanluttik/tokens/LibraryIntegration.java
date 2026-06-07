@@ -10,6 +10,7 @@ import java.util.logging.Level;
 public class LibraryIntegration {
     private static boolean hologramEnabled = false;
     private static Plugin hologramPlugin = null;
+    private static boolean hologramChecked = false;
 
     /**
      * Initialize and check for available integrations
@@ -23,12 +24,15 @@ public class LibraryIntegration {
      * Check if HolographicDisplays or DecentHolograms is available
      */
     private static void checkHologramIntegration() {
+        if (hologramChecked) return;
+
         // Check for HolographicDisplays
         Plugin hd = Bukkit.getPluginManager().getPlugin("HolographicDisplays");
         if (hd != null && hd.isEnabled()) {
             hologramEnabled = true;
             hologramPlugin = hd;
             Bukkit.getLogger().log(Level.INFO, "[Tokens] Successfully integrated with HolographicDisplays!");
+            hologramChecked = true;
             return;
         }
 
@@ -39,13 +43,17 @@ public class LibraryIntegration {
             hologramPlugin = dh;
             Bukkit.getLogger().log(Level.INFO, "[Tokens] Successfully integrated with DecentHolograms!");
         }
+        hologramChecked = true;
     }
 
     /**
-     * Check if hologram integration is available
-     * @return true if hologram plugin is available and enabled
+     * Check if hologram integration is available (cached).
+     * @return true if a supported hologram plugin is available and enabled
      */
     public static boolean isHologramEnabled() {
+        if (!hologramChecked) {
+            checkHologramIntegration();
+        }
         return hologramEnabled;
     }
 
@@ -54,7 +62,21 @@ public class LibraryIntegration {
      * @return Plugin instance or null if not available
      */
     public static Plugin getHologramPlugin() {
+        if (!hologramChecked) {
+            checkHologramIntegration();
+        }
         return hologramPlugin;
+    }
+
+    /**
+     * Check if DecentHolograms is available (used for hologram commands).
+     * This is cached for performance.
+     */
+    public static boolean isDecentHologramsAvailable() {
+        if (!hologramChecked) {
+            checkHologramIntegration();
+        }
+        return hologramPlugin != null && "DecentHolograms".equals(hologramPlugin.getName());
     }
 
     /**

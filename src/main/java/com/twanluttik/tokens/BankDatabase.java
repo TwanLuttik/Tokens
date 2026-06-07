@@ -40,7 +40,16 @@ public class BankDatabase {
             statement.setString(2, ownerUuid);
             ResultSet rs = statement.executeQuery();
             if (rs.next()) {
-                return rs.getInt(1);
+                int bankId = rs.getInt(1);
+                // Automatically add the owner as a member so they can deposit/withdraw
+                try (PreparedStatement memberStmt = connection.prepareStatement(
+                        "INSERT INTO bank_members (bank_id, member_uuid) VALUES (?, ?) " +
+                        "ON CONFLICT (bank_id, member_uuid) DO NOTHING")) {
+                    memberStmt.setInt(1, bankId);
+                    memberStmt.setString(2, ownerUuid);
+                    memberStmt.execute();
+                }
+                return bankId;
             }
             return -1;
         }
@@ -185,5 +194,13 @@ public class BankDatabase {
             ResultSet rs = statement.executeQuery();
             return rs.next();
         }
+    }
+
+    /**
+     * Returns true if the player is either an explicit member or the owner of the bank.
+     * This should be used for access checks on deposit/withdraw operations.
+     */
+    public static boolean hasAccess(String uuid, int bankId) throws SQLException {
+        return isMember(uuid, bankId) || isOwner(uuid, bankId);
     }
 } 
